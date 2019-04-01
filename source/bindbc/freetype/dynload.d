@@ -18,21 +18,21 @@ private {
     FTSupport loadedVersion;
 }
 
-void unloadFreetype()
+void unloadFreeType()
 {
     if(lib != invalidHandle) {
         lib.unload();
     }
 }
 
-FTSupport loadedFreetypeVersion() { return loadedVersion; }
+FTSupport loadedFreeTypeVersion() { return loadedVersion; }
 
-bool isFreetypeLoaded()
+bool isFreeTypeLoaded()
 {
     return  lib != invalidHandle;
 }
 
-FTSupport loadFreetype()
+FTSupport loadFreeType()
 {
     // #1778 prevents me from using static arrays here :(
     version(Windows) {
@@ -68,7 +68,7 @@ FTSupport loadFreetype()
     return ret;
 }
 
-FTSupport loadFreetype(const(char)* libName)
+FTSupport loadFreeType(const(char)* libName)
 {
     lib = load(libName);
     if(lib == invalidHandle) {
