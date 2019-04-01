@@ -9,11 +9,11 @@ module bindbc.freetype.config;
 enum FTSupport {
     noLibrary,
     badLibrary,
-    ft26,
-    ft27,
-    ft28,
-    ft29,
-    ft210,
+    ft26    = 26,
+    ft27    = 27,
+    ft28    = 28,
+    ft29    = 29,
+    ft210   = 210,
 }
 
 enum FREETYPE_MAJOR = 2;
