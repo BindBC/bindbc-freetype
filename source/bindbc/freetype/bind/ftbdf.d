@@ -7,6 +7,10 @@
 module bindbc.freetype.bind.ftbdf;
 
 version(linux) {
+    import bindbc.freetype.config;
+    import bindbc.freetype.freetype,
+           bindbc.freetype.fttypes;
+
     alias BDF_PropertyType = int;
     enum {
         BDF_PROPERTY_TYPE_NONE = 0,
@@ -34,8 +38,8 @@ version(linux) {
     }
     else {
         extern(C) @nogc nothrow {
-            alias da_FT_Get_BDF_Charset_ID = FT_Error function(FT_Face,const(char)** acharset_encoding,const(char)** acharset_registry);
-            alias da_FT_Get_BDF_Property = FT_Error function(FT_Face,const(char)*,BDF_PropertyRec*);
+            alias pFT_Get_BDF_Charset_ID = FT_Error function(FT_Face,const(char)** acharset_encoding,const(char)** acharset_registry);
+            alias pFT_Get_BDF_Property = FT_Error function(FT_Face,const(char)*,BDF_PropertyRec*);
         }
 
         __gshared {
