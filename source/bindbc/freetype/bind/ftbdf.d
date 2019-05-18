@@ -8,8 +8,8 @@ module bindbc.freetype.bind.ftbdf;
 
 version(linux) {
     import bindbc.freetype.config;
-    import bindbc.freetype.freetype,
-           bindbc.freetype.fttypes;
+    import bindbc.freetype.bind.freetype,
+           bindbc.freetype.bind.fttypes;
 
     alias BDF_PropertyType = int;
     enum {

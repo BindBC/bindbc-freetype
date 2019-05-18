@@ -62,7 +62,7 @@ FTSupport loadFreeType()
 
     FTSupport ret;
     foreach(name; libNames) {
-        ret = loadFreetype(name.ptr);
+        ret = loadFreeType(name.ptr);
         if(ret != FTSupport.noLibrary) break;
     }
     return ret;
