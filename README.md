@@ -90,11 +90,11 @@ Following are the supported versions of FreeType, the corresponding version IDs 
 
 | Library & Version  | Version ID       | `FTSupport` Member |
 |--------------------|------------------|--------------------|
-|FreeType 2.6.4      | FT_26 (Default)  | `FTSupport.ft26`   |
+|FreeType 2.6.4      | Default          | `FTSupport.ft26`   |
 |FreeType 2.7.1      | FT_27            | `FTSupport.ft27`   |
 |FreeType 2.8.1      | FT_28            | `FTSupport.ft28`   |
 |FreeType 2.9.1      | FT_29            | `FTSupport.ft29`   |
-|FreeType 2.10.0     | FT_210           | `FTSupport.ft210   |
+|FreeType 2.10.0     | FT_210           | `FTSupport.ft210`  |
 
 ## The static binding
 The static binding has a link-time dependency on either the shared or the static FreeType library. On Windows, you can link with the static library or, to use the shared library (`freetype.dll`), with the import library. On other systems, you can link with either the static library or directly with the shared library. This requires the FreeType development package be installed on your system at compile time, either by compiling the FreeType source yourself, downloading the FreeType precompiled binaries for Windows, or installing via a system package manager. [See the FreeType download page](https://www.freetype.org/download.html) for details.

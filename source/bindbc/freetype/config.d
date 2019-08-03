@@ -22,30 +22,30 @@ version(Posix) enum enableBZIP2 = true;
 else version(FT_BZIP2) enum enableBZIP2 = true;
 else enum enableBZIP2 = false;
 
-version(FT_26) {
-    enum FREETYPE_MINOR = 6;
-    enum FREETYPE_PATCH = 4;
-    enum ftSupport = FTSupport.ft26;
-}
 version(FT_27) {
     enum FREETYPE_MINOR = 7;
     enum FREETYPE_PATCH = 1;
     enum ftSupport = FTSupport.ft27;
 }
-version(FT_28) {
+else version(FT_28) {
     enum FREETYPE_MINOR = 8;
     enum FREETYPE_PATCH = 1;
     enum ftSupport = FTSupport.ft28;
 }
-version(FT_29) {
+else version(FT_29) {
     enum FREETYPE_MINOR = 9;
     enum FREETYPE_PATCH = 1;
     enum ftSupport = FTSupport.ft29;
 }
-version(FT_210) {
+else version(FT_210) {
     enum FREETYPE_MINOR = 10;
     enum FREETYPE_PATCH = 0;
     enum ftSupport = FTSupport.ft210;
+}
+else { // default
+    enum FREETYPE_MINOR = 6;
+    enum FREETYPE_PATCH = 4;
+    enum ftSupport = FTSupport.ft26;
 }
 
 // config/ftconfg.h
