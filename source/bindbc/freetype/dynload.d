@@ -296,14 +296,16 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Get_CMap_Language_ID, "FT_Get_CMap_Language_ID");
     lib.bindSymbol(cast(void**)&FT_Get_CMap_Format, "FT_Get_CMap_Format");
 
-    loadedVersion = FTSupport.ft26;
+    if(errorCount() != errCount) return FTSupport.badLibrary;
+    else loadedVersion = FTSupport.ft26;
 
     static if(ftSupport >= FTSupport.ft27) {
         lib.bindSymbol(cast(void**)&FT_Get_Var_Design_Coordinates, "FT_Get_Var_Design_Coordinates");
         lib.bindSymbol(cast(void**)&FT_Get_MM_Blend_Coordinates, "FT_Get_MM_Blend_Coordinates");
         lib.bindSymbol(cast(void**)&FT_Get_Var_Blend_Coordinates, "FT_Get_Var_Blend_Coordinates");
 
-        loadedVersion = FTSupport.ft27;
+        if(errorCount() != errCount) return FTSupport.badLibrary;
+        else loadedVersion = FTSupport.ft27;
     }
 
     static if(ftSupport >= FTSupport.ft28) {
@@ -312,14 +314,16 @@ FTSupport loadFreeType(const(char)* libName)
         lib.bindSymbol(cast(void**)&FT_Set_Default_Properties, "FT_Set_Default_Properties");
         lib.bindSymbol(cast(void**)&FT_Get_Sfnt_LangTag, "FT_Get_Sfnt_LangTag");
 
-        loadedVersion = FTSupport.ft28;
+        if(errorCount() != errCount) return FTSupport.badLibrary;
+        else loadedVersion = FTSupport.ft28;
     }
 
     static if(ftSupport >= FTSupport.ft29) {
         lib.bindSymbol(cast(void**)&FT_Done_MM_Var, "FT_Done_MM_Var");
         lib.bindSymbol(cast(void**)&FT_Set_Named_Instance, "FT_Set_Named_Instance");
 
-        loadedVersion = FTSupport.ft29;
+        if(errorCount() != errCount) return FTSupport.badLibrary;
+        else loadedVersion = FTSupport.ft29;
     }
 
     static if(ftSupport >= FTSupport.ft210) {
@@ -328,10 +332,9 @@ FTSupport loadFreeType(const(char)* libName)
         lib.bindSymbol(cast(void**)&FT_Palette_Set_Foreground_Color, "FT_Palette_Set_Foreground_Color");
         lib.bindSymbol(cast(void**)&FT_Library_SetLcdGeometry, "FT_Library_SetLcdGeometry");
 
-        loadedVersion = FTSupport.ft210;
+        if(errorCount() != errCount) return FTSupport.badLibrary;
+        else loadedVersion = FTSupport.ft210;
     }
-
-    if(errorCount() != errCount) return FTSupport.badLibrary;
 
     return loadedVersion;
 }
