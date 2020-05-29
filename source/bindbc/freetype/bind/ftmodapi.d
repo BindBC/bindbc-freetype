@@ -42,14 +42,16 @@ struct FT_Module_Class {
     FT_Module_Requester get_interface;
 }
 
-extern(C) nothrow alias FT_DebugHook_Func = void function(void*);
+static if((ftSupport == FTSupport.FT_210 && FREETYPE_PATCH > 0) || ftSupport > FTSupport.ft210)
+    extern(C) nothrow alias FT_DebugHook_Func = FT_Error function(void*);
+else
+    extern(C) nothrow alias FT_DebugHook_Func = void function(void*);
 
 alias FT_TrueTypeEngineType = int;
 enum {
     FT_TRUETYPE_ENGINE_TYPE_NONE = 0,
     FT_TRUETYPE_ENGINE_TYPE_UNPATENTED,
     FT_TRUETYPE_ENGINE_TYPE_PATENTED
-
 }
 
 version(BindFT_Static) {
