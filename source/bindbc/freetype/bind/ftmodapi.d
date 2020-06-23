@@ -42,7 +42,7 @@ struct FT_Module_Class {
     FT_Module_Requester get_interface;
 }
 
-static if((ftSupport == FTSupport.FT_210 && FREETYPE_PATCH > 0) || ftSupport > FTSupport.ft210)
+static if((ftSupport == FTSupport.ft210 && FREETYPE_PATCH > 0) || ftSupport > FTSupport.ft210)
     extern(C) nothrow alias FT_DebugHook_Func = FT_Error function(void*);
 else
     extern(C) nothrow alias FT_DebugHook_Func = void function(void*);
