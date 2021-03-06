@@ -6,7 +6,7 @@ By default, `bindbc-freetype` is configured to compile as a dynamic binding that
 
 When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. `-betterC` compatibility is also enabled via subconfigurations.
 
-To use FreeType, add `bindbc-freetype` as a dependency to your project's package config file. For example, the following is configured to FreeType as a dynamic binding that is not `-betterC` compatible:
+To use FreeType, add `bindbc-freetype` as a dependency to your project's package config file. For example, the following is configured to FreeType as a dynamic binding that is not `-betterC` compatible (please replace the example `0.1.0` version number with the actual version you'd like to use):
 
 __dub.json__
 ```
@@ -60,7 +60,7 @@ to the executable, only on Windows.
 */
 // version(Windows) loadFreeType("libs/freetype.dll")
 ```
-By default, the `bindbc-freetype` binding is configured to compile to load FreeType 2.6. This ensures the widest level of compatibility at runtime. This behavior can be overridden via the `-version` compiler switch or the `versions` DUB directive with the desired FreeType version number. It is recommended that you always select the minimum version you require _and no higher_. In this example, the FreeType dynamic binding is compiled to support FreeType 2.7:
+By default, the `bindbc-freetype` binding is configured to compile to load FreeType 2.6. This ensures the widest level of compatibility at runtime. This behavior can be overridden via the `-version` compiler switch or the `versions` DUB directive with the desired FreeType version number. It is recommended that you always select the minimum version you require _and no higher_. In this example, the FreeType dynamic binding is compiled to support FreeType 2.7 (please replace the example `0.1.0` version number with the actual version you'd like to use)::
 
 __dub.json__
 ```
@@ -90,11 +90,11 @@ Following are the supported versions of FreeType, the corresponding version IDs 
 
 | Library & Version  | Version ID       | `FTSupport` Member |
 |--------------------|------------------|--------------------|
-|FreeType 2.6.4      | Default          | `FTSupport.ft26`   |
-|FreeType 2.7.1      | FT_27            | `FTSupport.ft27`   |
-|FreeType 2.8.1      | FT_28            | `FTSupport.ft28`   |
-|FreeType 2.9.1      | FT_29            | `FTSupport.ft29`   |
-|FreeType 2.10.2     | FT_210           | `FTSupport.ft210`  |
+|FreeType 2.6.x      | Default          | `FTSupport.ft26`   |
+|FreeType 2.7.x      | FT_27            | `FTSupport.ft27`   |
+|FreeType 2.8.x      | FT_28            | `FTSupport.ft28`   |
+|FreeType 2.9.x      | FT_29            | `FTSupport.ft29`   |
+|FreeType 2.10.x     | FT_210           | `FTSupport.ft210`  |
 
 ## The static binding
 The static binding has a link-time dependency on either the shared or the static FreeType library. On Windows, you can link with the static library or, to use the shared library (`freetype.dll`), with the import library. On other systems, you can link with either the static library or directly with the shared library. This requires the FreeType development package be installed on your system at compile time, either by compiling the FreeType source yourself, downloading the FreeType precompiled binaries for Windows, or installing via a system package manager. [See the FreeType download page](https://www.freetype.org/download.html) for details.
@@ -108,7 +108,7 @@ Pass the `BindFT_Static` version to the compiler and link with the appropriate l
 
 When using the compiler command line or a build system that doesn't support DUB, this is the only option. The `-version=BindFT_Static` option should be passed to the compiler when building your program. All of the required C libraries, as well as the `bindbc-freetype` and `bindbc-loader` static libraries must also be passed to the compiler on the command line or via your build system's configuration.
 
-When using DUB, its `versions` directive is an option. For example, when using the static binding:
+When using DUB, its `versions` directive is an option. For example, when using the static binding (please replace the example `0.1.0` version number with the actual version you'd like to use)::
 
 __dub.json__
 ```
@@ -127,7 +127,7 @@ libs "freetype"
 ```
 
 ### Via DUB subconfigurations
-Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-freetype` dependency:
+Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-freetype` dependency (please replace the example `0.1.0` version number with the actual version you'd like to use)::
 
 __dub.json__
 ```
@@ -151,7 +151,7 @@ This has the benefit that it completely excludes from the build any source modul
 
 ## `betterC` support
 
-`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with `-betterC` support:
+`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with `-betterC` support (please replace the example `0.1.0` version number with the actual version you'd like to use)::
 
 __dub.json__
 ```
