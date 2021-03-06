@@ -18,6 +18,7 @@ private {
     FTSupport loadedVersion;
 }
 
+@nogc nothrow:
 void unloadFreeType()
 {
     if(lib != invalidHandle) {
