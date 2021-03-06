@@ -39,7 +39,7 @@ else version(FT_29) {
 }
 else version(FT_210) {
     enum FREETYPE_MINOR = 10;
-    enum FREETYPE_PATCH = 2;
+    enum FREETYPE_PATCH = 4;
     enum ftSupport = FTSupport.ft210;
 }
 else { // default
