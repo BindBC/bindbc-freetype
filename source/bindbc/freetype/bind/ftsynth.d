@@ -10,14 +10,14 @@ import bindbc.freetype.bind.freetype;
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        void FT_GlyphSlot_Embolden(FT_GlyphSlot);
-        void FT_GlyphSlot_Oblique(FT_GlyphSlot);
+        void FT_GlyphSlot_Embolden(FT_GlyphSlot slot);
+        void FT_GlyphSlot_Oblique(FT_GlyphSlot slot);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_GlyphSlot_Embolden = void function(FT_GlyphSlot);
-        alias pFT_GlyphSlot_Oblique = void function(FT_GlyphSlot);
+        alias pFT_GlyphSlot_Embolden = void function(FT_GlyphSlot slot);
+        alias pFT_GlyphSlot_Oblique = void function(FT_GlyphSlot slot);
     }
 
     __gshared {

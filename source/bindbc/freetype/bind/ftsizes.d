@@ -11,16 +11,16 @@ import bindbc.freetype.bind.freetype,
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_New_Size(FT_Face,FT_Size*);
-        FT_Error FT_Done_Size(FT_Size);
-        FT_Error FT_Activate_Size(FT_Size);
+        FT_Error FT_New_Size(FT_Face face,FT_Size* size);
+        FT_Error FT_Done_Size(FT_Size size);
+        FT_Error FT_Activate_Size(FT_Size size);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_New_Size = FT_Error function(FT_Face,FT_Size*);
-        alias pFT_Done_Size = FT_Error function(FT_Size);
-        alias pFT_Activate_Size = FT_Error function(FT_Size);
+        alias pFT_New_Size = FT_Error function(FT_Face face,FT_Size* size);
+        alias pFT_Done_Size = FT_Error function(FT_Size size);
+        alias pFT_Activate_Size = FT_Error function(FT_Size size);
     }
 
     __gshared {

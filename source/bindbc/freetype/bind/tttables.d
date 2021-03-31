@@ -178,20 +178,20 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        void* FT_Get_Sfnt_Table(FT_Face,FT_Sfnt_Tag);
-        FT_Error FT_Load_Sfnt_Table(FT_Face,FT_ULong,FT_Long,FT_Byte*,FT_ULong*);
-        FT_Error FT_Sfnt_Table_Info(FT_Face,FT_UInt,FT_ULong*,FT_ULong*);
-        FT_ULong FT_Get_CMap_Language_ID(FT_CharMap);
-        FT_ULong FT_Get_CMap_Format(FT_CharMap);
+        void* FT_Get_Sfnt_Table(FT_Face face, FT_Sfnt_Tag tag);
+        FT_Error FT_Load_Sfnt_Table(FT_Face face, FT_ULong tag, FT_Long offset, FT_Byte* buffer, FT_ULong* length);
+        FT_Error FT_Sfnt_Table_Info(FT_Face face, FT_UInt table_index, FT_ULong* tag, FT_ULong* length);
+        FT_ULong FT_Get_CMap_Language_ID(FT_CharMap charmap);
+        FT_ULong FT_Get_CMap_Format(FT_CharMap charmap);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Sfnt_Table = void* function(FT_Face,FT_Sfnt_Tag);
-        alias pFT_Load_Sfnt_Table = FT_Error function(FT_Face,FT_ULong,FT_Long,FT_Byte*,FT_ULong*);
-        alias pFT_Sfnt_Table_Info = FT_Error function(FT_Face,FT_UInt,FT_ULong*,FT_ULong*);
-        alias pFT_Get_CMap_Language_ID = FT_ULong function(FT_CharMap);
-        alias pFT_Get_CMap_Format = FT_ULong function(FT_CharMap);
+        alias pFT_Get_Sfnt_Table = void* function(FT_Face face, FT_Sfnt_Tag tag);
+        alias pFT_Load_Sfnt_Table = FT_Error function(FT_Face face, FT_ULong tag, FT_Long offset, FT_Byte* buffer, FT_ULong* length);
+        alias pFT_Sfnt_Table_Info = FT_Error function(FT_Face face, FT_UInt table_index, FT_ULong* tag, FT_ULong* length);
+        alias pFT_Get_CMap_Language_ID = FT_ULong function(FT_CharMap charmap);
+        alias pFT_Get_CMap_Format = FT_ULong function(FT_CharMap charmap);
     }
 
     __gshared {

@@ -56,39 +56,39 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Add_Module(FT_Library,const(FT_Module_Class)*);
-        FT_Module FT_Get_Module(FT_Library,const(char)*);
-        FT_Error FT_Remove_Module(FT_Library,FT_Module);
-        FT_Error FT_Property_Set(FT_Library,const(FT_String)*,const(FT_String)*,const(void)*);
-        FT_Error FT_Property_Get(FT_Library,const(FT_String)*,const(FT_String)*,void*);
-        FT_Error FT_Reference_Library(FT_Library);
-        FT_Error FT_New_Library(FT_Memory,FT_Library*);
-        FT_Error FT_Done_Library(FT_Library);
-        void FT_Set_Debug_Hook(FT_Library,FT_UInt,FT_DebugHook_Func);
-        void FT_Add_Default_Modules(FT_Library);
-        FT_TrueTypeEngineType FT_Get_TrueType_Engine_Type(FT_Library);
+        FT_Error FT_Add_Module(FT_Library library, const(FT_Module_Class)* clazz);
+        FT_Module FT_Get_Module(FT_Library library, const(char)* module_name);
+        FT_Error FT_Remove_Module(FT_Library library, FT_Module module_);
+        FT_Error FT_Property_Set(FT_Library library, const(FT_String)* module_name, const(FT_String)* property_name, const(void)* value);
+        FT_Error FT_Property_Get(FT_Library library, const(FT_String)* module_name, const(FT_String)* property_name, void* value);
+        FT_Error FT_Reference_Library(FT_Library library);
+        FT_Error FT_New_Library(FT_Memory memory, FT_Library* alibrary);
+        FT_Error FT_Done_Library(FT_Library library);
+        void FT_Set_Debug_Hook(FT_Library library, FT_UInt hook_index, FT_DebugHook_Func debug_hook);
+        void FT_Add_Default_Modules(FT_Library library);
+        FT_TrueTypeEngineType FT_Get_TrueType_Engine_Type(FT_Library library);
 
         static if(ftSupport >= FTSupport.ft28) {
-            void FT_Set_Default_Properties(FT_Library);
+            void FT_Set_Default_Properties(FT_Library library);
         }
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Add_Module = FT_Error function(FT_Library,const(FT_Module_Class)*);
-        alias pFT_Get_Module = FT_Module function(FT_Library,const(char)*);
-        alias pFT_Remove_Module = FT_Error function(FT_Library,FT_Module);
-        alias pFT_Property_Set = FT_Error function(FT_Library,const(FT_String)*,const(FT_String)*,const(void)*);
-        alias pFT_Property_Get = FT_Error function(FT_Library,const(FT_String)*,const(FT_String)*,void*);
-        alias pFT_Reference_Library = FT_Error function(FT_Library);
-        alias pFT_New_Library = FT_Error function(FT_Memory,FT_Library*);
-        alias pFT_Done_Library = FT_Error function(FT_Library);
-        alias pFT_Set_Debug_Hook = void function(FT_Library,FT_UInt,FT_DebugHook_Func);
-        alias pFT_Add_Default_Modules = void function(FT_Library);
-        alias pFT_Get_TrueType_Engine_Type = FT_TrueTypeEngineType function(FT_Library);
+        alias pFT_Add_Module = FT_Error function(FT_Library library, const(FT_Module_Class)* clazz);
+        alias pFT_Get_Module = FT_Module function(FT_Library library, const(char)* module_name);
+        alias pFT_Remove_Module = FT_Error function(FT_Library library, FT_Module module_);
+        alias pFT_Property_Set = FT_Error function(FT_Library library, const(FT_String)* module_name, const(FT_String)* property_name, const(void)* value);
+        alias pFT_Property_Get = FT_Error function(FT_Library library, const(FT_String)* module_name, const(FT_String)* property_name, void* value);
+        alias pFT_Reference_Library = FT_Error function(FT_Library library);
+        alias pFT_New_Library = FT_Error function(FT_Memory memory, FT_Library* alibrary);
+        alias pFT_Done_Library = FT_Error function(FT_Library library);
+        alias pFT_Set_Debug_Hook = void function(FT_Library library, FT_UInt hook_index, FT_DebugHook_Func debug_hook);
+        alias pFT_Add_Default_Modules = void function(FT_Library library);
+        alias pFT_Get_TrueType_Engine_Type = FT_TrueTypeEngineType function(FT_Library library);
 
         static if(ftSupport >= FTSupport.ft28) {
-            alias pFT_Set_Default_Properties = void function(FT_Library);
+            alias pFT_Set_Default_Properties = void function(FT_Library library);
         }
     }
 

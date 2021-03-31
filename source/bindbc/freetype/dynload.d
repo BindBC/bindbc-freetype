@@ -108,6 +108,7 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Get_Next_Char, "FT_Get_Next_Char");
     lib.bindSymbol(cast(void**)&FT_Get_Name_Index, "FT_Get_Name_Index");
     lib.bindSymbol(cast(void**)&FT_Get_SubGlyph_Info, "FT_Get_SubGlyph_Info");
+    lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Layer, "FT_Get_Color_Glyph_Layer");
     lib.bindSymbol(cast(void**)&FT_Get_FSType_Flags, "FT_Get_FSType_Flags");
     lib.bindSymbol(cast(void**)&FT_Face_GetCharVariantIndex, "FT_Face_GetCharVariantIndex");
     lib.bindSymbol(cast(void**)&FT_Face_GetCharVariantIsDefault, "FT_Face_GetCharVariantIsDefault");
@@ -139,8 +140,8 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Bitmap_Copy, "FT_Bitmap_Copy");
     lib.bindSymbol(cast(void**)&FT_Bitmap_Embolden, "FT_Bitmap_Embolden");
     lib.bindSymbol(cast(void**)&FT_Bitmap_Convert, "FT_Bitmap_Convert");
-    lib.bindSymbol(cast(void**)&FT_Bitmap_Done, "FT_Bitmap_Done");
     lib.bindSymbol(cast(void**)&FT_GlyphSlot_Own_Bitmap, "FT_GlyphSlot_Own_Bitmap");
+    lib.bindSymbol(cast(void**)&FT_Bitmap_Done, "FT_Bitmap_Done");
 
     static if(enableBZIP2) {
         lib.bindSymbol(cast(void**)&FT_Stream_OpenBzip2, "FT_Stream_OpenBzip2");
@@ -165,6 +166,8 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Get_CID_Registry_Ordering_Supplement, "FT_Get_CID_Registry_Ordering_Supplement");
     lib.bindSymbol(cast(void**)&FT_Get_CID_Is_Internally_CID_Keyed, "FT_Get_CID_Is_Internally_CID_Keyed");
     lib.bindSymbol(cast(void**)&FT_Get_CID_From_Glyph_Index, "FT_Get_CID_From_Glyph_Index");
+
+    lib.bindSymbol(cast(void**)&FT_Error_String, "FT_Error_String");
 
     lib.bindSymbol(cast(void**)&FT_Get_Font_Format, "FT_Get_Font_Format");
 
@@ -308,7 +311,6 @@ FTSupport loadFreeType(const(char)* libName)
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft27;
     }
-
     static if(ftSupport >= FTSupport.ft28) {
         lib.bindSymbol(cast(void**)&FT_Face_Properties, "FT_Face_Properties");
         lib.bindSymbol(cast(void**)&FT_Get_Var_Axis_Flags, "FT_Get_Var_Axis_Flags");
@@ -318,7 +320,6 @@ FTSupport loadFreeType(const(char)* libName)
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft28;
     }
-
     static if(ftSupport >= FTSupport.ft29) {
         lib.bindSymbol(cast(void**)&FT_Done_MM_Var, "FT_Done_MM_Var");
         lib.bindSymbol(cast(void**)&FT_Set_Named_Instance, "FT_Set_Named_Instance");
@@ -326,12 +327,16 @@ FTSupport loadFreeType(const(char)* libName)
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft29;
     }
-
     static if(ftSupport >= FTSupport.ft210) {
         lib.bindSymbol(cast(void**)&FT_Palette_Data_Get, "FT_Palette_Data_Get");
         lib.bindSymbol(cast(void**)&FT_Palette_Select, "FT_Palette_Select");
         lib.bindSymbol(cast(void**)&FT_Palette_Set_Foreground_Color, "FT_Palette_Set_Foreground_Color");
         lib.bindSymbol(cast(void**)&FT_Library_SetLcdGeometry, "FT_Library_SetLcdGeometry");
+        lib.bindSymbol(cast(void**)&FT_Bitmap_Blend, "FT_Bitmap_Blend");
+        lib.bindSymbol(cast(void**)&FT_New_Glyph, "FT_New_Glyph");
+        lib.bindSymbol(cast(void**)&FT_Set_MM_WeightVector, "FT_Set_MM_WeightVector");
+        lib.bindSymbol(cast(void**)&FT_Get_MM_WeightVector, "FT_Get_MM_WeightVector");
+
 
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft210;

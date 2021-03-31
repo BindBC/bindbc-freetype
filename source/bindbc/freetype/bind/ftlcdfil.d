@@ -26,16 +26,16 @@ alias FT_LcdFiveTapFilter = FT_Byte[FT_LCD_FILTER_FIVE_TAPS];
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Library_SetLcdFilter(FT_Library,FT_LcdFilter);
-        FT_Error FT_Library_SetLcdFilterWeights(FT_Library,ubyte*);
-        FT_Error FT_Library_SetLcdGeometry(FT_Library, ref FT_Vector[3]);
+        FT_Error FT_Library_SetLcdFilter(FT_Library library, FT_LcdFilter filter);
+        FT_Error FT_Library_SetLcdFilterWeights(FT_Library library, ubyte* weights);
+        FT_Error FT_Library_SetLcdGeometry(FT_Library library, ref FT_Vector[3] sub);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Library_SetLcdFilter = FT_Error function(FT_Library,FT_LcdFilter);
-        alias pFT_Library_SetLcdFilterWeights = FT_Error function(FT_Library,ubyte*);
-        alias pFT_Library_SetLcdGeometry = FT_Error function(FT_Library, ref FT_Vector[3]);
+        alias pFT_Library_SetLcdFilter = FT_Error function(FT_Library library, FT_LcdFilter filter);
+        alias pFT_Library_SetLcdFilterWeights = FT_Error function(FT_Library library, ubyte* weights);
+        alias pFT_Library_SetLcdGeometry = FT_Error function(FT_Library library, ref FT_Vector[3] sub);
     }
 
     __gshared {

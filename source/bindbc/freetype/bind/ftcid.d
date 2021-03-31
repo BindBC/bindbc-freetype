@@ -11,16 +11,16 @@ import bindbc.freetype.bind.freetype,
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-		FT_Error FT_Get_CID_Registry_Ordering_Supplement(FT_Face,const(char*)*,const(char*)*,FT_Int*);
-		FT_Error FT_Get_CID_Is_Internally_CID_Keyed(FT_Face,FT_Bool*);
-		FT_Error FT_Get_CID_From_Glyph_Index(FT_Face,FT_UInt,FT_UInt*);
+		FT_Error FT_Get_CID_Registry_Ordering_Supplement(FT_Face face, const(char)** registry, const(char)** ordering, FT_Int* supplement);
+		FT_Error FT_Get_CID_Is_Internally_CID_Keyed(FT_Face face, FT_Bool* is_cid);
+		FT_Error FT_Get_CID_From_Glyph_Index(FT_Face face, FT_UInt glyph_index, FT_UInt* cid);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_CID_Registry_Ordering_Supplement = FT_Error function(FT_Face,const(char*)*,const(char*)*,FT_Int*);
-        alias pFT_Get_CID_Is_Internally_CID_Keyed = FT_Error function(FT_Face,FT_Bool*);
-        alias pFT_Get_CID_From_Glyph_Index = FT_Error function(FT_Face,FT_UInt,FT_UInt*);
+        alias pFT_Get_CID_Registry_Ordering_Supplement = FT_Error function(FT_Face face, const(char)** registry, const(char)** ordering, FT_Int* supplement);
+        alias pFT_Get_CID_Is_Internally_CID_Keyed = FT_Error function(FT_Face face, FT_Bool* is_cid);
+        alias pFT_Get_CID_From_Glyph_Index = FT_Error function(FT_Face face, FT_UInt glyph_index, FT_UInt* cid);
     }
 
     __gshared {

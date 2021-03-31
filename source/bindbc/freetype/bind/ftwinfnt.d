@@ -75,12 +75,12 @@ alias FT_WinFNT_Header = FT_WinFNT_HeaderRec*;
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Get_WinFNT_Header(FT_Face,FT_WinFNT_HeaderRec*);
+        FT_Error FT_Get_WinFNT_Header(FT_Face face, FT_WinFNT_HeaderRec* aheader);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_WinFNT_Header = FT_Error function(FT_Face,FT_WinFNT_HeaderRec*);
+        alias pFT_Get_WinFNT_Header = FT_Error function(FT_Face face, FT_WinFNT_HeaderRec* aheader);
     }
 
     __gshared {

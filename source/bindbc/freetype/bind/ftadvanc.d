@@ -14,14 +14,14 @@ import bindbc.freetype.bind.freetype,
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Get_Advance(FT_Face,FT_UInt,FT_Int32,FT_Fixed*);
-        FT_Error FT_Get_Advances(FT_Face,FT_UInt,FT_UInt,FT_Int32,FT_Fixed*);
+        FT_Error FT_Get_Advance(FT_Face face, FT_UInt gIndex, FT_Int32 load_flags, FT_Fixed* padvance);
+        FT_Error FT_Get_Advances(FT_Face face, FT_UInt start, FT_UInt count, FT_Int32 load_flags, FT_Fixed* padvances);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Advance = FT_Error function(FT_Face,FT_UInt,FT_Int32,FT_Fixed*);
-        alias pFT_Get_Advances = FT_Error function(FT_Face,FT_UInt,FT_UInt,FT_Int32,FT_Fixed*);
+        alias pFT_Get_Advance = FT_Error function(FT_Face face, FT_UInt gIndex, FT_Int32 load_flags, FT_Fixed* padvance);
+        alias pFT_Get_Advances = FT_Error function(FT_Face face, FT_UInt start, FT_UInt count, FT_Int32 load_flags, FT_Fixed* padvances);
     }
 
     __gshared {

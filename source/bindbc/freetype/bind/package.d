@@ -18,6 +18,7 @@ public import
     bindbc.freetype.bind.ftcolor,
     bindbc.freetype.bind.ftdriver,
     bindbc.freetype.bind.fterrdef,
+    bindbc.freetype.bind.fterrors,
     bindbc.freetype.bind.ftfntfmt,
     bindbc.freetype.bind.ftgasp,
     bindbc.freetype.bind.ftglyph,

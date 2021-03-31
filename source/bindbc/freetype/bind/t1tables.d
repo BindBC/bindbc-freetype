@@ -208,18 +208,18 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Int FT_Has_PS_Glyph_Names(FT_Face);
-        FT_Error FT_Get_PS_Font_Info(FT_Face,PS_FontInfoRec*);
-        FT_Error FT_Get_PS_Font_Private(FT_Face,PS_PrivateRec*);
-        FT_Long FT_Get_PS_Font_Value(FT_Face,PS_Dict_Keys*,FT_UInt,FT_Long);
+        FT_Int FT_Has_PS_Glyph_Names(FT_Face face);
+        FT_Error FT_Get_PS_Font_Info(FT_Face face,PS_FontInfoRec* afont_info);
+        FT_Error FT_Get_PS_Font_Private(FT_Face face,PS_PrivateRec* afont_private);
+        FT_Long FT_Get_PS_Font_Value(FT_Face face, PS_Dict_Keys* key, FT_UInt idx, void* value, FT_Long value_len);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias da_FT_Has_PS_Glyph_Names = FT_Int function(FT_Face);
-        alias da_FT_Get_PS_Font_Info = FT_Error function(FT_Face,PS_FontInfoRec*);
-        alias da_FT_Get_PS_Font_Private = FT_Error function(FT_Face,PS_PrivateRec*);
-        alias da_FT_Get_PS_Font_Value = FT_Long function(FT_Face,PS_Dict_Keys*,FT_UInt,FT_Long);
+        alias da_FT_Has_PS_Glyph_Names = FT_Int function(FT_Face face);
+        alias da_FT_Get_PS_Font_Info = FT_Error function(FT_Face face,PS_FontInfoRec* afont_info);
+        alias da_FT_Get_PS_Font_Private = FT_Error function(FT_Face face,PS_PrivateRec* afont_private);
+        alias da_FT_Get_PS_Font_Value = FT_Long function(FT_Face face, PS_Dict_Keys* key, FT_UInt idx, void* value, FT_Long value_len);
     }
 
     __gshared {

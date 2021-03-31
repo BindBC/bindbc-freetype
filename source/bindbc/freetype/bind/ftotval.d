@@ -27,14 +27,14 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error da_FT_OpenType_Validate(FT_Face,FT_UInt,FT_Bytes*,FT_Bytes*,FT_Bytes*,FT_Bytes*,FT_Bytes*);
-        void da_FT_OpenType_Free(FT_Face,FT_Bytes);
+        FT_Error da_FT_OpenType_Validate(FT_Face face, FT_UInt validation_flags, FT_Bytes* BASE_table, FT_Bytes* GDEF_table, FT_Bytes* GPOS_table, FT_Bytes* GSUB_table, FT_Bytes* JSTF_table);
+        void da_FT_OpenType_Free(FT_Face face, FT_Bytes table);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_OpenType_Validate = FT_Error function(FT_Face,FT_UInt,FT_Bytes*,FT_Bytes*,FT_Bytes*,FT_Bytes*,FT_Bytes*);
-        alias pFT_OpenType_Free = void function (FT_Face,FT_Bytes);
+        alias pFT_OpenType_Validate = FT_Error function(FT_Face face, FT_UInt validation_flags, FT_Bytes* BASE_table, FT_Bytes* GDEF_table, FT_Bytes* GPOS_table, FT_Bytes* GSUB_table, FT_Bytes* JSTF_table);
+        alias pFT_OpenType_Free = void function (FT_Face face, FT_Bytes table);
     }
 
     __gshared {

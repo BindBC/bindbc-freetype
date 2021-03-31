@@ -16,24 +16,24 @@ extern(C) nothrow {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_ListNode FT_List_Find(FT_List,void*);
-        void FT_List_Add(FT_List,FT_ListNode);
-        void FT_List_Insert(FT_List,FT_ListNode);
-        void FT_List_Remove(FT_List,FT_ListNode);
-        void FT_List_Up(FT_List,FT_ListNode);
-        FT_Error FT_List_Iterate(FT_List,FT_List_Iterator,void*);
-        void FT_List_Finalize(FT_List,FT_List_Destructor,FT_Memory,void*);
+        FT_ListNode FT_List_Find(FT_List list, void* data);
+        void FT_List_Add(FT_List list, FT_ListNode node);
+        void FT_List_Insert(FT_List list, FT_ListNode node);
+        void FT_List_Remove(FT_List list, FT_ListNode node);
+        void FT_List_Up(FT_List list, FT_ListNode node);
+        FT_Error FT_List_Iterate(FT_List list, FT_List_Iterator iterator, void* user);
+        void FT_List_Finalize(FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user);;
     }
 }
 else {
     extern(C) @nogc nothrow {
         alias da_FT_List_Find = FT_ListNode function(FT_List,void*);
-        alias da_FT_List_Add = void function(FT_List,FT_ListNode);
-        alias da_FT_List_Insert = void function(FT_List,FT_ListNode);
-        alias da_FT_List_Remove = void function(FT_List,FT_ListNode);
-        alias da_FT_List_Up = void function(FT_List,FT_ListNode);
-        alias da_FT_List_Iterate = FT_Error function(FT_List,FT_List_Iterator,void*);
-        alias da_FT_List_Finalize = void function(FT_List,FT_List_Destructor,FT_Memory,void*);
+        alias da_FT_List_Add = void function(FT_List list,FT_ListNode node);
+        alias da_FT_List_Insert = void function(FT_List list, FT_ListNode node);
+        alias da_FT_List_Remove = void function(FT_List list, FT_ListNode node);
+        alias da_FT_List_Up = void function(FT_List list, FT_ListNode node);
+        alias da_FT_List_Iterate = FT_Error function(FT_List list, FT_List_Iterator iterator, void* user);
+        alias da_FT_List_Finalize = void function(FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user);
     }
 
     __gshared {

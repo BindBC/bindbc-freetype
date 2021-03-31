@@ -11,12 +11,12 @@ import bindbc.freetype.bind.ftimage,
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Outline_Get_BBox(FT_Outline*,FT_BBox);
+        FT_Error FT_Outline_Get_BBox(FT_Outline* outline, FT_BBox abbox);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Outline_Get_BBox = FT_Error function(FT_Outline*,FT_BBox);
+        alias pFT_Outline_Get_BBox = FT_Error function(FT_Outline* outline, FT_BBox abbox);
     }
 
     __gshared {

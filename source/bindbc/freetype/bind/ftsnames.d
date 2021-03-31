@@ -26,21 +26,21 @@ struct FT_SfntLangTag {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_UInt FT_Get_Sfnt_Name_Count(FT_Face);
-        FT_Error FT_Get_Sfnt_Name(FT_Face,FT_UInt,FT_SfntName*);
+        FT_UInt FT_Get_Sfnt_Name_Count(FT_Face face);
+        FT_Error FT_Get_Sfnt_Name(FT_Face face, FT_UInt idx, FT_SfntName* aname);
 
         static if(ftSupport >= FTSupport.ft28) {
-            FT_Error FT_Get_Sfnt_LangTag(FT_Face,FT_UInt,FT_SfntLangTag*);
+            FT_Error FT_Get_Sfnt_LangTag(FT_Face face, FT_UInt langID, FT_SfntLangTag* alangTag);
         }
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Sfnt_Name_Count = FT_UInt function(FT_Face);
-        alias pFT_Get_Sfnt_Name = FT_Error function(FT_Face,FT_UInt,FT_SfntName*);
+        alias pFT_Get_Sfnt_Name_Count = FT_UInt function(FT_Face face);
+        alias pFT_Get_Sfnt_Name = FT_Error function(FT_Face face, FT_UInt idx, FT_SfntName* aname);
 
         static if(ftSupport >= FTSupport.ft28) {
-            alias pFT_Get_Sfnt_LangTag = FT_Error function(FT_Face,FT_UInt,FT_SfntLangTag*);
+            alias pFT_Get_Sfnt_LangTag = FT_Error function(FT_Face face, FT_UInt langID, FT_SfntLangTag* alangTag);
         }
     }
 

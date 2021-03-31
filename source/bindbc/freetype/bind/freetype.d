@@ -48,7 +48,7 @@ alias FT_CharMap = FT_CharMapRec*;
 alias FT_ENC_TAG = FT_MAKE_TAG;
 
 alias FT_Encoding = FT_Tag;
-enum :FT_Tag {
+enum : FT_Tag {
     FT_ENCODING_NONE = 0,
     FT_ENCODING_MS_SYMBOL = FT_MAKE_TAG('s','y','m','b'),
     FT_ENCODING_UNICODE = FT_MAKE_TAG('u','n','i','c'),
@@ -389,6 +389,12 @@ enum {
     FT_SUBGLYPH_FLAG_USE_MY_METRICS = 0x200,
 }
 
+struct FT_LayerIterator {
+    FT_UInt num_layers;
+    FT_UInt layer;
+    FT_Byte* p;
+}
+
 enum {
     FT_FSTYPE_INSTALLABLE_EMBEDDING = 0x0000,
     FT_FSTYPE_RESTRICTED_LICENSE_EMBEDDING = 0x0002,
@@ -400,107 +406,109 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Init_FreeType(FT_Library*);
-        FT_Error FT_Done_FreeType(FT_Library);
-        FT_Error FT_New_Face(FT_Library,const(char)*,FT_Long,FT_Face*);
-        FT_Error FT_New_Memory_Face(FT_Library,const(FT_Byte)*,FT_Long,FT_Long,FT_Face*);
-        FT_Error FT_Open_Face(FT_Library,const(FT_Open_Args)*,FT_Long,FT_Face*);
-        FT_Error FT_Attach_File(FT_Face,const(char)*);
-        FT_Error FT_Attach_Stream(FT_Face,FT_Open_Args*);
-        FT_Error FT_Reference_Face(FT_Face);
-        FT_Error FT_Done_Face(FT_Face);
-        FT_Error FT_Select_Size(FT_Face,FT_Int);
-        FT_Error FT_Request_Size(FT_Face,FT_Size_Request);
-        FT_Error FT_Set_Char_Size(FT_Face,FT_F26Dot6,FT_F26Dot6,FT_UInt,FT_UInt);
-        FT_Error FT_Set_Pixel_Sizes(FT_Face,FT_UInt,FT_UInt);
-        FT_Error FT_Load_Glyph(FT_Face,FT_UInt,FT_Int32);
-        FT_Error FT_Load_Char(FT_Face,FT_ULong,FT_Int32);
-        void FT_Set_Transform(FT_Face,FT_Matrix*,FT_Vector*);
-        FT_Error FT_Render_Glyph(FT_GlyphSlot,FT_Render_Mode);
-        FT_Error FT_Get_Kerning(FT_Face,FT_UInt,FT_UInt,FT_UInt,FT_Vector*);
-        FT_Error FT_Get_Track_Kerning(FT_Face,FT_Fixed,FT_Int,FT_Fixed*);
-        FT_Error FT_Get_Glyph_Name(FT_Face,FT_UInt,FT_Pointer,FT_UInt);
-        const(char)* FT_Get_Postscript_Name(FT_Face);
-        FT_Error FT_Select_Charmap(FT_Face,FT_Encoding);
-        FT_Error FT_Set_Charmap(FT_Face,FT_CharMap);
-        FT_Int FT_Get_Charmap_Index(FT_CharMap);
-        FT_UInt FT_Get_Char_Index(FT_Face,FT_ULong);
-        FT_ULong FT_Get_First_Char(FT_Face,FT_UInt*);
-        FT_ULong FT_Get_Next_Char(FT_Face,FT_ULong,FT_UInt*);
-        FT_UInt FT_Get_Name_Index(FT_Face,FT_String*);
-        FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot,FT_UInt,FT_Int*,FT_UInt*,FT_Int*,FT_Int*,FT_Matrix*);
-        FT_UShort FT_Get_FSType_Flags(FT_Face);
-        FT_UInt FT_Face_GetCharVariantIndex(FT_Face,FT_ULong,FT_ULong);
-        FT_Int FT_Face_GetCharVariantIsDefault(FT_Face,FT_ULong,FT_ULong);
-        FT_UInt32* FT_Face_GetVariantSelectors(FT_Face);
-        FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face,FT_ULong);
-        FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face,FT_ULong);
-        FT_Long FT_MulDiv(FT_Long,FT_Long,FT_Long);
-        FT_Long FT_MulFix(FT_Long,FT_Long);
-        FT_Long FT_DivFix(FT_Long,FT_Long);
-        FT_Fixed FT_RoundFix(FT_Fixed);
-        FT_Fixed FT_CeilFix(FT_Fixed);
-        FT_Fixed FT_FloorFix(FT_Fixed);
-        void FT_Vector_Transform(FT_Vector*,FT_Matrix*);
-        void FT_Library_Version(FT_Library,FT_Int*,FT_Int*,FT_Int*);
-        FT_Bool FT_Face_CheckTrueTypePatents(FT_Face);
-        FT_Bool FT_Face_SetUnpatentedHinting(FT_Face,FT_Bool);
+        FT_Error FT_Init_FreeType(FT_Library* alibrary);
+        FT_Error FT_Done_FreeType(FT_Library library);
+        FT_Error FT_New_Face(FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface);
+        FT_Error FT_New_Memory_Face(FT_Library library, const(FT_Byte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface);
+        FT_Error FT_Open_Face(FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface);
+        FT_Error FT_Attach_File(FT_Face face, const(char)* filepathname);
+        FT_Error FT_Attach_Stream(FT_Face face, FT_Open_Args* parameters);
+        FT_Error FT_Reference_Face(FT_Face face);
+        FT_Error FT_Done_Face(FT_Face face);
+        FT_Error FT_Select_Size(FT_Face face, FT_Int strike_index);
+        FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req);
+        FT_Error FT_Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution);
+        FT_Error FT_Set_Pixel_Sizes(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height);
+        FT_Error FT_Load_Glyph(FT_Face face, FT_UInt glyph_index, FT_Int32 load_flags);
+        FT_Error FT_Load_Char(FT_Face face, FT_UInt char_code, FT_Int32 load_flags);
+        void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
+        FT_Error FT_Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode);
+        FT_Error FT_Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector* akerning);
+        FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning);
+        FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max);
+        const(char)* FT_Get_Postscript_Name(FT_Face face);
+        FT_Error FT_Select_Charmap(FT_Face face, FT_Encoding encoding);
+        FT_Error FT_Set_Charmap(FT_Face face, FT_CharMap charmap);
+        FT_Int FT_Get_Charmap_Index(FT_CharMap charmap);
+        FT_UInt FT_Get_Char_Index(FT_Face face, FT_ULong charcode);
+        FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt* agindex);
+        FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt* agindex);
+        FT_UInt FT_Get_Name_Index(FT_Face face, const(FT_String)* glyph_name);
+        FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int* p_index, FT_UInt* p_flags, FT_Int* p_arg1, FT_Int* p_arg2, FT_Matrix* p_transform);
+        FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+        FT_UShort FT_Get_FSType_Flags(FT_Face face);
+        FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+        FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+        FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face);
+        FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode);
+        FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector);
+        FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c);
+        FT_Long FT_MulFix(FT_Long a, FT_Long b);
+        FT_Long FT_DivFix(FT_Long a,FT_Long b);
+        FT_Fixed FT_RoundFix(FT_Fixed a);
+        FT_Fixed FT_CeilFix(FT_Fixed a);
+        FT_Fixed FT_FloorFix(FT_Fixed a);
+        void FT_Vector_Transform(FT_Vector* vector, FT_Matrix* matrix);
+        void FT_Library_Version(FT_Library library, FT_Int* amajor, FT_Int* aminor, FT_Int* apatch);
+        FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face);
+        FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
     }
 
     static if(ftSupport >= FTSupport.ft28) {
-        FT_Error FT_Face_Properties(FT_Face,FT_String*);
+        FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Init_FreeType = FT_Error function(FT_Library*);
-        alias pFT_Done_FreeType = FT_Error function(FT_Library);
-        alias pFT_New_Face = FT_Error function(FT_Library,const(char)*,FT_Long,FT_Face*);
-        alias pFT_New_Memory_Face = FT_Error function(FT_Library,const(FT_Byte)*,FT_Long,FT_Long,FT_Face*);
-        alias pFT_Open_Face = FT_Error function(FT_Library,const(FT_Open_Args)*,FT_Long,FT_Face*);
-        alias pFT_Attach_File = FT_Error function(FT_Face,const(char)*);
-        alias pFT_Attach_Stream = FT_Error function(FT_Face,FT_Open_Args*);
-        alias pFT_Reference_Face = FT_Error function(FT_Face);
-        alias pFT_Done_Face = FT_Error function(FT_Face);
-        alias pFT_Select_Size = FT_Error function(FT_Face,FT_Int);
-        alias pFT_Request_Size = FT_Error function(FT_Face,FT_Size_Request);
-        alias pFT_Set_Char_Size = FT_Error function(FT_Face,FT_F26Dot6,FT_F26Dot6,FT_UInt,FT_UInt);
-        alias pFT_Set_Pixel_Sizes = FT_Error function(FT_Face,FT_UInt,FT_UInt);
-        alias pFT_Load_Glyph = FT_Error function(FT_Face,FT_UInt,FT_Int32);
-        alias pFT_Load_Char = FT_Error function(FT_Face,FT_ULong,FT_Int32);
-        alias pFT_Set_Transform = void function(FT_Face,FT_Matrix*,FT_Vector*);
-        alias pFT_Render_Glyph = FT_Error function(FT_GlyphSlot,FT_Render_Mode);
-        alias pFT_Get_Kerning = FT_Error function(FT_Face,FT_UInt,FT_UInt,FT_UInt,FT_Vector*);
-        alias pFT_Get_Track_Kerning = FT_Error function(FT_Face,FT_Fixed,FT_Int,FT_Fixed*);
-        alias pFT_Get_Glyph_Name = FT_Error function(FT_Face,FT_UInt,FT_Pointer,FT_UInt);
-        alias pFT_Get_Postscript_Name = const(char)* function(FT_Face);
-        alias pFT_Select_Charmap = FT_Error function(FT_Face,FT_Encoding);
-        alias pFT_Set_Charmap = FT_Error function(FT_Face,FT_CharMap);
-        alias pFT_Get_Charmap_Index = FT_Int function(FT_CharMap);
-        alias pFT_Get_Char_Index = FT_UInt function(FT_Face,FT_ULong);
-        alias pFT_Get_First_Char = FT_ULong function(FT_Face,FT_UInt*);
-        alias pFT_Get_Next_Char = FT_ULong function(FT_Face,FT_ULong,FT_UInt*);
-        alias pFT_Get_Name_Index = FT_UInt function(FT_Face,FT_String*);
-        alias pFT_Get_SubGlyph_Info = FT_Error function(FT_GlyphSlot,FT_UInt,FT_Int*,FT_UInt*,FT_Int*,FT_Int*,FT_Matrix*);
-        alias pFT_Get_FSType_Flags = FT_UShort function(FT_Face);
-        alias pFT_Face_GetCharVariantIndex = FT_UInt function(FT_Face,FT_ULong,FT_ULong);
-        alias pFT_Face_GetCharVariantIsDefault = FT_Int function(FT_Face,FT_ULong,FT_ULong);
-        alias pFT_Face_GetVariantSelectors = FT_UInt32* function(FT_Face);
-        alias pFT_Face_GetVariantsOfChar = FT_UInt32* function(FT_Face,FT_ULong);
-        alias pFT_Face_GetCharsOfVariant = FT_UInt32* function(FT_Face,FT_ULong);
-        alias pFT_MulDiv = FT_Long function(FT_Long,FT_Long,FT_Long);
-        alias pFT_MulFix = FT_Long function(FT_Long,FT_Long);
-        alias pFT_DivFix = FT_Long function(FT_Long,FT_Long);
-        alias pFT_RoundFix = FT_Fixed function(FT_Fixed);
-        alias pFT_CeilFix = FT_Fixed function(FT_Fixed);
-        alias pFT_FloorFix = FT_Fixed function(FT_Fixed);
-        alias pFT_Vector_Transform = void function(FT_Vector*,FT_Matrix*);
-        alias pFT_Library_Version = void function(FT_Library,FT_Int*,FT_Int*,FT_Int*);
-        alias pFT_Face_CheckTrueTypePatents = FT_Bool function(FT_Face);
-        alias pFT_Face_SetUnpatentedHinting = FT_Bool function(FT_Face,FT_Bool);
+        alias pFT_Init_FreeType = FT_Error function(FT_Library* alibrary);
+        alias pFT_Done_FreeType = FT_Error function(FT_Library library);
+        alias pFT_New_Face = FT_Error function(FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface);
+        alias pFT_New_Memory_Face = FT_Error function(FT_Library library, const(FT_Byte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface);
+        alias pFT_Open_Face = FT_Error function(FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface);
+        alias pFT_Attach_File = FT_Error function(FT_Face face, const(char)* filepathname);
+        alias pFT_Attach_Stream = FT_Error function(FT_Face face, FT_Open_Args* parameters);
+        alias pFT_Reference_Face = FT_Error function(FT_Face face);
+        alias pFT_Done_Face = FT_Error function(FT_Face face);
+        alias pFT_Select_Size = FT_Error function(FT_Face face, FT_Int strike_index);
+        alias pFT_Request_Size = FT_Error function(FT_Face face, FT_Size_Request req);
+        alias pFT_Set_Char_Size = FT_Error function(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution);
+        alias pFT_Set_Pixel_Sizes = FT_Error function(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height);
+        alias pFT_Load_Glyph = FT_Error function(FT_Face face, FT_UInt glyph_index, FT_Int32 load_flags);
+        alias pFT_Load_Char = FT_Error function(FT_Face face, FT_UInt char_code, FT_Int32 load_flags);
+        alias pFT_Set_Transform = void function(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
+        alias pFT_Render_Glyph = FT_Error function(FT_GlyphSlot slot, FT_Render_Mode render_mode);
+        alias pFT_Get_Kerning = FT_Error function(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector* akerning);
+        alias pFT_Get_Track_Kerning = FT_Error function(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning);
+        alias pFT_Get_Glyph_Name = FT_Error function(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max);
+        alias pFT_Get_Postscript_Name = const(char)* function(FT_Face face);
+        alias pFT_Select_Charmap = FT_Error function(FT_Face face, FT_Encoding encoding);
+        alias pFT_Set_Charmap = FT_Error function(FT_Face face, FT_CharMap charmap);
+        alias pFT_Get_Charmap_Index = FT_Int function(FT_CharMap charmap);
+        alias pFT_Get_Char_Index = FT_UInt function(FT_Face face, FT_ULong charcode);
+        alias pFT_Get_First_Char = FT_ULong function(FT_Face face, FT_UInt* agindex);
+        alias pFT_Get_Next_Char = FT_ULong function(FT_Face face, FT_ULong char_code, FT_UInt* agindex);
+        alias pFT_Get_Name_Index = FT_UInt function(FT_Face face, const(FT_String)* glyph_name);
+        alias pFT_Get_SubGlyph_Info = FT_Error function(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int* p_index, FT_UInt* p_flags, FT_Int* p_arg1, FT_Int* p_arg2, FT_Matrix* p_transform);
+        alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+        alias pFT_Get_FSType_Flags = FT_UShort function(FT_Face face);
+        alias pFT_Face_GetCharVariantIndex = FT_UInt function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
+        alias pFT_Face_GetCharVariantIsDefault = FT_Int function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);;
+        alias pFT_Face_GetVariantSelectors = FT_UInt32* function(FT_Face face);
+        alias pFT_Face_GetVariantsOfChar = FT_UInt32* function(FT_Face face, FT_ULong charcode);
+        alias pFT_Face_GetCharsOfVariant = FT_UInt32* function(FT_Face face, FT_ULong variantSelector);
+        alias pFT_MulDiv = FT_Long function(FT_Long a, FT_Long b, FT_Long c);
+        alias pFT_MulFix = FT_Long function(FT_Long a, FT_Long b);
+        alias pFT_DivFix = FT_Long function(FT_Long a, FT_Long b);
+        alias pFT_RoundFix = FT_Fixed function(FT_Fixed a);
+        alias pFT_CeilFix = FT_Fixed function(FT_Fixed a);
+        alias pFT_FloorFix = FT_Fixed function(FT_Fixed a);
+        alias pFT_Vector_Transform = void function(FT_Vector* vector, FT_Matrix* matrix);
+        alias pFT_Library_Version = void function(FT_Library library, FT_Int* amajor, FT_Int* aminor, FT_Int* apatch);
+        alias pFT_Face_CheckTrueTypePatents = FT_Bool function(FT_Face face);
+        alias pFT_Face_SetUnpatentedHinting = FT_Bool function(FT_Face face, FT_Bool value);
 
         static if(ftSupport >= FTSupport.ft28) {
-            alias pFT_Face_Properties = FT_Error function(FT_Face,FT_String*);
+            alias pFT_Face_Properties = FT_Error function(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
         }
     }
 
@@ -534,6 +542,7 @@ else {
         pFT_Get_Next_Char FT_Get_Next_Char;
         pFT_Get_Name_Index FT_Get_Name_Index;
         pFT_Get_SubGlyph_Info FT_Get_SubGlyph_Info;
+        pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
         pFT_Get_FSType_Flags FT_Get_FSType_Flags;
         pFT_Face_GetCharVariantIndex FT_Face_GetCharVariantIndex;
         pFT_Face_GetCharVariantIsDefault FT_Face_GetCharVariantIsDefault;

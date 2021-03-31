@@ -15,7 +15,7 @@ import bindbc.freetype.bind.freetype,
 extern(C) nothrow {
     alias FT_Glyph_InitFunc = FT_Error function(FT_Glyph, FT_GlyphSlot);
     alias FT_Glyph_DoneFunc = void function(FT_Glyph);
-    alias FT_Glyph_TransformFunc = void function(FT_Glyph, const(FT_Matrix)* matrix, const(FT_Vector)*);
+    alias FT_Glyph_TransformFunc = void function(FT_Glyph, const(FT_Matrix)*, const(FT_Vector)*);
     alias FT_Glyph_GetBBoxFunc = void function(FT_Glyph, FT_BBox*);
     alias FT_Glyph_CopyFunc = FT_Error function(FT_Glyph, FT_Glyph);
     alias FT_Glyph_PrepareFunc = FT_Error function(FT_Glyph, FT_GlyphSlot);
@@ -51,14 +51,14 @@ struct FT_Renderer_Class {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Renderer FT_Get_Renderer(FT_Library,FT_Glyph_Format);
-        FT_Error FT_Set_Renderer(FT_Library,FT_Renderer,FT_UInt,FT_Parameter*);
+        FT_Renderer FT_Get_Renderer(FT_Library library, FT_Glyph_Format format);
+        FT_Error FT_Set_Renderer(FT_Library library, FT_Renderer renderer, FT_UInt num_params, FT_Parameter* parameters);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias da_FT_Get_Renderer = FT_Renderer function(FT_Library,FT_Glyph_Format);
-        alias da_FT_Set_Renderer = FT_Error function(FT_Library,FT_Renderer,FT_UInt,FT_Parameter*);
+        alias da_FT_Get_Renderer = FT_Renderer function(FT_Library library, FT_Glyph_Format format);
+        alias da_FT_Set_Renderer = FT_Error function(FT_Library library, FT_Renderer renderer, FT_UInt num_params, FT_Parameter* parameters);
     }
 
     __gshared {

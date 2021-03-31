@@ -10,12 +10,12 @@ import bindbc.freetype.bind.freetype;
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        const(char)* FT_Get_Font_Format(FT_Face);
+        const(char)* FT_Get_Font_Format(FT_Face face);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Font_Format = const(char)* function(FT_Face);
+        alias pFT_Get_Font_Format = const(char)* function(FT_Face face);
     }
 
     __gshared {

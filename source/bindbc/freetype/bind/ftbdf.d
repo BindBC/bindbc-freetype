@@ -32,14 +32,14 @@ version(linux) {
 
     version(BindFT_Static) {
         extern(C) @nogc nothrow {
-            FT_Error FT_Get_BDF_Charset_ID(FT_Face,const(char)** acharset_encoding,const(char)** acharset_registry);
-            FT_Error FT_Get_BDF_Property(FT_Face,const(char)*,BDF_PropertyRec*);
+            FT_Error FT_Get_BDF_Charset_ID(FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry);
+            FT_Error FT_Get_BDF_Property(FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty);
         }
     }
     else {
         extern(C) @nogc nothrow {
-            alias pFT_Get_BDF_Charset_ID = FT_Error function(FT_Face,const(char)** acharset_encoding,const(char)** acharset_registry);
-            alias pFT_Get_BDF_Property = FT_Error function(FT_Face,const(char)*,BDF_PropertyRec*);
+            alias pFT_Get_BDF_Charset_ID = FT_Error function(FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry);
+            alias pFT_Get_BDF_Property = FT_Error function(FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty);
         }
 
         __gshared {

@@ -52,51 +52,57 @@ enum FT_VAR_AXIS_FLAG_HIDDEN = 1;
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Get_Multi_Master(FT_Face,FT_Multi_Master*);
-        FT_Error FT_Get_MM_Var(FT_Face,FT_MM_Var**);
-        FT_Error FT_Set_MM_Design_Coordinates(FT_Face,FT_UInt,FT_Long*);
-        FT_Error FT_Set_Var_Design_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
-        FT_Error FT_Set_MM_Blend_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
-        FT_Error FT_Set_Var_Blend_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
+        FT_Error FT_Get_Multi_Master(FT_Face face, FT_Multi_Master* amaster);
+        FT_Error FT_Get_MM_Var(FT_Face face, FT_MM_Var** amaster);
+        FT_Error FT_Set_MM_Design_Coordinates(FT_Face face, FT_UInt num_coords, FT_Long* coords);
+        FT_Error FT_Set_Var_Design_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+        FT_Error FT_Set_MM_Blend_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+        FT_Error FT_Set_Var_Blend_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
 
         static if(ftSupport >= FTSupport.ft27) {
-            FT_Error FT_Get_Var_Design_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
-            FT_Error FT_Get_MM_Blend_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
-            FT_Error FT_Get_Var_Blend_Coordinates(FT_Face,FT_UInt,FT_Fixed*);
+            FT_Error FT_Get_Var_Design_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+            FT_Error FT_Get_MM_Blend_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+            FT_Error FT_Get_Var_Blend_Coordinates(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
         }
-
         static if(ftSupport >= FTSupport.ft28) {
-            FT_Error FT_Get_Var_Axis_Flags(FT_MM_Var*,FT_UInt,FT_UInt*);
+            FT_Error FT_Get_Var_Axis_Flags(FT_MM_Var* master, FT_UInt axis_index, FT_UInt* flags);
         }
-
         static if(ftSupport >= FTSupport.ft29) {
-            FT_Error FT_Done_MM_Var(FT_Library,FT_MM_Var*);
-            FT_Error FT_Set_Named_Instance(FT_Face,FT_UInt);
+            FT_Error FT_Done_MM_Var(FT_Library library, FT_MM_Var* amaster);
+            FT_Error FT_Set_Named_Instance(FT_Face face, FT_UInt instance_index);
+        }
+        static if(ftSupport >= FTSupport.ft210) {
+            FT_Error FT_Set_MM_WeightVector(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
+            FT_Error FT_Get_MM_WeightVector(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
         }
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Multi_Master = FT_Error function(FT_Face,FT_Multi_Master*);
-        alias pFT_Get_MM_Var = FT_Error function(FT_Face,FT_MM_Var**);
-        alias pFT_Set_MM_Design_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Long*);
-        alias pFT_Set_Var_Design_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
-        alias pFT_Set_MM_Blend_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
-        alias pFT_Set_Var_Blend_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
+        alias pFT_Get_Multi_Master = FT_Error function(FT_Face face, FT_Multi_Master* amaster);
+        alias pFT_Get_MM_Var = FT_Error function(FT_Face face, FT_MM_Var** amaster);
+        alias pFT_Set_MM_Design_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Long* coords);
+        alias pFT_Set_Var_Design_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+        alias pFT_Set_MM_Blend_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+        alias pFT_Set_Var_Blend_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
 
         static if(ftSupport >= FTSupport.ft27) {
-            alias pFT_Get_Var_Design_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
-            alias pFT_Get_MM_Blend_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
-            alias pFT_Get_Var_Blend_Coordinates = FT_Error function(FT_Face,FT_UInt,FT_Fixed*);
+            alias pFT_Get_Var_Design_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+            alias pFT_Get_MM_Blend_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
+            alias pFT_Get_Var_Blend_Coordinates = FT_Error function(FT_Face face, FT_UInt num_coords, FT_Fixed* coords);
         }
 
         static if(ftSupport >= FTSupport.ft28) {
-            alias pFT_Get_Var_Axis_Flags = FT_Error function(FT_MM_Var*,FT_UInt,FT_UInt*);
+            alias pFT_Get_Var_Axis_Flags = FT_Error function(FT_MM_Var* master, FT_UInt axis_index, FT_UInt* flags);
         }
 
         static if(ftSupport >= FTSupport.ft29) {
-            alias pFT_Done_MM_Var = FT_Error function(FT_Library,FT_MM_Var*);
-            alias pFT_Set_Named_Instance = FT_Error function(FT_Face,FT_UInt);
+            alias pFT_Done_MM_Var = FT_Error function(FT_Library library, FT_MM_Var* amaster);
+            alias pFT_Set_Named_Instance = FT_Error function(FT_Face face, FT_UInt instance_index);
+        }
+        static if(ftSupport >= FTSupport.ft210) {
+            alias FT_Set_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
+            alias FT_Get_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
         }
     }
 
@@ -113,14 +119,16 @@ else {
             pFT_Get_MM_Blend_Coordinates FT_Get_MM_Blend_Coordinates;
             pFT_Get_Var_Blend_Coordinates FT_Get_Var_Blend_Coordinates;
         }
-
         static if(ftSupport >= FTSupport.ft28) {
             pFT_Get_Var_Axis_Flags FT_Get_Var_Axis_Flags;
         }
-
         static if(ftSupport >= FTSupport.ft29) {
             pFT_Done_MM_Var FT_Done_MM_Var;
             pFT_Set_Named_Instance FT_Set_Named_Instance;
+        }
+        static if(ftSupport >= FTSupport.ft210) {
+            pFT_Set_MM_WeightVector FT_Set_MM_WeightVector;
+            pFT_Get_MM_WeightVector FT_Get_MM_WeightVector;
         }
     }
 

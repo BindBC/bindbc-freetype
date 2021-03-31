@@ -12,16 +12,16 @@ import bindbc.freetype.bind.freetype,
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_Get_PFR_Metrics(FT_Face,FT_UInt*,FT_UInt*,FT_Fixed*,FT_Fixed*);
-        FT_Error FT_Get_PFR_Kerning(FT_Face,FT_UInt,FT_UInt,FT_Vector*);
-        FT_Error FT_Get_PFR_Advance(FT_Face,FT_UInt,FT_Pos*);
+        FT_Error FT_Get_PFR_Metrics(FT_Face face, FT_UInt* aoutline_resolution, FT_UInt* ametrics_resolution,FT_Fixed* ametrics_x_scale,FT_Fixed* ametrics_y_scale);
+        FT_Error FT_Get_PFR_Kerning(FT_Face face, FT_UInt left, FT_UInt right, FT_Vector* avector);
+        FT_Error FT_Get_PFR_Advance(FT_Face face, FT_UInt gindex, FT_Pos* aadvance);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias da_FT_Get_PFR_Metrics = FT_Error function(FT_Face,FT_UInt*,FT_UInt*,FT_Fixed*,FT_Fixed*);
-        alias da_FT_Get_PFR_Kerning = FT_Error function(FT_Face,FT_UInt,FT_UInt,FT_Vector*);
-        alias da_FT_Get_PFR_Advance = FT_Error function(FT_Face,FT_UInt,FT_Pos*);
+        alias da_FT_Get_PFR_Metrics = FT_Error function(FT_Face face, FT_UInt* aoutline_resolution, FT_UInt* ametrics_resolution,FT_Fixed* ametrics_x_scale,FT_Fixed* ametrics_y_scale);
+        alias da_FT_Get_PFR_Kerning = FT_Error function(FT_Face face, FT_UInt left, FT_UInt right, FT_Vector* avector);
+        alias da_FT_Get_PFR_Advance = FT_Error function(FT_Face face, FT_UInt gindex, FT_Pos* aadvance);
     }
 
     __gshared {

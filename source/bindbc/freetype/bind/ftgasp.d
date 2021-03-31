@@ -31,12 +31,12 @@ else {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Int FT_Get_Gasp(FT_Face,FT_UInt);
+        FT_Int FT_Get_Gasp(FT_Face face, FT_UInt ppem);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Get_Gasp = FT_Int function(FT_Face,FT_UInt);
+        alias pFT_Get_Gasp = FT_Int function(FT_Face face, FT_UInt ppem);
     }
 
     __gshared {

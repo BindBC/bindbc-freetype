@@ -53,18 +53,18 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Error FT_TrueTypeGX_Validate(FT_Face,FT_UInt,FT_Bytes,FT_UInt);
-        void FT_TrueTypeGX_Free(FT_Face,FT_Bytes);
-        FT_Error FT_ClassicKern_Validate(FT_Face,FT_UInt,FT_Bytes*);
-        void FT_ClassicKern_Free(FT_Face,FT_Bytes);
+        FT_Error FT_TrueTypeGX_Validate(FT_Face face, FT_UInt validation_flags, FT_Bytes* tables, FT_UInt table_length);
+        void FT_TrueTypeGX_Free(FT_Face face, FT_Bytes table);
+        FT_Error FT_ClassicKern_Validate(FT_Face face, FT_UInt validation_flags, FT_Bytes* ckern_table);
+        void FT_ClassicKern_Free(FT_Face face, FT_Bytes table);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_TrueTypeGX_Validate = FT_Error function(FT_Face,FT_UInt,FT_Bytes,FT_UInt);
-        alias pFT_TrueTypeGX_Free = void function(FT_Face,FT_Bytes);
-        alias pFT_ClassicKern_Validate = FT_Error function(FT_Face,FT_UInt,FT_Bytes*);
-        alias pFT_ClassicKern_Free = void function(FT_Face,FT_Bytes);
+        alias pFT_TrueTypeGX_Validate = FT_Error function(FT_Face face, FT_UInt validation_flags, FT_Bytes* tables, FT_UInt table_length);
+        alias pFT_TrueTypeGX_Free = void function(FT_Face face, FT_Bytes table);
+        alias pFT_ClassicKern_Validate = FT_Error function(FT_Face face, FT_UInt validation_flags, FT_Bytes* ckern_table);
+        alias pFT_ClassicKern_Free = void function(FT_Face face, FT_Bytes table);
     }
 
     __gshared {

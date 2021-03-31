@@ -14,12 +14,12 @@ static if(enableBZIP2) {
 
     version(BindFT_Static) {
         extern(C) @nogc nothrow {
-            FT_Error FT_Stream_OpenBzip2(FT_Stream,FT_Stream);
+            FT_Error FT_Stream_OpenBzip2(FT_Stream stream, FT_Stream source);
         }
     }
     else {
         extern(C) @nogc nothrow {
-            alias pFT_Stream_OpenBzip2 = FT_Error function(FT_Stream,FT_Stream);
+            alias pFT_Stream_OpenBzip2 = FT_Error function(FT_Stream stream, FT_Stream source);
         }
 
         __gshared {

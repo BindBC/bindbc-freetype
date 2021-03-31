@@ -20,30 +20,30 @@ enum {
 
 version(BindFT_Static) {
 	extern(C) @nogc nothrow {
-        FT_Fixed FT_Sin(FT_Angle);
-        FT_Fixed FT_Cos(FT_Angle);
-        FT_Fixed FT_Tan(FT_Angle);
-        FT_Angle FT_Atan2(FT_Fixed,FT_Fixed);
-        FT_Angle FT_Angle_Diff(FT_Angle,FT_Angle);
-        void FT_Vector_Unit(FT_Vector*,FT_Angle);
-        void FT_Vector_Rotate(FT_Vector*,FT_Angle);
-        FT_Fixed FT_Vector_Length(FT_Vector*);
-        void FT_Vector_Polarize(FT_Vector*,FT_Fixed*,FT_Angle*);
-        void FT_Vector_From_Polar(FT_Vector*,FT_Fixed,FT_Angle);
+        FT_Fixed FT_Sin(FT_Angle angle);
+        FT_Fixed FT_Cos(FT_Angle angle);
+        FT_Fixed FT_Tan(FT_Angle angle);
+        FT_Angle FT_Atan2(FT_Fixed x, FT_Fixed y);
+        FT_Angle FT_Angle_Diff(FT_Angle angle1, FT_Angle angle2);
+        void FT_Vector_Unit(FT_Vector* vec, FT_Angle angle);
+        void FT_Vector_Rotate(FT_Vector* vec, FT_Angle angle);
+        FT_Fixed FT_Vector_Length(FT_Vector* vec);
+        void FT_Vector_Polarize(FT_Vector* vec, FT_Fixed* length, FT_Angle* angle);
+        void FT_Vector_From_Polar(FT_Vector* vec, FT_Fixed length, FT_Angle angle);
     }
 }
 else {
     extern(C) @nogc nothrow {
-        alias pFT_Sin = FT_Fixed function(FT_Angle);
-        alias pFT_Cos = FT_Fixed function(FT_Angle);
-        alias pFT_Tan = FT_Fixed function(FT_Angle);
-        alias pFT_Atan2 = FT_Angle function(FT_Fixed,FT_Fixed);
-        alias pFT_Angle_Diff = FT_Angle function(FT_Angle,FT_Angle);
-        alias pFT_Vector_Unit = void function(FT_Vector*,FT_Angle);
-        alias pFT_Vector_Rotate = void function(FT_Vector*,FT_Angle);
-        alias pFT_Vector_Length = FT_Fixed function(FT_Vector*);
-        alias pFT_Vector_Polarize = void function(FT_Vector*,FT_Fixed*,FT_Angle*);
-        alias pFT_Vector_From_Polar = void function(FT_Vector*,FT_Fixed,FT_Angle);
+        alias pFT_Sin = FT_Fixed function(FT_Angle angle);
+        alias pFT_Cos = FT_Fixed function(FT_Angle angle);
+        alias pFT_Tan = FT_Fixed function(FT_Angle angle);
+        alias pFT_Atan2 = FT_Angle function(FT_Fixed x, FT_Fixed y);
+        alias pFT_Angle_Diff = FT_Angle function(FT_Angle angle1, FT_Angle angle2);
+        alias pFT_Vector_Unit = void function(FT_Vector* vec, FT_Angle angle);
+        alias pFT_Vector_Rotate = void function(FT_Vector* vec, FT_Angle angle);
+        alias pFT_Vector_Length = FT_Fixed function(FT_Vector* vec);
+        alias pFT_Vector_Polarize = void function(FT_Vector* vec, FT_Fixed* length, FT_Angle* angle);
+        alias pFT_Vector_From_Polar = void function(FT_Vector* vec, FT_Fixed length, FT_Angle angle);
     }
 
     __gshared {
