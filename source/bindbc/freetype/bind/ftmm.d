@@ -101,8 +101,8 @@ else {
             alias pFT_Set_Named_Instance = FT_Error function(FT_Face face, FT_UInt instance_index);
         }
         static if(ftSupport >= FTSupport.ft210) {
-            alias FT_Set_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
-            alias FT_Get_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
+            alias pFT_Set_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
+            alias pFT_Get_MM_WeightVector = FT_Error function(FT_Face face, FT_UInt len, FT_Fixed* weightvector);
         }
     }
 
