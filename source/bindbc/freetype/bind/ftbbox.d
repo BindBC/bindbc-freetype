@@ -6,10 +6,11 @@
 
 module bindbc.freetype.bind.ftbbox;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Outline_Get_BBox(FT_Outline* outline, FT_BBox abbox);
     }

@@ -351,26 +351,38 @@ else {
     }
 }
 
+@nogc FT_Render_Mode FT_LOAD_TARGET_MODE(uint x) nothrow {
+    return cast(FT_Render_Mode)((x >> 16) & 15);
+}
+
+alias FT_Render_Mode = uint;
+static if(ftSupport >= FTSupport.ft211) {
+    enum {
+        FT_RENDER_MODE_NORMAL = 0,
+        FT_RENDER_MODE_LIGHT,
+        FT_RENDER_MODE_MONO,
+        FT_RENDER_MODE_LCD,
+        FT_RENDER_MODE_LCD_V,
+        FT_RENDER_MODE_MAX,
+        FT_RENDER_MODE_SDF,
+    }
+} else {
+    enum {
+        FT_RENDER_MODE_NORMAL = 0,
+        FT_RENDER_MODE_LIGHT,
+        FT_RENDER_MODE_MONO,
+        FT_RENDER_MODE_LCD,
+        FT_RENDER_MODE_LCD_V,
+        FT_RENDER_MODE_MAX
+    }
+}
+
 enum {
     FT_LOAD_TARGET_NORMAL = (FT_RENDER_MODE_NORMAL & 15) << 16,
     FT_LOAD_TARGET_LIGHT = (FT_RENDER_MODE_LIGHT & 15) << 16,
     FT_LOAD_TARGET_MONO = (FT_RENDER_MODE_MONO & 15) << 16,
     FT_LOAD_TARGET_LCD = (FT_RENDER_MODE_LCD & 15) << 16,
     FT_LOAD_TARGET_LCD_V = (FT_RENDER_MODE_LCD_V & 15) << 16,
-}
-
-@nogc FT_Render_Mode FT_LOAD_TARGET_MODE(uint x) nothrow {
-    return cast(FT_Render_Mode)((x >> 16) & 15);
-}
-
-alias FT_Render_Mode = uint;
-enum {
-    FT_RENDER_MODE_NORMAL = 0,
-    FT_RENDER_MODE_LIGHT,
-    FT_RENDER_MODE_MONO,
-    FT_RENDER_MODE_LCD,
-    FT_RENDER_MODE_LCD_V,
-    FT_RENDER_MODE_MAX
 }
 
 enum FT_Kerning_Mode {
@@ -389,10 +401,12 @@ enum {
     FT_SUBGLYPH_FLAG_USE_MY_METRICS = 0x200,
 }
 
-struct FT_LayerIterator {
-    FT_UInt num_layers;
-    FT_UInt layer;
-    FT_Byte* p;
+static if(ftSupport <= FTSupport.ft210) {
+    struct FT_LayerIterator {
+        FT_UInt num_layers;
+        FT_UInt layer;
+        FT_Byte* p;
+    }
 }
 
 enum {
@@ -404,7 +418,7 @@ enum {
     FT_FSTYPE_BITMAP_EMBEDDING_ONLY = 0x0200,
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Init_FreeType(FT_Library* alibrary);
         FT_Error FT_Done_FreeType(FT_Library library);
@@ -435,7 +449,6 @@ version(BindFT_Static) {
         FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt* agindex);
         FT_UInt FT_Get_Name_Index(FT_Face face, const(FT_String)* glyph_name);
         FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int* p_index, FT_UInt* p_flags, FT_Int* p_arg1, FT_Int* p_arg2, FT_Matrix* p_transform);
-        FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
         FT_UShort FT_Get_FSType_Flags(FT_Face face);
         FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
         FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
@@ -453,9 +466,15 @@ version(BindFT_Static) {
         FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face);
         FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
     }
-
     static if(ftSupport >= FTSupport.ft28) {
         FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
+    }
+    static if(ftSupport <= FTSupport.ft210) {
+        // Moved to ftcolor.h in 2.11
+        FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+    }
+    static if(ftSupport >= FTSupport.ft211) {
+        void FT_Get_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
     }
 }
 else {
@@ -489,7 +508,6 @@ else {
         alias pFT_Get_Next_Char = FT_ULong function(FT_Face face, FT_ULong char_code, FT_UInt* agindex);
         alias pFT_Get_Name_Index = FT_UInt function(FT_Face face, const(FT_String)* glyph_name);
         alias pFT_Get_SubGlyph_Info = FT_Error function(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int* p_index, FT_UInt* p_flags, FT_Int* p_arg1, FT_Int* p_arg2, FT_Matrix* p_transform);
-        alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
         alias pFT_Get_FSType_Flags = FT_UShort function(FT_Face face);
         alias pFT_Face_GetCharVariantIndex = FT_UInt function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
         alias pFT_Face_GetCharVariantIsDefault = FT_Int function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);;
@@ -509,6 +527,13 @@ else {
 
         static if(ftSupport >= FTSupport.ft28) {
             alias pFT_Face_Properties = FT_Error function(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
+        }
+        static if(ftSupport <= FTSupport.ft210) {
+            // Moved to ftcolor.h in 2.11
+            alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+        }
+        static if(ftSupport >= FTSupport.ft211) {
+            alias pFT_Get_Transform = void function(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
         }
     }
 
@@ -542,7 +567,6 @@ else {
         pFT_Get_Next_Char FT_Get_Next_Char;
         pFT_Get_Name_Index FT_Get_Name_Index;
         pFT_Get_SubGlyph_Info FT_Get_SubGlyph_Info;
-        pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
         pFT_Get_FSType_Flags FT_Get_FSType_Flags;
         pFT_Face_GetCharVariantIndex FT_Face_GetCharVariantIndex;
         pFT_Face_GetCharVariantIsDefault FT_Face_GetCharVariantIsDefault;
@@ -562,6 +586,13 @@ else {
 
         static if(ftSupport >= FTSupport.ft28) {
             pFT_Face_Properties FT_Face_Properties;
+        }
+        static if(ftSupport <= FTSupport.ft210) {
+            // Moved to ftcolor.h in 2.11
+            pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
+        }
+        static if(ftSupport >= FTSupport.ft211) {
+            pFT_Get_Transform FT_Get_Transform;
         }
     }
 }

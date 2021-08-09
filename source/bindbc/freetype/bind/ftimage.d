@@ -7,6 +7,7 @@
 module bindbc.freetype.bind.ftimage;
 
 import core.stdc.config;
+import bindbc.freetype.config;
 import bindbc.freetype.bind.fttypes;
 
 alias FT_Pos = c_long;
@@ -56,17 +57,32 @@ struct FT_Outline {
 enum FT_OUTLINE_CONTOURS_MAX = short.max;
 enum FT_OUTLINE_POINTS_MAX = short.max;
 
-enum : uint {
-    FT_OUTLINE_NONE            = 0x0,
-    FT_OUTLINE_OWNER           = 0x1,
-    FT_OUTLINE_EVEN_ODD_FILL   = 0x2,
-    FT_OUTLINE_REVERSE_FILL    = 0x4,
-    FT_OUTLINE_IGNORE_DROPOUTS = 0x8,
-    FT_OUTLINE_SMART_DROPOUTS  = 0x10,
-    FT_OUTLINE_INCLUDE_STUBS   = 0x20,
-    FT_OUTLINE_OVERLAP         = 0x40,
-    FT_OUTLINE_HIGH_PRECISION  = 0x100,
-    FT_OUTLINE_SINGLE_PASS     = 0x200,
+static if(ftSupport >= FTSupport.ft211) {
+    enum : uint {
+        FT_OUTLINE_NONE            = 0x0,
+        FT_OUTLINE_OWNER           = 0x1,
+        FT_OUTLINE_EVEN_ODD_FILL   = 0x2,
+        FT_OUTLINE_REVERSE_FILL    = 0x4,
+        FT_OUTLINE_IGNORE_DROPOUTS = 0x8,
+        FT_OUTLINE_SMART_DROPOUTS  = 0x10,
+        FT_OUTLINE_INCLUDE_STUBS   = 0x20,
+        FT_OUTLINE_OVERLAP         = 0x40,
+        FT_OUTLINE_HIGH_PRECISION  = 0x100,
+        FT_OUTLINE_SINGLE_PASS     = 0x200,
+    }
+}
+else {
+    enum : uint {
+        FT_OUTLINE_NONE            = 0x0,
+        FT_OUTLINE_OWNER           = 0x1,
+        FT_OUTLINE_EVEN_ODD_FILL   = 0x2,
+        FT_OUTLINE_REVERSE_FILL    = 0x4,
+        FT_OUTLINE_IGNORE_DROPOUTS = 0x8,
+        FT_OUTLINE_SMART_DROPOUTS  = 0x10,
+        FT_OUTLINE_INCLUDE_STUBS   = 0x20,
+        FT_OUTLINE_HIGH_PRECISION  = 0x100,
+        FT_OUTLINE_SINGLE_PASS     = 0x200,
+    }
 }
 
 enum {
@@ -114,11 +130,22 @@ struct FT_Span {
 
 extern(C) nothrow alias FT_SpanFunc = void function(int, int, FT_Span*, void*);
 
-enum {
-    FT_RASTER_FLAG_DEFAULT  = 0x0,
-    FT_RASTER_FLAG_AA       = 0x1,
-    FT_RASTER_FLAG_DIRECT   = 0x2,
-    FT_RASTER_FLAG_CLIP     = 0x4
+static if(ftSupport >= FTSupport.ft211) {
+    enum {
+        FT_RASTER_FLAG_DEFAULT  = 0x0,
+        FT_RASTER_FLAG_AA       = 0x1,
+        FT_RASTER_FLAG_DIRECT   = 0x2,
+        FT_RASTER_FLAG_CLIP     = 0x4,
+        FT_RASTER_FLAG_SDF      = 0x8,
+    }
+}
+else {
+    enum {
+        FT_RASTER_FLAG_DEFAULT  = 0x0,
+        FT_RASTER_FLAG_AA       = 0x1,
+        FT_RASTER_FLAG_DIRECT   = 0x2,
+        FT_RASTER_FLAG_CLIP     = 0x4,
+    }
 }
 
 struct FT_Raster_Params {

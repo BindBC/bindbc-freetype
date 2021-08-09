@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftwinfnt;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
@@ -73,7 +74,7 @@ struct FT_WinFNT_HeaderRec {
 
 alias FT_WinFNT_Header = FT_WinFNT_HeaderRec*;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Get_WinFNT_Header(FT_Face face, FT_WinFNT_HeaderRec* aheader);
     }

@@ -12,7 +12,7 @@ static if(enableBZIP2) {
     import bindbc.freetype.bind.ftsystem,
         bindbc.freetype.bind.fttypes;
 
-    version(BindFT_Static) {
+    static if(staticBinding) {
         extern(C) @nogc nothrow {
             FT_Error FT_Stream_OpenBzip2(FT_Stream stream, FT_Stream source);
         }

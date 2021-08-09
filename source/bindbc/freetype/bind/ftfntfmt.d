@@ -6,9 +6,10 @@
 
 module bindbc.freetype.bind.ftfntfmt;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         const(char)* FT_Get_Font_Format(FT_Face face);
     }

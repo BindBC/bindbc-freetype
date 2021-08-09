@@ -29,7 +29,7 @@ else {
     }
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Int FT_Get_Gasp(FT_Face face, FT_UInt ppem);
     }

@@ -6,9 +6,10 @@
 
 module bindbc.freetype.bind.ftsynth;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         void FT_GlyphSlot_Embolden(FT_GlyphSlot slot);
         void FT_GlyphSlot_Oblique(FT_GlyphSlot slot);

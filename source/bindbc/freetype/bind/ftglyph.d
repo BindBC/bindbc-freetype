@@ -46,7 +46,7 @@ enum {
     FT_GLYPH_BBOX_PIXELS = 3
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph* aglyph);
         FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph* target);

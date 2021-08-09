@@ -6,10 +6,11 @@
 
 module bindbc.freetype.bind.ftcid;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
 		FT_Error FT_Get_CID_Registry_Ordering_Supplement(FT_Face face, const(char)** registry, const(char)** ordering, FT_Int* supplement);
 		FT_Error FT_Get_CID_Is_Internally_CID_Keyed(FT_Face face, FT_Bool* is_cid);

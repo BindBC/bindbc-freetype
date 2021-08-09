@@ -6,9 +6,10 @@
 
 module bindbc.freetype.bind.fterrors;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         const(char)* FT_Error_String(FT_Error error_code);
     }

@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.fttrigon;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.fttypes;
 
@@ -18,7 +19,7 @@ enum {
     FT_ANGLE_PI4    = FT_ANGLE_PI / 4
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Fixed FT_Sin(FT_Angle angle);
         FT_Fixed FT_Cos(FT_Angle angle);

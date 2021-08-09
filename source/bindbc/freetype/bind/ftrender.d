@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftrender;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.ftglyph,
        bindbc.freetype.bind.ftimage,
@@ -49,7 +50,7 @@ struct FT_Renderer_Class {
     FT_Raster_Funcs* raster_class;
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Renderer FT_Get_Renderer(FT_Library library, FT_Glyph_Format format);
         FT_Error FT_Set_Renderer(FT_Library library, FT_Renderer renderer, FT_UInt num_params, FT_Parameter* parameters);

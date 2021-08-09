@@ -30,7 +30,7 @@ version(linux) {
         }
     }
 
-    version(BindFT_Static) {
+    static if(staticBinding) {
         extern(C) @nogc nothrow {
             FT_Error FT_Get_BDF_Charset_ID(FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry);
             FT_Error FT_Get_BDF_Property(FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty);

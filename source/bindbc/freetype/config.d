@@ -14,7 +14,12 @@ enum FTSupport {
     ft28    = 28,
     ft29    = 29,
     ft210   = 210,
+    ft211   = 211,
 }
+
+version(BindBC_Static) version = BindFT_Static;
+version(BindFT_Static) enum staticBinding = true;
+else enum staticBinding = false;
 
 enum FREETYPE_MAJOR = 2;
 
@@ -41,6 +46,11 @@ else version(FT_210) {
     enum FREETYPE_MINOR = 10;
     enum FREETYPE_PATCH = 4;
     enum ftSupport = FTSupport.ft210;
+}
+else version(FT_211) {
+    enum FREETYPE_MINOR = 11;
+    enum FREETYPE_PATCH = 0;
+    enum ftSupport = FTSupport.ft211;
 }
 else { // default
     enum FREETYPE_MINOR = 6;

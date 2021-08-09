@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.t1tables;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.fttypes;
@@ -206,7 +207,7 @@ enum {
     PS_DICT_MAX = PS_DICT_ITALIC_ANGLE
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Int FT_Has_PS_Glyph_Names(FT_Face face);
         FT_Error FT_Get_PS_Font_Info(FT_Face face,PS_FontInfoRec* afont_info);

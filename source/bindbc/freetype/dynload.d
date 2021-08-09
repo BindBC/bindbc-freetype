@@ -341,6 +341,22 @@ FTSupport loadFreeType(const(char)* libName)
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft210;
     }
+    static if(ftSupport >= FTSupport.ft211) {
+        lib.bindSymbol(cast(void**)&FT_Get_Transform, "FT_Get_Transform");
+        lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Layer, "FT_Get_Color_Glyph_Layer");
+        lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Paint, "FT_Get_Color_Glyph_Paint");
+        lib.bindSymbol(cast(void**)&FT_Get_Paint_Layers, "FT_Get_Paint_Layers");
+        lib.bindSymbol(cast(void**)&FT_Get_Colorline_Stops, "FT_Get_Colorline_Stops");
+        lib.bindSymbol(cast(void**)&FT_Get_Paint, "FT_Get_Paint");
+        lib.bindSymbol(cast(void**)&FT_Trace_Set_Level, "FT_Trace_Set_Level");
+        lib.bindSymbol(cast(void**)&FT_Trace_Set_Default_Level, "FT_Trace_Set_Default_Level");
+        lib.bindSymbol(cast(void**)&FT_Set_Log_Handler, "FT_Set_Log_Handler");
+        lib.bindSymbol(cast(void**)&FT_Set_Default_Log_Handler, "FT_Set_Default_Log_Handler");
+
+
+        if(errorCount() != errCount) return FTSupport.badLibrary;
+        else loadedVersion = FTSupport.ft211;
+    }
 
     return loadedVersion;
 }

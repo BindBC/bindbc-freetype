@@ -12,7 +12,7 @@ import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Get_Advance(FT_Face face, FT_UInt gIndex, FT_Int32 load_flags, FT_Fixed* padvance);
         FT_Error FT_Get_Advances(FT_Face face, FT_UInt start, FT_UInt count, FT_Int32 load_flags, FT_Fixed* padvances);

@@ -176,7 +176,7 @@ enum {
     FT_SFNT_MAX
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         void* FT_Get_Sfnt_Table(FT_Face face, FT_Sfnt_Tag tag);
         FT_Error FT_Load_Sfnt_Table(FT_Face face, FT_ULong tag, FT_Long offset, FT_Byte* buffer, FT_ULong* length);

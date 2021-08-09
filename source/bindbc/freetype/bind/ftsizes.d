@@ -6,10 +6,11 @@
 
 module bindbc.freetype.bind.ftsizes;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_New_Size(FT_Face face,FT_Size* size);
         FT_Error FT_Done_Size(FT_Size size);

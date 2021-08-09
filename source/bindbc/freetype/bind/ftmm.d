@@ -50,7 +50,7 @@ struct FT_MM_Var {
 // Added in Freetype 2.8
 enum FT_VAR_AXIS_FLAG_HIDDEN = 1;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Get_Multi_Master(FT_Face face, FT_Multi_Master* amaster);
         FT_Error FT_Get_MM_Var(FT_Face face, FT_MM_Var** amaster);

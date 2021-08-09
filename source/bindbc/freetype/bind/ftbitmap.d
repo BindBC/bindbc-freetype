@@ -16,7 +16,7 @@ static if(ftSupport >= FTSupport.ft210) {
     import bindbc.freetype.bind.ftcolor;
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         void FT_Bitmap_Init(FT_Bitmap* abitmap);
         FT_Error FT_Bitmap_Copy(FT_Library library, const(FT_Bitmap)* source, FT_Bitmap* target);

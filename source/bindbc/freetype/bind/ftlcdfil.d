@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftlcdfil;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.fttypes;
@@ -24,7 +25,7 @@ enum {
 enum FT_LCD_FILTER_FIVE_TAPS = 5;
 alias FT_LcdFiveTapFilter = FT_Byte[FT_LCD_FILTER_FIVE_TAPS];
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Library_SetLcdFilter(FT_Library library, FT_LcdFilter filter);
         FT_Error FT_Library_SetLcdFilterWeights(FT_Library library, ubyte* weights);

@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftgxval;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
@@ -51,7 +52,7 @@ enum {
     FT_VALIDATE_CKERN = FT_VALIDATE_MS | FT_VALIDATE_APPLE,
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_TrueTypeGX_Validate(FT_Face face, FT_UInt validation_flags, FT_Bytes* tables, FT_UInt table_length);
         void FT_TrueTypeGX_Free(FT_Face face, FT_Bytes table);

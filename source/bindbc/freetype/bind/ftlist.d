@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftlist;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.ftsystem,
        bindbc.freetype.bind.fttypes;
 
@@ -14,7 +15,7 @@ extern(C) nothrow {
     alias FT_List_Destructor = void function(FT_Memory, void*, void*);
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_ListNode FT_List_Find(FT_List list, void* data);
         void FT_List_Add(FT_List list, FT_ListNode node);

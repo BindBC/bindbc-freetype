@@ -24,7 +24,7 @@ struct FT_SfntLangTag {
     FT_UInt string_len;
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_UInt FT_Get_Sfnt_Name_Count(FT_Face face);
         FT_Error FT_Get_Sfnt_Name(FT_Face face, FT_UInt idx, FT_SfntName* aname);

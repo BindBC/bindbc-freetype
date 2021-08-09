@@ -28,6 +28,7 @@ public import
     bindbc.freetype.bind.ftincrem,
     bindbc.freetype.bind.ftlcdfil,
     bindbc.freetype.bind.ftlist,
+    bindbc.freetype.bind.ftlogging,
     bindbc.freetype.bind.ftlzw,
     bindbc.freetype.bind.ftmm,
     bindbc.freetype.bind.ftmodapi,
@@ -45,4 +46,5 @@ public import
     bindbc.freetype.bind.ftwinfnt,
     bindbc.freetype.bind.t1tables,
     bindbc.freetype.bind.ttnameid,
-    bindbc.freetype.bind.tttables;
+    bindbc.freetype.bind.tttables,
+    bindbc.freetype.bind.tttags;

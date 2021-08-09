@@ -6,10 +6,11 @@
 
 module bindbc.freetype.bind.ftlzw;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.ftsystem,
        bindbc.freetype.bind.fttypes;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Stream_OpenLZW(FT_Stream stream, FT_Stream source);
     }

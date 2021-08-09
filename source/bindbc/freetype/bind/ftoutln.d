@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftoutln;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.fttypes;
@@ -18,7 +19,7 @@ enum {
     FT_ORIENTATION_FILL_LEFT = FT_ORIENTATION_POSTSCRIPT
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Outline_Decompose(FT_Outline* outline, const(FT_Outline_Funcs)* func_interface, void* user);
         FT_Error FT_Outline_New(FT_Library library, FT_UInt numPoints, FT_Int numContours, FT_Outline* anoutline);

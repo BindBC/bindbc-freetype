@@ -54,7 +54,7 @@ enum {
     FT_TRUETYPE_ENGINE_TYPE_PATENTED
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FT_Add_Module(FT_Library library, const(FT_Module_Class)* clazz);
         FT_Module FT_Get_Module(FT_Library library, const(char)* module_name);

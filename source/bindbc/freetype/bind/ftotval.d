@@ -6,6 +6,8 @@
 
 module bindbc.freetype.bind.ftotval;
 
+import bindbc.freetype.config;
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.fttypes;
 
@@ -25,7 +27,7 @@ enum {
                        FT_VALIDATE_MATH,
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error da_FT_OpenType_Validate(FT_Face face, FT_UInt validation_flags, FT_Bytes* BASE_table, FT_Bytes* GDEF_table, FT_Bytes* GPOS_table, FT_Bytes* GSUB_table, FT_Bytes* JSTF_table);
         void da_FT_OpenType_Free(FT_Face face, FT_Bytes table);

@@ -6,6 +6,7 @@
 
 module bindbc.freetype.bind.ftstroke;
 
+import bindbc.freetype.config;
 import bindbc.freetype.bind.freetype,
        bindbc.freetype.bind.ftimage,
        bindbc.freetype.bind.ftglyph,
@@ -35,7 +36,7 @@ enum {
     FT_STROKER_BORDER_RIGHT
 }
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_StrokerBorder FT_Outline_GetInsideBorder(FT_Outline* outline);
         FT_StrokerBorder FT_Outline_GetOutsideBorder(FT_Outline* outline);

@@ -64,7 +64,7 @@ struct FTC_SBitRec {
 struct FTC_SBitCacheRec;
 alias FTC_SBitCache = FTC_SBitCacheRec*;
 
-version(BindFT_Static) {
+static if(staticBinding) {
 	extern(C) @nogc nothrow {
         FT_Error FTC_Manager_New(FT_Library library, FT_UInt max_faces, FT_UInt max_sizes, FT_ULong max_bytes, FTC_Face_Requester requester, FT_Pointer req_data, FTC_Manager* amanager);
         void FTC_Manager_Reset(FTC_Manager manager);
