@@ -23,7 +23,8 @@ else enum staticBinding = false;
 
 enum FREETYPE_MAJOR = 2;
 
-version(Posix) enum enableBZIP2 = true;
+version(OpenBSD) enum enableBZIP2 = false;
+else version(Posix) enum enableBZIP2 = true;
 else version(FT_BZIP2) enum enableBZIP2 = true;
 else enum enableBZIP2 = false;
 
