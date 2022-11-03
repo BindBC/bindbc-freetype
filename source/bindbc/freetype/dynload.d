@@ -108,7 +108,6 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Get_Next_Char, "FT_Get_Next_Char");
     lib.bindSymbol(cast(void**)&FT_Get_Name_Index, "FT_Get_Name_Index");
     lib.bindSymbol(cast(void**)&FT_Get_SubGlyph_Info, "FT_Get_SubGlyph_Info");
-    lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Layer, "FT_Get_Color_Glyph_Layer");
     lib.bindSymbol(cast(void**)&FT_Get_FSType_Flags, "FT_Get_FSType_Flags");
     lib.bindSymbol(cast(void**)&FT_Face_GetCharVariantIndex, "FT_Face_GetCharVariantIndex");
     lib.bindSymbol(cast(void**)&FT_Face_GetCharVariantIsDefault, "FT_Face_GetCharVariantIsDefault");
@@ -166,8 +165,6 @@ FTSupport loadFreeType(const(char)* libName)
     lib.bindSymbol(cast(void**)&FT_Get_CID_Registry_Ordering_Supplement, "FT_Get_CID_Registry_Ordering_Supplement");
     lib.bindSymbol(cast(void**)&FT_Get_CID_Is_Internally_CID_Keyed, "FT_Get_CID_Is_Internally_CID_Keyed");
     lib.bindSymbol(cast(void**)&FT_Get_CID_From_Glyph_Index, "FT_Get_CID_From_Glyph_Index");
-
-    lib.bindSymbol(cast(void**)&FT_Error_String, "FT_Error_String");
 
     lib.bindSymbol(cast(void**)&FT_Get_Font_Format, "FT_Get_Font_Format");
 
@@ -336,14 +333,14 @@ FTSupport loadFreeType(const(char)* libName)
         lib.bindSymbol(cast(void**)&FT_New_Glyph, "FT_New_Glyph");
         lib.bindSymbol(cast(void**)&FT_Set_MM_WeightVector, "FT_Set_MM_WeightVector");
         lib.bindSymbol(cast(void**)&FT_Get_MM_WeightVector, "FT_Get_MM_WeightVector");
-
+        lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Layer, "FT_Get_Color_Glyph_Layer");
+        lib.bindSymbol(cast(void**)&FT_Error_String, "FT_Error_String");
 
         if(errorCount() != errCount) return FTSupport.badLibrary;
         else loadedVersion = FTSupport.ft210;
     }
     static if(ftSupport >= FTSupport.ft211) {
         lib.bindSymbol(cast(void**)&FT_Get_Transform, "FT_Get_Transform");
-        lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Layer, "FT_Get_Color_Glyph_Layer");
         lib.bindSymbol(cast(void**)&FT_Get_Color_Glyph_Paint, "FT_Get_Color_Glyph_Paint");
         lib.bindSymbol(cast(void**)&FT_Get_Paint_Layers, "FT_Get_Paint_Layers");
         lib.bindSymbol(cast(void**)&FT_Get_Colorline_Stops, "FT_Get_Colorline_Stops");
