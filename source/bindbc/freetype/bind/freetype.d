@@ -469,10 +469,6 @@ static if(staticBinding) {
     static if(ftSupport >= FTSupport.ft28) {
         FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties);
     }
-    static if(ftSupport <= FTSupport.ft210) {
-        // Moved to ftcolor.h in 2.11
-        FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
-    }
     static if(ftSupport >= FTSupport.ft211) {
         void FT_Get_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
     }

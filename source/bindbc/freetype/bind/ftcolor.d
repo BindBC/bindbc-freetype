@@ -255,27 +255,36 @@ static if(ftSupport >= FTSupport.ft211) {
 
     static if(staticBinding) {
         extern(C) @nogc nothrow {
-            FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
             FT_Bool FT_Get_Color_Glyph_Paint(FT_Face face, FT_UInt base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint);
             FT_Bool FT_Get_Paint_Layers(FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint);
             FT_Bool FT_Get_Colorline_Stops(FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator);
             FT_Bool FT_Get_Paint(FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint);
+            static if(ftSupport >= FTSupport.ft210) {
+                FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+            }
         }
     }
     else {
         extern(C) @nogc nothrow {
-            alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
             alias pFT_Get_Color_Glyph_Paint = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint);
             alias pFT_Get_Paint_Layers = FT_Bool function(FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint);
             alias pFT_Get_Colorline_Stops = FT_Bool function(FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator);
             alias pFT_Get_Paint = FT_Bool function(FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint);
         }
         __gshared {
-            pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
             pFT_Get_Color_Glyph_Paint FT_Get_Color_Glyph_Paint;
             pFT_Get_Paint_Layers FT_Get_Paint_Layers;
             pFT_Get_Colorline_Stops FT_Get_Colorline_Stops;
             pFT_Get_Paint FT_Get_Paint;
+        }
+        static if(ftSupport >= FTSupport.ft210) {
+            extern(C) @nogc nothrow {
+                alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, FT_UInt base_glyph, FT_UInt* aglyph_index, FT_UInt* acolor_index, FT_LayerIterator* iterator);
+            }
+
+            __gshared {
+                pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
+            }
         }
     }
 }

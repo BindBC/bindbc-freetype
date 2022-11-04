@@ -11,15 +11,19 @@ import bindbc.freetype.bind.fttypes;
 
 static if(staticBinding) {
 	extern(C) @nogc nothrow {
-        const(char)* FT_Error_String(FT_Error error_code);
+        static if(ftSupport >= FTSupport.ft210) {
+            const(char)* FT_Error_String(FT_Error error_code);
+        }
     }
 }
 else {
-    extern(C) @nogc nothrow {
-        alias pFT_Error_String = const(char)* function(FT_Error error_code);
-    }
+    static if(ftSupport >= FTSupport.ft210) {
+        extern(C) @nogc nothrow {
+            alias pFT_Error_String = const(char)* function(FT_Error error_code);
+        }
 
-    __gshared {
-        pFT_Error_String FT_Error_String;
+        __gshared {
+            pFT_Error_String FT_Error_String;
+        }
     }
 }
