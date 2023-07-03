@@ -17,7 +17,7 @@ dependencies {
 
 __dub.sdl__
 ```
-dependency "bindbc-freetypee" version="~>1.0.0"
+dependency "bindbc-freetype" version="~>1.0.0"
 ```
 
 ### The dynamic binding
