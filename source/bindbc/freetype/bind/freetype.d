@@ -363,8 +363,8 @@ static if(ftSupport >= FTSupport.ft211) {
         FT_RENDER_MODE_MONO,
         FT_RENDER_MODE_LCD,
         FT_RENDER_MODE_LCD_V,
-        FT_RENDER_MODE_MAX,
         FT_RENDER_MODE_SDF,
+        FT_RENDER_MODE_MAX,
     }
 } else {
     enum {
