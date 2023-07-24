@@ -1,8 +1,9 @@
 name "bindbc-freetype"
 description "Static & dynamic bindings to FreeType, compatible with BetterC, @nogc, and nothrow."
-authors "Mike Parker"
+authors "Aya Partridge" "Mike Parker"
 license "BSL-1.0"
 
+dependency "bindbc-common" version="~>0.1.0"
 targetType "staticLibrary"
 targetPath "lib"
 targetName "BindBC_FT"
@@ -14,6 +15,7 @@ configuration "dynamic" {
 configuration "dynamicBC" {
 	dependency "bindbc-loader" version="~>1.1.0"
 	subConfiguration "bindbc-loader" "yesBC"
+	subConfiguration "bindbc-common" "yesBC"
 	buildOptions "betterC"
 }
 
@@ -23,6 +25,7 @@ configuration "static" {
 }
 
 configuration "staticBC" {
+	subConfiguration "bindbc-common" "yesBC"
 	versions "BindFT_Static"
 	buildOptions "betterC"
 	excludedSourceFiles "source/bindbc/freetype/binddynamic.d"
