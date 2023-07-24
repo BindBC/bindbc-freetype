@@ -1,70 +1,65 @@
-
-//          Copyright 2019 - 2021 Michael D. Parker
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
-
+/+
++                Copyright 2023 Aya Partridge
++          Copyright 2019 - 2022 Michael D. Parker
++ Distributed under the Boost Software License, Version 1.0.
++     (See accompanying file LICENSE_1_0.txt or copy at
++           http://www.boost.org/LICENSE_1_0.txt)
++/
 module bindbc.freetype.config;
 
-enum FTSupport {
-    noLibrary,
-    badLibrary,
-    ft26    = 26,
-    ft27    = 27,
-    ft28    = 28,
-    ft29    = 29,
-    ft210   = 210,
-    ft211   = 211,
+import bindbc.common: Version;
+
+enum FTSupport: Version{
+	noLibrary   = Version.none,
+	badLibrary  = Version.bad,
+	v2_6        = Version(2,6,4),
+	v2_7        = Version(2,7,1),
+	v2_8        = Version(2,8,1),
+	v2_9        = Version(2,9,1),
+	v2_10       = Version(2,10,4),
+	v2_11       = Version(2,11,1),
+	v2_12       = Version(2,12,1),
+	v2_13       = Version(2,13,1),
+	
+	//These will become deprecated later.
+	deprecated("remove this msg later :)") ft26  = v2_6,
+	deprecated("remove this msg later :)") ft27  = v2_7,
+	deprecated("remove this msg later :)") ft28  = v2_8,
+	deprecated("remove this msg later :)") ft29  = v2_9,
+	deprecated("remove this msg later :)") ft210 = v2_10,
+	deprecated("remove this msg later :)") ft211 = v2_11,
 }
 
-version(BindBC_Static) version = BindFT_Static;
-version(BindFT_Static) enum staticBinding = true;
-else enum staticBinding = false;
+enum staticBinding = (){
+	version(BindBC_Static)      return true;
+	else version(BindFT_Static) return true;
+	else return false;
+}();
 
-enum FREETYPE_MAJOR = 2;
+enum ftSupport = (){
+	version(FT_2_13)      return FTSupport.v2_13;
+	else version(FT_2_12) return FTSupport.v2_12;
+	else version(FT_211)  return FTSupport.v2_11;
+	else version(FT_210)  return FTSupport.v2_10;
+	else version(FT_29)   return FTSupport.v2_9;
+	else version(FT_28)   return FTSupport.v2_8;
+	else version(FT_27)   return FTSupport.v2_7;
+	else                  return FTSupport.v2_6;
+}();
 
-version(OpenBSD) enum enableBZIP2 = false;
-else version(Posix) enum enableBZIP2 = true;
-else version(FT_BZIP2) enum enableBZIP2 = true;
-else enum enableBZIP2 = false;
-
-version(FT_27) {
-    enum FREETYPE_MINOR = 7;
-    enum FREETYPE_PATCH = 1;
-    enum ftSupport = FTSupport.ft27;
-}
-else version(FT_28) {
-    enum FREETYPE_MINOR = 8;
-    enum FREETYPE_PATCH = 1;
-    enum ftSupport = FTSupport.ft28;
-}
-else version(FT_29) {
-    enum FREETYPE_MINOR = 9;
-    enum FREETYPE_PATCH = 1;
-    enum ftSupport = FTSupport.ft29;
-}
-else version(FT_210) {
-    enum FREETYPE_MINOR = 10;
-    enum FREETYPE_PATCH = 4;
-    enum ftSupport = FTSupport.ft210;
-}
-else version(FT_211) {
-    enum FREETYPE_MINOR = 11;
-    enum FREETYPE_PATCH = 0;
-    enum ftSupport = FTSupport.ft211;
-}
-else { // default
-    enum FREETYPE_MINOR = 6;
-    enum FREETYPE_PATCH = 4;
-    enum ftSupport = FTSupport.ft26;
-}
+enum enableBZIP2 = (){
+	version(OpenBSD)       return false;
+	else version(Posix)    return true;
+	else version(FT_BZIP2) return true;
+	else return false;
+}();
 
 // config/ftconfg.h
-alias FT_Int16 = short;
-alias FT_UInt16 = ushort;
-alias FT_Int32 = int;
-alias FT_UInt32 = uint;
+deprecated("Please use `short` instead") alias FT_Int16 = short;
+deprecated("Please use `ushort` instead") alias FT_UInt16 = ushort;
+deprecated("Please use `int` instead") alias FT_Int32 = int;
+deprecated("Please use `uint` instead") alias FT_UInt32 = uint;
 alias FT_Fast = int;
 alias FT_UFast = uint;
-alias FT_Int64 = long;
-alias FT_Uint64 = ulong;
+deprecated("Please use `long` instead") alias FT_Int64 = long;
+deprecated("Please use `ulong` instead") alias FT_Uint64 = ulong;
