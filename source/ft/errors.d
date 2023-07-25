@@ -22,7 +22,6 @@ static if(staticBinding){
 		extern(C) nothrow @nogc{
 			alias pFT_Error_String = const(char)* function(FT_Error error_code);
 		}
-
 		__gshared{
 			pFT_Error_String FT_Error_String;
 		}

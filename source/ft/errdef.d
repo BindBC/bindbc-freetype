@@ -7,6 +7,8 @@
 +/
 module ft.errdef;
 
+import bindbc.freetype.config;
+
 enum{
 	FT_Err_Ok = 0x00,
 	FT_Err_Cannot_Open_Resource = 0x01,

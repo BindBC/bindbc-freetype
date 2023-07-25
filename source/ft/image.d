@@ -71,7 +71,7 @@ enum: uint{
 	FT_OUTLINE_HIGH_PRECISION  = 0x100,
 	FT_OUTLINE_SINGLE_PASS     = 0x200,
 }
-static if(ftSupport >= FTSupport.v2_11){
+static if(ftSupport >= FTSupport.v2_11)
 enum: uint{
 	FT_OUTLINE_OVERLAP         = 0x40,
 }

@@ -83,7 +83,9 @@ static if(ftSupport >= FTSupport.v2_11){
 	
 	struct FT_ColorStopIterator{
 		uint num_color_stops;
+		alias num_colour_stops = num_color_stops;
 		uint current_color_stop;
+		alias current_colour_stop = current_color_stop;
 		ubyte* p;
 	}
 	alias FT_ColourStopIterator = FT_ColorStopIterator;
@@ -95,8 +97,13 @@ static if(ftSupport >= FTSupport.v2_11){
 	alias FT_ColourIndex = FT_ColorIndex;
 	
 	struct FT_ColorStop{
-		FT_F2Dot14 stop_offset;
+		static if(ftSupport >= FTSupport.v2_13){
+			FT_Fixed stop_offset;
+		}else{
+			FT_F2Dot14 stop_offset;
+		}
 		FT_ColorIndex color;
+		alias colour = color;
 	}
 	alias FT_ColourStop = FT_ColorStop;
 	

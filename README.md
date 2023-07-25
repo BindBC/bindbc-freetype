@@ -1,6 +1,19 @@
 # BindBC-FreeType
 This project provides both static and dynamic bindings to [the FreeType library](https://www.freetype.org/). They are `@nogc` and `nothrow` compatible can be compiled for compatibility with BetterC. This package is intended as a replacement of [DerelictFT](https://github.com/DerelictOrg/DerelictFT), which is not compatible with `@nogc`,  `nothrow`, or BetterC.
 
+| Table of Contents |
+|-------------------|
+|[License](#license)|
+|[Usage](#usage)|
+|[Configurations](#configurations)|
+|[Library versions](#library-versions)|
+|[BetterC support](#betterc-support)|
+
+## License
+BindBC-FreeType&mdash;as well as every other binding in the [BindBC project](https://github.com/BindBC)&mdash;is licensed under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt).
+
+Bear in mind that you still need to abide by [one of FreeType's licenses](https://freetype.org/license.html).
+
 ## Usage
 By default, BindBC-FreeType is configured to compile as a dynamic binding that is not BetterC compatible. The dynamic binding has no link-time dependency on the FreeType library, so the FreeType shared library must be manually loaded at  run time. When configured as a static binding, there is a link-time dependency on the FreeType library&mdash;either the static library or the appropriate file for linking with shared libraries on your platform (see below).
 
@@ -20,7 +33,7 @@ __dub.sdl__
 dependency "bindbc-freetype" version="~>1.2.0"
 ```
 
-### The dynamic binding
+### The dynamic bindings
 The dynamic binding requires no special configuration when using DUB to manage your project. There is no link-time dependency. At  run time, the FreeType shared library is required to be on the shared library search path of the user's system. On Windows, this is typically handled by distributing the FreeType DLL with your program. On other systems, it usually means the user must install the FreeType shared library through a package manager.
 
 To load the shared library, you need to call the `loadFreeType` function. This returns a member of the `FTSupport` enumeration (see [the readme for BindBC-Loader](https://github.com/BindBC/bindbc-loader/blob/master/README.md) for the error handling API):
@@ -90,7 +103,7 @@ The function `isFreeTypeLoaded` returns `true` if any version of FreeType was su
 
 Following are the supported versions of FreeType, the corresponding version identifiers to pass to the compiler, and the corresponding `FTSupport` members.
 
-#FreeType versions
+## Library versions
 
 | Version |Version Identifier|
 |---------|------------------|
@@ -103,7 +116,7 @@ Following are the supported versions of FreeType, the corresponding version iden
 | 2.12.X  | FT_2_12          |
 | 2.13.X  | FT_2_13          |
 
-## The static bindings
+### The static bindings
 The static binding has a link-time dependency on either the shared or the static FreeType library. On Windows, you can link with the static library or, to use the shared library (`freetype.dll`), you can link with the import library. On other systems, you can link with either the static library or directly with the shared library. This requires the FreeType development package be installed on your system at compile time, either by compiling the FreeType source yourself, downloading the FreeType precompiled binaries for Windows, or installing via a system package manager. [See the FreeType download page](https://www.freetype.org/download.html) for details.
 
 When linking with the static library, there is no run-time dependency on FreeType. When linking with the shared library (or the import library on Windows), the run-time dependency is the same as that of the dynamic binding, the difference being that the shared library is no longer loaded manually&mdash;loading is handled automatically by the system when the program is launched.
@@ -159,9 +172,9 @@ libs "freetype"
 
 This has the benefit that it completely excludes from the build any source modules related to the dynamic binding, i.e., they will never be passed to the compiler.
 
-## `betterC` support
+## BetterC support
 
-`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the dynamic binding with BetterC support:
+BetterC support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the dynamic binding with BetterC support:
 
 __dub.json__
 ```

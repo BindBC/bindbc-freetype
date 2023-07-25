@@ -49,7 +49,11 @@ struct FT_Renderer_Class{
 	FT_Renderer_TransformFunc transform_glyph;
 	FT_Renderer_GetCBoxFunc get_glyph_cbox;
 	FT_Renderer_SetModeFunc set_mode;
-	FT_Raster_Funcs* raster_class;
+	static if(ftSupport >= FTSupport.v2_13){
+		const(FT_Raster_Funcs)* raster_class;
+	}else{
+		FT_Raster_Funcs* raster_class;
+	}
 }
 
 static if(staticBinding){

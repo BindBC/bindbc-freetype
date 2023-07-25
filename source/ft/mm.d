@@ -60,7 +60,7 @@ static if(staticBinding){
 		FT_Error FT_Set_Var_Design_Coordinates(FT_Face face, uint num_coords, FT_Fixed* coords);
 		FT_Error FT_Set_MM_Blend_Coordinates(FT_Face face, uint num_coords, FT_Fixed* coords);
 		FT_Error FT_Set_Var_Blend_Coordinates(FT_Face face, uint num_coords, FT_Fixed* coords);
-
+		
 		static if(ftSupport >= FTSupport.v2_7){
 			FT_Error FT_Get_Var_Design_Coordinates(FT_Face face, uint num_coords, FT_Fixed* coords);
 			FT_Error FT_Get_MM_Blend_Coordinates(FT_Face face, uint num_coords, FT_Fixed* coords);
@@ -77,6 +77,9 @@ static if(staticBinding){
 			FT_Error FT_Set_MM_WeightVector(FT_Face face, uint len, FT_Fixed* weightvector);
 			FT_Error FT_Get_MM_WeightVector(FT_Face face, uint len, FT_Fixed* weightvector);
 		}
+		static if(ftSupport >= FTSupport.v2_13){
+			FT_Error FT_Get_Default_Named_Instance(FT_Face face, uint* instance_index);
+		}
 	}
 }else{
 	extern(C) nothrow @nogc{
@@ -86,17 +89,15 @@ static if(staticBinding){
 		alias pFT_Set_Var_Design_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
 		alias pFT_Set_MM_Blend_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
 		alias pFT_Set_Var_Blend_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
-
+		
 		static if(ftSupport >= FTSupport.v2_7){
 			alias pFT_Get_Var_Design_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
 			alias pFT_Get_MM_Blend_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
 			alias pFT_Get_Var_Blend_Coordinates = FT_Error function(FT_Face face, uint num_coords, FT_Fixed* coords);
 		}
-
 		static if(ftSupport >= FTSupport.v2_8){
 			alias pFT_Get_Var_Axis_Flags = FT_Error function(FT_MM_Var* master, uint axis_index, uint* flags);
 		}
-
 		static if(ftSupport >= FTSupport.v2_9){
 			alias pFT_Done_MM_Var = FT_Error function(FT_Library library, FT_MM_Var* amaster);
 			alias pFT_Set_Named_Instance = FT_Error function(FT_Face face, uint instance_index);
@@ -105,8 +106,10 @@ static if(staticBinding){
 			alias pFT_Set_MM_WeightVector = FT_Error function(FT_Face face, uint len, FT_Fixed* weightvector);
 			alias pFT_Get_MM_WeightVector = FT_Error function(FT_Face face, uint len, FT_Fixed* weightvector);
 		}
+		static if(ftSupport >= FTSupport.v2_13){
+			alias pFT_Get_Default_Named_Instance = FT_Error function(FT_Face face, uint* instance_index);
+		}
 	}
-	
 	__gshared{
 		pFT_Get_Multi_Master FT_Get_Multi_Master;
 		pFT_Get_MM_Var FT_Get_MM_Var;
@@ -114,7 +117,7 @@ static if(staticBinding){
 		pFT_Set_Var_Design_Coordinates FT_Set_Var_Design_Coordinates;
 		pFT_Set_MM_Blend_Coordinates FT_Set_MM_Blend_Coordinates;
 		pFT_Set_Var_Blend_Coordinates FT_Set_Var_Blend_Coordinates;
-
+		
 		static if(ftSupport >= FTSupport.v2_7){
 			pFT_Get_Var_Design_Coordinates FT_Get_Var_Design_Coordinates;
 			pFT_Get_MM_Blend_Coordinates FT_Get_MM_Blend_Coordinates;
@@ -131,6 +134,8 @@ static if(staticBinding){
 			pFT_Set_MM_WeightVector FT_Set_MM_WeightVector;
 			pFT_Get_MM_WeightVector FT_Get_MM_WeightVector;
 		}
+		static if(ftSupport >= FTSupport.v2_13){
+			pFT_Get_Default_Named_Instance FT_Get_Default_Named_Instance;
+		}
 	}
-
 }

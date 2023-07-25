@@ -7,6 +7,8 @@
 +/
 module ft.params;
 
+import bindbc.freetype.config;
+
 import ft.types;
 
 enum{

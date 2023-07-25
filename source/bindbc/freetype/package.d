@@ -8,7 +8,7 @@
 module bindbc.freetype;
 
 public import bindbc.freetype.config;
-static if(staticBinding) public import bindbc.freetype.dynload;
+static if(!staticBinding) public import bindbc.freetype.dynload;
 public import
 	ft,
 	ft.advanc,

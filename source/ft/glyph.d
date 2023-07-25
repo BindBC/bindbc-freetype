@@ -54,7 +54,7 @@ static if(ftSupport >= FTSupport.v2_12){
 	struct FT_SvgGlyphRec_{
 		FT_GlyphRec root;
 		
-		ubyte* ;
+		ubyte* svg_document;
 		FT_ULong svg_document_length;
 		
 		FT_UInt glyph_index;
