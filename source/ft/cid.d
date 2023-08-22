@@ -8,25 +8,16 @@
 module ft.cid;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Get_CID_Registry_Ordering_Supplement(FT_Face face, const(char)** registry, const(char)** ordering, int* supplement);
-		FT_Error FT_Get_CID_Is_Internally_CID_Keyed(FT_Face face, FT_Bool* is_cid);
-		FT_Error FT_Get_CID_From_Glyph_Index(FT_Face face, uint glyph_index, uint* cid);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_CID_Registry_Ordering_Supplement = FT_Error function(FT_Face face, const(char)** registry, const(char)** ordering, int* supplement);
-		alias pFT_Get_CID_Is_Internally_CID_Keyed = FT_Error function(FT_Face face, FT_Bool* is_cid);
-		alias pFT_Get_CID_From_Glyph_Index = FT_Error function(FT_Face face, uint glyph_index, uint* cid);
-	}
-	__gshared{
-		pFT_Get_CID_Registry_Ordering_Supplement FT_Get_CID_Registry_Ordering_Supplement;
-		pFT_Get_CID_Is_Internally_CID_Keyed FT_Get_CID_Is_Internally_CID_Keyed;
-		pFT_Get_CID_From_Glyph_Index FT_Get_CID_From_Glyph_Index;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Get_CID_Registry_Ordering_Supplement}, q{FT_Face face, const(char)** registry, const(char)** ordering, int* supplement}},
+		{q{FT_Error}, q{FT_Get_CID_Is_Internally_CID_Keyed}, q{FT_Face face, FT_Bool* is_cid}},
+		{q{FT_Error}, q{FT_Get_CID_From_Glyph_Index}, q{FT_Face face, uint glyph_index, uint* cid}},
+	];
+	return ret;
+}()));

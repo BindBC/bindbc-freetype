@@ -1,95 +1,87 @@
+
 # BindBC-FreeType
-This project provides both static and dynamic bindings to [the FreeType library](https://www.freetype.org/). They are `@nogc` and `nothrow` compatible can be compiled for compatibility with BetterC. This package is intended as a replacement of [DerelictFT](https://github.com/DerelictOrg/DerelictFT), which is not compatible with `@nogc`,  `nothrow`, or BetterC.
+This project provides a set of both static and dynamic bindings to
+[the FreeType library](https://www.freetype.org/). They are compatible with `@nogc` and `nothrow`, and can be compiled with BetterC compatibility. This package is intended to replace [DerelictFT](https://github.com/DerelictOrg/DerelictFT), which does not provide the same level of compatibility.
 
 | Table of Contents |
 |-------------------|
 |[License](#license)|
-|[Usage](#usage)|
+|[FreeType documentation](#freetype-documentation)|
+|[Quickstart guide](#quickstart-guide)|
 |[Configurations](#configurations)|
 |[Library versions](#library-versions)|
-|[BetterC support](#betterc-support)|
 
 ## License
 BindBC-FreeType&mdash;as well as every other binding in the [BindBC project](https://github.com/BindBC)&mdash;is licensed under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt).
 
 Bear in mind that you still need to abide by [one of FreeType's licenses](https://freetype.org/license.html).
 
-## Usage
-By default, BindBC-FreeType is configured to compile as a dynamic binding that is not BetterC compatible. The dynamic binding has no link-time dependency on the FreeType library, so the FreeType shared library must be manually loaded at  run time. When configured as a static binding, there is a link-time dependency on the FreeType library&mdash;either the static library or the appropriate file for linking with shared libraries on your platform (see below).
+## FreeType documentation
+This readme describes how to use BindBC-FreeType, *not* FreeType itself. BindBC-FreeType is a direct D binding to the FreeType API, so any existing FreeType documentation and tutorials can be adapted with only minor modifications.
+* [The FreeType API reference](https://freetype.org/freetype2/docs/reference/index.html) has official documentation of the FreeType API.
+* [The official FreeType tutorials](https://freetype.org/freetype2/docs/tutorial/index.html) provide good references for how to use the API.
 
-When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. BetterC compatibility is also enabled via subconfigurations.
+## Quickstart guide
+To use BindBC-FreeType in your dub project, add it to the list of `dependencies` in your dub configuration file. The easiest way is by running `dub add bindbc-freetype` in your project folder. The result should look like this:
 
-To use FreeType, add BindBC-FreeType as a dependency to your project's package config file. For example, the following is configured to compile `bindbc-freeType` as a dynamic binding that is not BetterC compatible:
-
-__dub.json__
-```
-dependencies {
+Example __dub.json__
+```json
+"dependencies": {
 	"bindbc-freetype": "~>1.2.0",
-}
+},
 ```
-
-__dub.sdl__
-```
+Example __dub.sdl__
+```sdl
 dependency "bindbc-freetype" version="~>1.2.0"
 ```
 
-### The dynamic bindings
-The dynamic binding requires no special configuration when using DUB to manage your project. There is no link-time dependency. At  run time, the FreeType shared library is required to be on the shared library search path of the user's system. On Windows, this is typically handled by distributing the FreeType DLL with your program. On other systems, it usually means the user must install the FreeType shared library through a package manager.
+By default, BindBC-FreeType is configured to compile as a dynamic binding that is not BetterC-compatible. If you prefer static bindings or need BetterC compatibility, they can be enabled via `subConfigurations` in your dub configuration file. For configuration naming & more details, see [Configurations](#configurations).
 
-To load the shared library, you need to call the `loadFreeType` function. This returns a member of the `FTSupport` enumeration (see [the readme for BindBC-Loader](https://github.com/BindBC/bindbc-loader/blob/master/README.md) for the error handling API):
+Example __dub.json__
+```json
+"subConfigurations": {
+	"bindbc-freetype": "staticBC",
+},
+```
+Example __dub.sdl__
+```sdl
+subConfiguration "bindbc-freetype" "staticBC"
+```
 
-* `FTSupport.noLibrary` indicating that the library failed to load (it couldn't be found)
-* `FTSupport.badLibrary` indicating that one or more symbols in the library failed to load
-* a member of `FTSupport` indicating a version number that matches the version of FreeType that BindBC-FreeType was configured at compile time to load. By default, that is `FTSupport.v2_6`, but can be configured via a version identifier (see below). This value will match the global manifest constant, `ftSupport`.
+If you need to use versions of FreeType newer than 2.6.X, then you will have to add the appropriate version identifiers to `versions` in your dub configuration. For a list of library version identifiers, see [Library versions](#library-versions).
 
+If using static bindings, then you will also need to add the name of each library you're using to `libs`.
+
+Example __dub.json__
+```json
+"versions": [
+	"FT_2_12",
+],
+"libs": [
+	"freetype",
+],
+```
+Example __dub.sdl__
+```sdl
+versions "FT_2_12"
+libs "freetype"
+```
+
+**If you're using static bindings**: `import bindbc.freetype` in your code, and then you can use all of SDL just like you would in C. That's it!
 ```d
 import bindbc.freetype;
 
-/*
-This version attempts to load the FreeType shared library using well-known
-variations of the library name for the host system.
-*/
-FTSupport ret = loadFreeType();
-if(ret != ftSupport){
+void main(){
+	FT_Library lib;
+	FT_Init_FreeType(&lib);
 	
-	// Handle error. For most use cases, its reasonable to use the the error handling API in
-	// BindBC-Loader to retrieve error messages for logging and then abort. If necessary, it's
-	// possible to determine the root cause via the return value:
+	//etc.
 	
-	if(ret == FTSupport.noLibrary){
-		// FreeType shared library failed to load
-	}else if(FTSupport.badLibrary){
-		// One or more symbols failed to load. The likely cause is that the
-		// shared library is for a lower version than bindbc-freetype was configured
-		// to load (via `FT_26`, `FT_27`, etc.)
-	}
+	FT_Done_FreeType(lib);
 }
-
-/*
-This version attempts to load the FreeType library using a user-supplied file name.
-Usually, the name and/or path used will be platform specific, as in this example
-which attempts to load `freetype.dll` from the `libs` sub-directory, relative
-to the executable, only on Windows.
-*/
-version(Windows) loadFreeType("libs/freetype.dll")
-```
-By default, the BindBC-FreeType binding is configured to load FreeType 2.6. This ensures the widest level of compatibility at run time. This behavior can be overridden via the `-version` compiler switch or the `versions` DUB directive with the desired FreeType version number. It is recommended that you always select the minimum version you require _and no higher_.
-
-In this example, the FreeType dynamic binding is compiled to support FreeType 2.7:
-
-__dub.json__
-```
-"dependencies": {
-	"bindbc-freetype": "~>1.2.0"
-},
-"versions": ["FT_27"]
 ```
 
-__dub.sdl__
-```
-dependency "bindbc-freetype" version="~>1.2.0"
-versions "FT_27"
-```
+# ---------
 
 With this example configuration, `ftSupport == FTSupport.v2_7` after a successful load. If FreeType 2.7 or later is installed on the user's system, `loadFreeType` will return `FTSupport.v2_7`. If FreeType 2.6 is installed, `loadFreeType` will return `FTSupport.badLibrary`. In this scenario, calling `loadedFreeTypeVersion()` will return a `FTSupport` member indicating which version of FreeType, if any, actually loaded. If a lower version was loaded, it's still possible to call functions from that version of FreeType, but any calls to functions from higher versions will result in a null pointer access. For this reason, it's recommended to always specify your required version of the FreeType library at compile time and abort when you receive a `FTSupport.badLibrary` return value from `loadFreeType`.
 

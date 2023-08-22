@@ -8,6 +8,7 @@
 module ft.modapi;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.system;
@@ -58,57 +59,25 @@ enum: FT_TrueTypeEngineType{
 	FT_TRUETYPE_ENGINE_TYPE_PATENTED    = 2,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Add_Module(FT_Library library, const(FT_Module_Class)* clazz);
-		FT_Module FT_Get_Module(FT_Library library, const(char)* module_name);
-		FT_Error FT_Remove_Module(FT_Library library, FT_Module module_);
-		FT_Error FT_Property_Set(FT_Library library, const(char)* module_name, const(char)* property_name, const(void)* value);
-		FT_Error FT_Property_Get(FT_Library library, const(char)* module_name, const(char)* property_name, void* value);
-		FT_Error FT_Reference_Library(FT_Library library);
-		FT_Error FT_New_Library(FT_Memory memory, FT_Library* alibrary);
-		FT_Error FT_Done_Library(FT_Library library);
-		void FT_Set_Debug_Hook(FT_Library library, uint hook_index, FT_DebugHook_Func debug_hook);
-		void FT_Add_Default_Modules(FT_Library library);
-		FT_TrueTypeEngineType FT_Get_TrueType_Engine_Type(FT_Library library);
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			void FT_Set_Default_Properties(FT_Library library);
-		}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Add_Module}, q{FT_Library library, const(FT_Module_Class)* clazz}},
+		{q{FT_Module}, q{FT_Get_Module}, q{FT_Library library, const(char)* module_name}},
+		{q{FT_Error}, q{FT_Remove_Module}, q{FT_Library library, FT_Module module_}},
+		{q{FT_Error}, q{FT_Property_Set}, q{FT_Library library, const(char)* module_name, const(char)* property_name, const(void)* value}},
+		{q{FT_Error}, q{FT_Property_Get}, q{FT_Library library, const(char)* module_name, const(char)* property_name, void* value}},
+		{q{FT_Error}, q{FT_Reference_Library}, q{FT_Library library}},
+		{q{FT_Error}, q{FT_New_Library}, q{FT_Memory memory, FT_Library* alibrary}},
+		{q{FT_Error}, q{FT_Done_Library}, q{FT_Library library}},
+		{q{void}, q{FT_Set_Debug_Hook}, q{FT_Library library, uint hook_index, FT_DebugHook_Func debug_hook}},
+		{q{void}, q{FT_Add_Default_Modules}, q{FT_Library library}},
+		{q{FT_TrueTypeEngineType}, q{FT_Get_TrueType_Engine_Type}, q{FT_Library library}},
+	];
+	if(ftSupport >= FTSupport.v2_8){
+		FnBind[] add = [
+			{q{void}, q{FT_Set_Default_Properties}, q{FT_Library library}},
+		];
+		ret ~= add;
 	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Add_Module = FT_Error function(FT_Library library, const(FT_Module_Class)* clazz);
-		alias pFT_Get_Module = FT_Module function(FT_Library library, const(char)* module_name);
-		alias pFT_Remove_Module = FT_Error function(FT_Library library, FT_Module module_);
-		alias pFT_Property_Set = FT_Error function(FT_Library library, const(char)* module_name, const(char)* property_name, const(void)* value);
-		alias pFT_Property_Get = FT_Error function(FT_Library library, const(char)* module_name, const(char)* property_name, void* value);
-		alias pFT_Reference_Library = FT_Error function(FT_Library library);
-		alias pFT_New_Library = FT_Error function(FT_Memory memory, FT_Library* alibrary);
-		alias pFT_Done_Library = FT_Error function(FT_Library library);
-		alias pFT_Set_Debug_Hook = void function(FT_Library library, uint hook_index, FT_DebugHook_Func debug_hook);
-		alias pFT_Add_Default_Modules = void function(FT_Library library);
-		alias pFT_Get_TrueType_Engine_Type = FT_TrueTypeEngineType function(FT_Library library);
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			alias pFT_Set_Default_Properties = void function(FT_Library library);
-		}
-	}
-	__gshared{
-		pFT_Add_Module FT_Add_Module;
-		pFT_Get_Module FT_Get_Module;
-		pFT_Remove_Module FT_Remove_Module;
-		pFT_Property_Set FT_Property_Set;
-		pFT_Property_Get FT_Property_Get;
-		pFT_Reference_Library FT_Reference_Library;
-		pFT_New_Library FT_New_Library;
-		pFT_Done_Library FT_Done_Library;
-		pFT_Set_Debug_Hook FT_Set_Debug_Hook;
-		pFT_Add_Default_Modules FT_Add_Default_Modules;
-		pFT_Get_TrueType_Engine_Type FT_Get_TrueType_Engine_Type;
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			pFT_Set_Default_Properties FT_Set_Default_Properties;
-		}
-	}
-}
+	return ret;
+}()));

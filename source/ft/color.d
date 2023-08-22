@@ -8,6 +8,7 @@
 module ft.color;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 static if(ftSupport >= FTSupport.v2_10){
 	import ft;
@@ -33,25 +34,6 @@ static if(ftSupport >= FTSupport.v2_10){
 		const(ushort)* palette_flags;
 		ushort num_palette_entries;
 		const(ushort)* palette_entry_name_ids;
-	}
-	
-	static if(staticBinding){
-		extern(C) @nogc nothrow{
-			FT_Error FT_Palette_Data_Get(FT_Face face, FT_Palette_Data* apalette);
-			FT_Error FT_Palette_Select(FT_Face face, ushort palette_index, FT_Color* apalette);
-			FT_Error FT_Palette_Set_Foreground_Color(FT_Face face, FT_Color foreground_color);
-		}
-	}else{
-		extern(C) @nogc nothrow{
-			alias pFT_Palette_Data_Get = FT_Error function(FT_Face face,FT_Palette_Data* apalette);
-			alias pFT_Palette_Select = FT_Error function(FT_Face face, ushort palette_index, FT_Color* apalette);
-			alias pFT_Palette_Set_Foreground_Color = FT_Error function(FT_Face face, FT_Color foreground_color);
-		}
-		__gshared{
-			pFT_Palette_Data_Get FT_Palette_Data_Get;
-			pFT_Palette_Select FT_Palette_Select;
-			pFT_Palette_Set_Foreground_Color FT_Palette_Set_Foreground_Color;
-		}
 	}
 }
 
@@ -271,39 +253,27 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_COLOR_NO_ROOT_TRANSFORM,
 		FT_COLOR_ROOT_TRANSFORM_MAX,
 	}
-	
-	static if(staticBinding){
-		extern(C) @nogc nothrow{
-			FT_Bool FT_Get_Color_Glyph_Paint(FT_Face face, uint base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint);
-			FT_Bool FT_Get_Paint_Layers(FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint);
-			FT_Bool FT_Get_Colorline_Stops(FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator);
-			FT_Bool FT_Get_Paint(FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint);
-			static if(ftSupport >= FTSupport.v2_10){
-				FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator);
-			}
-		}
-	}else{
-		extern(C) @nogc nothrow{
-			alias pFT_Get_Color_Glyph_Paint = FT_Bool function(FT_Face face, uint base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint);
-			alias pFT_Get_Paint_Layers = FT_Bool function(FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint);
-			alias pFT_Get_Colorline_Stops = FT_Bool function(FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator);
-			alias pFT_Get_Paint = FT_Bool function(FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint);
-		}
-		__gshared{
-			pFT_Get_Color_Glyph_Paint FT_Get_Color_Glyph_Paint;
-			pFT_Get_Paint_Layers FT_Get_Paint_Layers;
-			pFT_Get_Colorline_Stops FT_Get_Colorline_Stops;
-			pFT_Get_Paint FT_Get_Paint;
-		}
-		static if(ftSupport >= FTSupport.v2_10){
-			extern(C) @nogc nothrow{
-				alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator);
-			}
-			__gshared{
-				pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
-			}
-		}
-		alias FT_Get_Colourline_Stops = FT_Get_Colorline_Stops;
-		alias FT_Get_Colour_Glyph_Layer = FT_Get_Color_Glyph_Layer;
-	}
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	if(ftSupport >= FTSupport.v2_10){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_Palette_Data_Get}, q{FT_Face face, FT_Palette_Data* apalette}},
+			{q{FT_Error}, q{FT_Palette_Select}, q{FT_Face face, ushort palette_index, FT_Color* apalette}},
+			{q{FT_Error}, q{FT_Palette_Set_Foreground_Color}, q{FT_Face face, FT_Color foreground_color}},
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator}, aliases: ["FT_Get_Colour_Glyph_Layer"]},
+		];
+		ret ~= add;
+	}
+	if(ftSupport >= FTSupport.v2_11){
+		FnBind[] add = [
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Paint}, q{FT_Face face, uint base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint}, aliases: ["FT_Get_Colour_Glyph_Paint"]},
+			{q{FT_Bool}, q{FT_Get_Paint_Layers}, q{FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint}},
+			{q{FT_Bool}, q{FT_Get_Colorline_Stops}, q{FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator}, aliases: ["FT_Get_Colourline_Stops"]},
+			{q{FT_Bool}, q{FT_Get_Paint}, q{FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint}},
+		];
+		ret ~= add;
+	}
+	return ret;
+}()));

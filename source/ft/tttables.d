@@ -8,6 +8,7 @@
 module ft.tttables;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -177,28 +178,13 @@ enum{
 	FT_SFNT_MAX,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		void* FT_Get_Sfnt_Table(FT_Face face, FT_Sfnt_Tag tag);
-		FT_Error FT_Load_Sfnt_Table(FT_Face face, FT_ULong tag, FT_Long offset, ubyte* buffer, FT_ULong* length);
-		FT_Error FT_Sfnt_Table_Info(FT_Face face, uint table_index, FT_ULong* tag, FT_ULong* length);
-		FT_ULong FT_Get_CMap_Language_ID(FT_CharMap charmap);
-		FT_ULong FT_Get_CMap_Format(FT_CharMap charmap);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_Sfnt_Table = void* function(FT_Face face, FT_Sfnt_Tag tag);
-		alias pFT_Load_Sfnt_Table = FT_Error function(FT_Face face, FT_ULong tag, FT_Long offset, ubyte* buffer, FT_ULong* length);
-		alias pFT_Sfnt_Table_Info = FT_Error function(FT_Face face, uint table_index, FT_ULong* tag, FT_ULong* length);
-		alias pFT_Get_CMap_Language_ID = FT_ULong function(FT_CharMap charmap);
-		alias pFT_Get_CMap_Format = FT_ULong function(FT_CharMap charmap);
-	}
-	
-	__gshared{
-		pFT_Get_Sfnt_Table FT_Get_Sfnt_Table;
-		pFT_Load_Sfnt_Table FT_Load_Sfnt_Table;
-		pFT_Sfnt_Table_Info FT_Sfnt_Table_Info;
-		pFT_Get_CMap_Language_ID FT_Get_CMap_Language_ID;
-		pFT_Get_CMap_Format FT_Get_CMap_Format;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{void*}, q{FT_Get_Sfnt_Table}, q{FT_Face face, FT_Sfnt_Tag tag}},
+		{q{FT_Error}, q{FT_Load_Sfnt_Table}, q{FT_Face face, FT_ULong tag, FT_Long offset, ubyte* buffer, FT_ULong* length}},
+		{q{FT_Error}, q{FT_Sfnt_Table_Info}, q{FT_Face face, uint table_index, FT_ULong* tag, FT_ULong* length}},
+		{q{FT_ULong}, q{FT_Get_CMap_Language_ID}, q{FT_CharMap charmap}},
+		{q{FT_ULong}, q{FT_Get_CMap_Format}, q{FT_CharMap charmap}},
+	];
+	return ret;
+}()));

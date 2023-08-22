@@ -8,6 +8,7 @@
 module ft.errdef;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 enum{
 	FT_Err_Ok = 0x00,
@@ -123,3 +124,8 @@ enum{
 	
 	FT_Err_Missing_SVG_Hooks = 0x9E,
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

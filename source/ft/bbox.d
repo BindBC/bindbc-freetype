@@ -8,19 +8,15 @@
 module ft.bbox;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.image;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Outline_Get_BBox(FT_Outline* outline, FT_BBox* abbox);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Outline_Get_BBox = FT_Error function(FT_Outline* outline, FT_BBox* abbox);
-	}
-	__gshared{
-		pFT_Outline_Get_BBox FT_Outline_Get_BBox;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Outline_Get_BBox}, q{FT_Outline* outline, FT_BBox* abbox}},
+	];
+	return ret;
+}()));
+

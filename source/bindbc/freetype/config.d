@@ -22,12 +22,12 @@ enum FTSupport: Version{
 	v2_13       = Version(2,13,1),
 	
 	//These will become deprecated later.
-	deprecated("remove this msg later :)") ft26  = v2_6,
-	deprecated("remove this msg later :)") ft27  = v2_7,
-	deprecated("remove this msg later :)") ft28  = v2_8,
-	deprecated("remove this msg later :)") ft29  = v2_9,
-	deprecated("remove this msg later :)") ft210 = v2_10,
-	deprecated("remove this msg later :)") ft211 = v2_11,
+	ft26  = v2_6,
+	ft27  = v2_7,
+	ft28  = v2_8,
+	ft29  = v2_9,
+	ft210 = v2_10,
+	ft211 = v2_11,
 }
 
 enum staticBinding = (){

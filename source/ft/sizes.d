@@ -8,25 +8,16 @@
 module ft.sizes;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_New_Size(FT_Face face,FT_Size* size);
-		FT_Error FT_Done_Size(FT_Size size);
-		FT_Error FT_Activate_Size(FT_Size size);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_New_Size = FT_Error function(FT_Face face,FT_Size* size);
-		alias pFT_Done_Size = FT_Error function(FT_Size size);
-		alias pFT_Activate_Size = FT_Error function(FT_Size size);
-	}
-	__gshared{
-		pFT_New_Size FT_New_Size;
-		pFT_Done_Size FT_Done_Size;
-		pFT_Activate_Size FT_Activate_Size;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_New_Size}, q{FT_Face face, FT_Size* size}},
+		{q{FT_Error}, q{FT_Done_Size}, q{FT_Size size}},
+		{q{FT_Error}, q{FT_Activate_Size}, q{FT_Size size}},
+	];
+	return ret;
+}()));

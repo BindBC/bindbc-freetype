@@ -8,6 +8,7 @@
 module ft.params;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.types;
 
@@ -29,3 +30,8 @@ static if(ftSupport >= FTSupport.v2_12)
 enum{
 	FT_PARAM_TAG_IGNORE_SBIX 	               = FT_MAKE_TAG( 'i', 's', 'b', 'x' ),
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

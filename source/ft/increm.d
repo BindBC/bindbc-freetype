@@ -8,6 +8,7 @@
 module ft.increm;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -41,3 +42,8 @@ struct FT_Incremental_InterfaceRec{
 }
 
 alias FT_Incremental_Interface = FT_Incremental_InterfaceRec*;
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

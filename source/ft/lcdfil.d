@@ -8,41 +8,31 @@
 module ft.lcdfil;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.image;
 import ft.types;
 
 alias FT_LcdFilter = int;
-enum{
+enum: FT_LcdFilter{
 	FT_LCD_FILTER_NONE    = 0,
 	FT_LCD_FILTER_DEFAULT = 1,
 	FT_LCD_FILTER_LIGHT   = 2,
 	FT_LCD_FILTER_LEGACY1 = 3,
 	FT_LCD_FILTER_LEGACY  = 16,
-	FT_LCD_FILTER_MAX
+	FT_LCD_FILTER_MAX,
 }
 
 // Added in Freetype 2.8
-enum FT_LCD_FILTER_FIVE_TAPS = 5;
+enum FT_LcdFilter FT_LCD_FILTER_FIVE_TAPS = 5;
 alias FT_LcdFiveTapFilter = ubyte[FT_LCD_FILTER_FIVE_TAPS];
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Library_SetLcdFilter(FT_Library library, FT_LcdFilter filter);
-		FT_Error FT_Library_SetLcdFilterWeights(FT_Library library, ubyte* weights);
-		FT_Error FT_Library_SetLcdGeometry(FT_Library library, ref FT_Vector[3] sub);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Library_SetLcdFilter = FT_Error function(FT_Library library, FT_LcdFilter filter);
-		alias pFT_Library_SetLcdFilterWeights = FT_Error function(FT_Library library, ubyte* weights);
-		alias pFT_Library_SetLcdGeometry = FT_Error function(FT_Library library, ref FT_Vector[3] sub);
-	}
-	
-	__gshared{
-		pFT_Library_SetLcdFilter FT_Library_SetLcdFilter;
-		pFT_Library_SetLcdFilterWeights FT_Library_SetLcdFilterWeights;
-		pFT_Library_SetLcdGeometry FT_Library_SetLcdGeometry;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Library_SetLcdFilter}, q{FT_Library library, FT_LcdFilter filter}},
+		{q{FT_Error}, q{FT_Library_SetLcdFilterWeights}, q{FT_Library library, ubyte* weights}},
+		{q{FT_Error}, q{FT_Library_SetLcdGeometry}, q{FT_Library library, ref FT_Vector[3] sub}},
+	];
+	return ret;
+}()));

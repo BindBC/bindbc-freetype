@@ -8,6 +8,7 @@
 module ft.list;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.system;
 import ft.types;
@@ -17,34 +18,15 @@ extern(C) nothrow{
 	alias FT_List_Destructor = void function(FT_Memory, void*, void*);
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_ListNode FT_List_Find(FT_List list, void* data);
-		void FT_List_Add(FT_List list, FT_ListNode node);
-		void FT_List_Insert(FT_List list, FT_ListNode node);
-		void FT_List_Remove(FT_List list, FT_ListNode node);
-		void FT_List_Up(FT_List list, FT_ListNode node);
-		FT_Error FT_List_Iterate(FT_List list, FT_List_Iterator iterator, void* user);
-		void FT_List_Finalize(FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user);;
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias da_FT_List_Find = FT_ListNode function(FT_List,void*);
-		alias da_FT_List_Add = void function(FT_List list,FT_ListNode node);
-		alias da_FT_List_Insert = void function(FT_List list, FT_ListNode node);
-		alias da_FT_List_Remove = void function(FT_List list, FT_ListNode node);
-		alias da_FT_List_Up = void function(FT_List list, FT_ListNode node);
-		alias da_FT_List_Iterate = FT_Error function(FT_List list, FT_List_Iterator iterator, void* user);
-		alias da_FT_List_Finalize = void function(FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user);
-	}
-	
-	__gshared{
-		da_FT_List_Find FT_List_Find;
-		da_FT_List_Add FT_List_Add;
-		da_FT_List_Insert FT_List_Insert;
-		da_FT_List_Remove FT_List_Remove;
-		da_FT_List_Up FT_List_Up;
-		da_FT_List_Iterate FT_List_Iterate;
-		da_FT_List_Finalize FT_List_Finalize;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_ListNode}, q{FT_List_Find}, q{FT_List list, void* data}},
+		{q{void}, q{FT_List_Add}, q{FT_List list, FT_ListNode node}},
+		{q{void}, q{FT_List_Insert}, q{FT_List list, FT_ListNode node}},
+		{q{void}, q{FT_List_Remove}, q{FT_List list, FT_ListNode node}},
+		{q{void}, q{FT_List_Up}, q{FT_List list, FT_ListNode node}},
+		{q{FT_Error}, q{FT_List_Iterate}, q{FT_List list, FT_List_Iterator iterator, void* user}},
+		{q{void}, q{FT_List_Finalize}, q{FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user}, aliases: ["FT_List_Finalise"]},
+	];
+	return ret;
+}()));

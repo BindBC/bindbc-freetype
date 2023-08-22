@@ -8,6 +8,7 @@
 module ft.render;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.glyph;
@@ -56,18 +57,10 @@ struct FT_Renderer_Class{
 	}
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Renderer FT_Get_Renderer(FT_Library library, FT_Glyph_Format format);
-		FT_Error FT_Set_Renderer(FT_Library library, FT_Renderer renderer, uint num_params, FT_Parameter* parameters);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias da_FT_Get_Renderer = FT_Renderer function(FT_Library library, FT_Glyph_Format format);
-		alias da_FT_Set_Renderer = FT_Error function(FT_Library library, FT_Renderer renderer, uint num_params, FT_Parameter* parameters);
-	}
-	__gshared{
-		da_FT_Get_Renderer FT_Get_Renderer;
-		da_FT_Set_Renderer FT_Set_Renderer;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Renderer}, q{FT_Get_Renderer}, q{FT_Library library, FT_Glyph_Format format}},
+		{q{FT_Error}, q{FT_Set_Renderer}, q{FT_Library library, FT_Renderer renderer, uint num_params, FT_Parameter* parameters}},
+	];
+	return ret;
+}()));

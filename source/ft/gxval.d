@@ -8,6 +8,7 @@
 module ft.gxval;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -54,25 +55,12 @@ enum{
 	FT_VALIDATE_CKERN = FT_VALIDATE_MS | FT_VALIDATE_APPLE,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_TrueTypeGX_Validate(FT_Face face, uint validation_flags, ubyte** tables, uint table_length);
-		void FT_TrueTypeGX_Free(FT_Face face, ubyte* table);
-		FT_Error FT_ClassicKern_Validate(FT_Face face, uint validation_flags, ubyte** ckern_table);
-		void FT_ClassicKern_Free(FT_Face face, ubyte* table);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_TrueTypeGX_Validate = FT_Error function(FT_Face face, uint validation_flags, ubyte** tables, uint table_length);
-		alias pFT_TrueTypeGX_Free = void function(FT_Face face, ubyte* table);
-		alias pFT_ClassicKern_Validate = FT_Error function(FT_Face face, uint validation_flags, ubyte** ckern_table);
-		alias pFT_ClassicKern_Free = void function(FT_Face face, ubyte* table);
-	}
-	
-	__gshared{
-		pFT_TrueTypeGX_Validate FT_TrueTypeGX_Validate;
-		pFT_TrueTypeGX_Free FT_TrueTypeGX_Free;
-		pFT_ClassicKern_Validate FT_ClassicKern_Validate;
-		pFT_ClassicKern_Free FT_ClassicKern_Free;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_TrueTypeGX_Validate}, q{FT_Face face, uint validation_flags, ubyte** tables, uint table_length}},
+		{q{void}, q{FT_TrueTypeGX_Free}, q{FT_Face face, ubyte* table}},
+		{q{FT_Error}, q{FT_ClassicKern_Validate}, q{FT_Face face, uint validation_flags, ubyte** ckern_table}},
+		{q{void}, q{FT_ClassicKern_Free}, q{FT_Face face, ubyte* table}},
+	];
+	return ret;
+}()));

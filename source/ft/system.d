@@ -7,6 +7,8 @@
 +/
 module ft.system;
 
+import bindbc.freetype.codegen;
+
 import bindbc.common: c_long, c_ulong;
 
 alias FT_Memory = FT_MemoryRec*;
@@ -48,3 +50,8 @@ struct FT_StreamRec{
 	ubyte* cursor;
 	ubyte* limit;
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

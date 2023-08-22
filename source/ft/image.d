@@ -8,6 +8,7 @@
 module ft.image;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import bindbc.common.types: c_long;
 import ft.types;
@@ -123,7 +124,7 @@ struct FT_Span{
 	ubyte coverage;
 }
 
-extern(C) alias FT_SpanFunc = void function(int, int, FT_Span*, void*) nothrow;
+alias FT_SpanFunc = extern(C) void function(int, int, FT_Span*, void*) nothrow;
 
 enum{
 	FT_RASTER_FLAG_DEFAULT  = 0x0,
@@ -164,3 +165,8 @@ struct FT_Raster_Funcs{
 	FT_Raster_RenderFunc raster_render;
 	FT_Raster_DoneFunc raster_done;
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

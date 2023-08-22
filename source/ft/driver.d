@@ -8,6 +8,7 @@
 module ft.driver;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -39,3 +40,8 @@ struct FT_Prop_IncreaseXHeight{
 	FT_Face face;
 	uint limit;
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

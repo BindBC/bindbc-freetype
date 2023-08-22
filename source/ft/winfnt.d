@@ -8,6 +8,7 @@
 module ft.winfnt;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -77,15 +78,9 @@ struct FT_WinFNT_HeaderRec{
 
 alias FT_WinFNT_Header = FT_WinFNT_HeaderRec*;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Get_WinFNT_Header(FT_Face face, FT_WinFNT_HeaderRec* aheader);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_WinFNT_Header = FT_Error function(FT_Face face, FT_WinFNT_HeaderRec* aheader);
-	}
-	__gshared{
-		 pFT_Get_WinFNT_Header FT_Get_WinFNT_Header;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Get_WinFNT_Header}, q{FT_Face face, FT_WinFNT_HeaderRec* aheader}},
+	];
+	return ret;
+}()));

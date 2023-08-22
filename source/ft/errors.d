@@ -8,22 +8,17 @@
 module ft.errors;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		static if(ftSupport >= FTSupport.v2_10){
-			const(char)* FT_Error_String(FT_Error error_code);
-		}
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	if(ftSupport >= FTSupport.v2_10){
+		FnBind[] add = [
+			{q{const(char)*}, q{FT_Error_String}, q{FT_Error error_code}},
+		];
+		ret ~= add;
 	}
-}else{
-	static if(ftSupport >= FTSupport.v2_10){
-		extern(C) nothrow @nogc{
-			alias pFT_Error_String = const(char)* function(FT_Error error_code);
-		}
-		__gshared{
-			pFT_Error_String FT_Error_String;
-		}
-	}
-}
+	return ret;
+}()));

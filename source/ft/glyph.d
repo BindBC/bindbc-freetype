@@ -8,6 +8,7 @@
 module ft.glyph;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.image;
@@ -70,45 +71,22 @@ static if(ftSupport >= FTSupport.v2_12){
 	}
 }
 
-static if(staticBinding){
-	extern(C) @nogc nothrow{
-		FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph* aglyph);
-		FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph* target);
-		FT_Error FT_Glyph_Transform(FT_Glyph glyph, FT_Matrix* matrix, FT_Vector* delta);
-		void FT_Glyph_Get_CBox(FT_Glyph glyph, uint bbox_mode, FT_BBox* acbox);
-		FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, FT_Vector* origin, FT_Bool destroy);
-		void FT_Done_Glyph(FT_Glyph glyph);
-		void FT_Matrix_Multiply(const(FT_Matrix)* a, FT_Matrix* b);
-		FT_Error FT_Matrix_Invert(FT_Matrix* matrix);
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Get_Glyph}, q{FT_GlyphSlot slot, FT_Glyph* aglyph}},
+		{q{FT_Error}, q{FT_Glyph_Copy}, q{FT_Glyph source, FT_Glyph* target}},
+		{q{FT_Error}, q{FT_Glyph_Transform}, q{FT_Glyph glyph, FT_Matrix* matrix, FT_Vector* delta}},
+		{q{void}, q{FT_Glyph_Get_CBox}, q{FT_Glyph glyph, uint bbox_mode, FT_BBox* acbox}},
+		{q{FT_Error}, q{FT_Glyph_To_Bitmap}, q{FT_Glyph* the_glyph, FT_Render_Mode render_mode, FT_Vector* origin, FT_Bool destroy}},
+		{q{void}, q{FT_Done_Glyph}, q{FT_Glyph glyph}},
+		{q{void}, q{FT_Matrix_Multiply}, q{const(FT_Matrix)* a, FT_Matrix* b}},
+		{q{FT_Error}, q{FT_Matrix_Invert}, q{FT_Matrix* matrix}},
+	];
+	if(ftSupport >= FTSupport.v2_10){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_New_Glyph}, q{FT_Library library, FT_Glyph_Format format, FT_Glyph* aglyph}},
+		];
+		ret ~= add;
 	}
-	static if(ftSupport >= FTSupport.v2_10){
-		FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph* aglyph);
-	}
-}else{
-	extern(C) @nogc nothrow{
-		alias pFT_Get_Glyph = FT_Error function(FT_GlyphSlot slot, FT_Glyph* aglyph);
-		alias pFT_Glyph_Copy = FT_Error function(FT_Glyph source, FT_Glyph* target);
-		alias pFT_Glyph_Transform = FT_Error function(FT_Glyph glyph, FT_Matrix* matrix, FT_Vector* delta);
-		alias pFT_Glyph_Get_CBox = void function(FT_Glyph glyph, uint bbox_mode, FT_BBox* acbox);
-		alias pFT_Glyph_To_Bitmap = FT_Error function(FT_Glyph* the_glyph, FT_Render_Mode render_mode, FT_Vector* origin, FT_Bool destroy);
-		alias pFT_Done_Glyph = void function(FT_Glyph glyph);
-		alias pFT_Matrix_Multiply = void function(const(FT_Matrix)* a, FT_Matrix* b);
-		alias pFT_Matrix_Invert = FT_Error function(FT_Matrix* matrix);
-		static if(ftSupport >= FTSupport.v2_10){
-			alias pFT_New_Glyph = FT_Error function(FT_Library library, FT_Glyph_Format format, FT_Glyph* aglyph);
-		}
-	}
-	__gshared{
-		pFT_Get_Glyph FT_Get_Glyph;
-		pFT_Glyph_Copy FT_Glyph_Copy;
-		pFT_Glyph_Transform FT_Glyph_Transform;
-		pFT_Glyph_Get_CBox FT_Glyph_Get_CBox;
-		pFT_Glyph_To_Bitmap FT_Glyph_To_Bitmap;
-		pFT_Done_Glyph FT_Done_Glyph;
-		pFT_Matrix_Multiply FT_Matrix_Multiply;
-		pFT_Matrix_Invert FT_Matrix_Invert;
-		static if(ftSupport >= FTSupport.v2_10){
-			pFT_New_Glyph FT_New_Glyph;
-		}
-	}
-}
+	return ret;
+}()));

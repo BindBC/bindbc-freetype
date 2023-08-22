@@ -8,22 +8,15 @@
 module ft.gzip;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.system;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Stream_OpenGzip(FT_Stream stream, FT_Stream source);
-		FT_Error FT_Gzip_Uncompress(FT_Memory memory, ubyte* output, FT_ULong* output_len, const(ubyte)* input, FT_ULong input_len);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias da_FT_Stream_OpenGzip = FT_Error function(FT_Stream stream, FT_Stream source);
-		alias da_FT_Gzip_Uncompress = FT_Error function(FT_Memory memory, ubyte* output, FT_ULong* output_len, const(ubyte)* input, FT_ULong input_len);
-	}
-	__gshared{
-		da_FT_Stream_OpenGzip FT_Stream_OpenGzip;
-		da_FT_Gzip_Uncompress FT_Gzip_Uncompress;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Stream_OpenGzip}, q{FT_Stream stream, FT_Stream source}},
+		{q{FT_Error}, q{FT_Gzip_Uncompress}, q{FT_Memory memory, ubyte* output, FT_ULong* output_len, const(ubyte)* input, FT_ULong input_len}},
+	];
+	return ret;
+}()));

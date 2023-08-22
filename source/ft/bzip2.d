@@ -8,20 +8,15 @@
 module ft.bzip2;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 static if(enableBZIP2):
 import ft.system;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Stream_OpenBzip2(FT_Stream stream, FT_Stream source);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Stream_OpenBzip2 = FT_Error function(FT_Stream stream, FT_Stream source);
-	}
-	__gshared{
-		pFT_Stream_OpenBzip2 FT_Stream_OpenBzip2;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Stream_OpenBzip2}, q{FT_Stream stream, FT_Stream source}},
+	];
+	return ret;
+}()));

@@ -9,6 +9,7 @@ module ft.bdf;
 
 version(linux):
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -32,18 +33,10 @@ struct BDF_PropertyRec{
 	}
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Get_BDF_Charset_ID(FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry);
-		FT_Error FT_Get_BDF_Property(FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_BDF_Charset_ID = FT_Error function(FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry);
-		alias pFT_Get_BDF_Property = FT_Error function(FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty);
-	}
-	__gshared{
-		pFT_Get_BDF_Charset_ID FT_Get_BDF_Charset_ID;
-		pFT_Get_BDF_Property FT_Get_BDF_Property;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Get_BDF_Charset_ID}, q{FT_Face face, const(char)** acharset_encoding, const(char)** acharset_registry}},
+		{q{FT_Error}, q{FT_Get_BDF_Property}, q{FT_Face face, const(char)* prop_name, BDF_PropertyRec* aproperty}},
+	];
+	return ret;
+}()));

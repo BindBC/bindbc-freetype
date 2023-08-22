@@ -8,6 +8,7 @@
 module ft.snames;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -26,30 +27,17 @@ struct FT_SfntLangTag{
 	uint string_len;
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		uint FT_Get_Sfnt_Name_Count(FT_Face face);
-		FT_Error FT_Get_Sfnt_Name(FT_Face face, uint idx, FT_SfntName* aname);
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{uint}, q{FT_Get_Sfnt_Name_Count}, q{FT_Face face}},
+		{q{FT_Error}, q{FT_Get_Sfnt_Name}, q{FT_Face face, uint idx, FT_SfntName* aname}},
 		
-		static if(ftSupport >= FTSupport.v2_8){
-			FT_Error FT_Get_Sfnt_LangTag(FT_Face face, uint langID, FT_SfntLangTag* alangTag);
-		}
+	];
+	if(ftSupport >= FTSupport.v2_8){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_Get_Sfnt_LangTag}, q{FT_Face face, uint langID, FT_SfntLangTag* alangTag}},
+		];
+		ret ~= add;
 	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_Sfnt_Name_Count = uint function(FT_Face face);
-		alias pFT_Get_Sfnt_Name = FT_Error function(FT_Face face, uint idx, FT_SfntName* aname);
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			alias pFT_Get_Sfnt_LangTag = FT_Error function(FT_Face face, uint langID, FT_SfntLangTag* alangTag);
-		}
-	}
-	__gshared{
-		pFT_Get_Sfnt_Name_Count FT_Get_Sfnt_Name_Count;
-		pFT_Get_Sfnt_Name FT_Get_Sfnt_Name;
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			pFT_Get_Sfnt_LangTag FT_Get_Sfnt_LangTag;
-		}
-	}
-}
+	return ret;
+}()));

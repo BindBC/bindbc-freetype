@@ -8,20 +8,14 @@
 module ft.lzw;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft.system;
 import ft.types;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Stream_OpenLZW(FT_Stream stream, FT_Stream source);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Stream_OpenLZW = FT_Error function(FT_Stream stream, FT_Stream source);
-	}
-	
-	__gshared{
-		pFT_Stream_OpenLZW FT_Stream_OpenLZW;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Stream_OpenLZW}, q{FT_Stream stream, FT_Stream source}},
+	];
+	return ret;
+}()));

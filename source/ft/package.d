@@ -8,6 +8,7 @@
 module ft;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import bindbc.common.types: c_long;
 import ft.image;
@@ -149,7 +150,7 @@ enum: uint{
 	FT_FACE_FLAG_SBIX_OVERLAY      = 1 << 18,
 }
 
-pragma(inline,true) nothrow @nogc pure @safe{
+pragma(inline, true) nothrow @nogc pure @safe{
 	bool FT_HAS_HORIZONTAL(FT_Face face){ return (face.face_flags & FT_FACE_FLAG_HORIZONTAL) != 0; }
 	bool FT_HAS_VERTICAL(FT_Face face){ return (face.face_flags & FT_FACE_FLAG_VERTICAL) != 0; }
 	bool FT_HAS_KERNING(FT_Face face){ return (face.face_flags & FT_FACE_FLAG_KERNING) != 0; }
@@ -239,11 +240,11 @@ struct FT_GlyphSlotRec{
 }
 
 enum: uint{
-	FT_OPEN_MEMORY      = 0x1,
-	FT_OPEN_STREAM      = 0x2,
-	FT_OPEN_PATHNAME    = 0x4,
-	FT_OPEN_DRIVER      = 0x8,
-	FT_OPEN_PARAMS      = 0x10,
+	FT_OPEN_MEMORY    = 0x1,
+	FT_OPEN_STREAM    = 0x2,
+	FT_OPEN_PATHNAME  = 0x4,
+	FT_OPEN_DRIVER    = 0x8,
+	FT_OPEN_PARAMS    = 0x10,
 }
 
 struct FT_Parameter{
@@ -383,130 +384,71 @@ enum: ushort{
 	FT_FSTYPE_BITMAP_EMBEDDING_ONLY         = 0x0200,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FT_Init_FreeType(FT_Library* alibrary);
-		FT_Error FT_Done_FreeType(FT_Library library);
-		FT_Error FT_New_Face(FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface);
-		FT_Error FT_New_Memory_Face(FT_Library library, const(ubyte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface);
-		FT_Error FT_Open_Face(FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface);
-		FT_Error FT_Attach_File(FT_Face face, const(char)* filepathname);
-		FT_Error FT_Attach_Stream(FT_Face face, const(FT_Open_Args)* parameters);
-		FT_Error FT_Reference_Face(FT_Face face);
-		FT_Error FT_Done_Face(FT_Face face);
-		FT_Error FT_Select_Size(FT_Face face, int strike_index);
-		FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req);
-		FT_Error FT_Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, uint horz_resolution, uint vert_resolution);
-		FT_Error FT_Set_Pixel_Sizes(FT_Face face, uint pixel_width, uint pixel_height);
-		FT_Error FT_Load_Glyph(FT_Face face, uint glyph_index, int load_flags);
-		FT_Error FT_Load_Char(FT_Face face, uint char_code, int load_flags);
-		void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
-		FT_Error FT_Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode);
-		FT_Error FT_Get_Kerning(FT_Face face, uint left_glyph, uint right_glyph, uint kern_mode, FT_Vector* akerning);
-		FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, int degree, FT_Fixed* akerning);
-		FT_Error FT_Get_Glyph_Name(FT_Face face, uint glyph_index, FT_Pointer buffer, uint buffer_max);
-		const(char)* FT_Get_Postscript_Name(FT_Face face);
-		FT_Error FT_Select_Charmap(FT_Face face, FT_Encoding encoding);
-		FT_Error FT_Set_Charmap(FT_Face face, FT_CharMap charmap);
-		int FT_Get_Charmap_Index(FT_CharMap charmap);
-		uint FT_Get_Char_Index(FT_Face face, FT_ULong charcode);
-		FT_ULong FT_Get_First_Char(FT_Face face, uint* agindex);
-		FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, uint* agindex);
-		uint FT_Get_Name_Index(FT_Face face, const(char)* glyph_name);
-		FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, uint sub_index, int* p_index, uint* p_flags, int* p_arg1, int* p_arg2, FT_Matrix* p_transform);
-		ushort FT_Get_FSType_Flags(FT_Face face);
-		uint FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
-		int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector);
-		uint* FT_Face_GetVariantSelectors(FT_Face face);
-		uint* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode);
-		uint* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector);
-		FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c);
-		FT_Long FT_MulFix(FT_Long a, FT_Long b);
-		FT_Long FT_DivFix(FT_Long a,FT_Long b);
-		FT_Fixed FT_RoundFix(FT_Fixed a);
-		FT_Fixed FT_CeilFix(FT_Fixed a);
-		FT_Fixed FT_FloorFix(FT_Fixed a);
-		void FT_Vector_Transform(FT_Vector* vector, FT_Matrix* matrix);
-		void FT_Library_Version(FT_Library library, int* amajor, int* aminor, int* apatch);
-		FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face);
-		FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value);
-		static if(ftSupport >= FTSupport.v2_8){
-			FT_Error FT_Face_Properties(FT_Face face, uint num_properties, FT_Parameter* properties);
-		}
-		static if(ftSupport >= FTSupport.v2_11){
-			void FT_Get_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
-		}else{
-			// Moved to ftcolor.h in 2.11
-			FT_Bool FT_Get_Color_Glyph_Layer(FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator);
-		}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FT_Init_FreeType}, q{FT_Library* alibrary}},
+		{q{FT_Error}, q{FT_Done_FreeType}, q{FT_Library library}},
+		{q{FT_Error}, q{FT_New_Face}, q{FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface}},
+		{q{FT_Error}, q{FT_New_Memory_Face}, q{FT_Library library, const(ubyte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface}},
+		{q{FT_Error}, q{FT_Open_Face}, q{FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface}},
+		{q{FT_Error}, q{FT_Attach_File}, q{FT_Face face, const(char)* filepathname}},
+		{q{FT_Error}, q{FT_Attach_Stream}, q{FT_Face face, const(FT_Open_Args)* parameters}},
+		{q{FT_Error}, q{FT_Reference_Face}, q{FT_Face face}},
+		{q{FT_Error}, q{FT_Done_Face}, q{FT_Face face}},
+		{q{FT_Error}, q{FT_Select_Size}, q{FT_Face face, int strike_index}},
+		{q{FT_Error}, q{FT_Request_Size}, q{FT_Face face, FT_Size_Request req}},
+		{q{FT_Error}, q{FT_Set_Char_Size}, q{FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, uint horz_resolution, uint vert_resolution}},
+		{q{FT_Error}, q{FT_Set_Pixel_Sizes}, q{FT_Face face, uint pixel_width, uint pixel_height}},
+		{q{FT_Error}, q{FT_Load_Glyph}, q{FT_Face face, uint glyph_index, int load_flags}},
+		{q{FT_Error}, q{FT_Load_Char}, q{FT_Face face, uint char_code, int load_flags}},
+		{q{void}, q{FT_Set_Transform}, q{FT_Face face, FT_Matrix* matrix, FT_Vector* delta}},
+		{q{FT_Error}, q{FT_Render_Glyph}, q{FT_GlyphSlot slot, FT_Render_Mode render_mode}},
+		{q{FT_Error}, q{FT_Get_Kerning}, q{FT_Face face, uint left_glyph, uint right_glyph, uint kern_mode, FT_Vector* akerning}},
+		{q{FT_Error}, q{FT_Get_Track_Kerning}, q{FT_Face face, FT_Fixed point_size, int degree, FT_Fixed* akerning}},
+		{q{FT_Error}, q{FT_Get_Glyph_Name}, q{FT_Face face, uint glyph_index, FT_Pointer buffer, uint buffer_max}},
+		{q{const(char)*}, q{FT_Get_Postscript_Name}, q{FT_Face face}},
+		{q{FT_Error}, q{FT_Select_Charmap}, q{FT_Face face, FT_Encoding encoding}},
+		{q{FT_Error}, q{FT_Set_Charmap}, q{FT_Face face, FT_CharMap charmap}},
+		{q{int}, q{FT_Get_Charmap_Index}, q{FT_CharMap charmap}},
+		{q{uint}, q{FT_Get_Char_Index}, q{FT_Face face, FT_ULong charcode}},
+		{q{FT_ULong}, q{FT_Get_First_Char}, q{FT_Face face, uint* agindex}},
+		{q{FT_ULong}, q{FT_Get_Next_Char}, q{FT_Face face, FT_ULong char_code, uint* agindex}},
+		{q{uint}, q{FT_Get_Name_Index}, q{FT_Face face, const(char)* glyph_name}},
+		{q{FT_Error}, q{FT_Get_SubGlyph_Info}, q{FT_GlyphSlot glyph, uint sub_index, int* p_index, uint* p_flags, int* p_arg1, int* p_arg2, FT_Matrix* p_transform}},
+		{q{ushort}, q{FT_Get_FSType_Flags}, q{FT_Face face}},
+		{q{uint}, q{FT_Face_GetCharVariantIndex}, q{FT_Face face, FT_ULong charcode, FT_ULong variantSelector}},
+		{q{int}, q{FT_Face_GetCharVariantIsDefault}, q{FT_Face face, FT_ULong charcode, FT_ULong variantSelector}},
+		{q{uint*}, q{FT_Face_GetVariantSelectors}, q{FT_Face face}},
+		{q{uint*}, q{FT_Face_GetVariantsOfChar}, q{FT_Face face, FT_ULong charcode}},
+		{q{uint*}, q{FT_Face_GetCharsOfVariant}, q{FT_Face face, FT_ULong variantSelector}},
+		{q{FT_Long}, q{FT_MulDiv}, q{FT_Long a, FT_Long b, FT_Long c}},
+		{q{FT_Long}, q{FT_MulFix}, q{FT_Long a, FT_Long b}},
+		{q{FT_Long}, q{FT_DivFix}, q{FT_Long a, FT_Long b}},
+		{q{FT_Fixed}, q{FT_RoundFix}, q{FT_Fixed a}},
+		{q{FT_Fixed}, q{FT_CeilFix}, q{FT_Fixed a}},
+		{q{FT_Fixed}, q{FT_FloorFix}, q{FT_Fixed a}},
+		{q{void}, q{FT_Vector_Transform}, q{FT_Vector* vector, FT_Matrix* matrix}},
+		{q{void}, q{FT_Library_Version}, q{FT_Library library, int* amajor, int* aminor, int* apatch}},
+		{q{FT_Bool}, q{FT_Face_CheckTrueTypePatents}, q{FT_Face face}},
+		{q{FT_Bool}, q{FT_Face_SetUnpatentedHinting}, q{FT_Face face, FT_Bool value}},
+	];
+	if(ftSupport >= FTSupport.v2_8){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_Face_Properties}, q{FT_Face face, uint num_properties, FT_Parameter* properties}},
+		];
+		ret ~= add;
 	}
-}else{
-	extern(C) __gshared nothrow @nogc{
-		FT_Error function(FT_Library* alibrary) FT_Init_FreeType;
-		FT_Error function(FT_Library library) FT_Done_FreeType;
-		FT_Error function(FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface) FT_New_Face;
-		FT_Error function(FT_Library library, const(ubyte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface) FT_New_Memory_Face;
-		FT_Error function(FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface) FT_Open_Face;
-		FT_Error function(FT_Face face, const(char)* filepathname) FT_Attach_File;
-		FT_Error function(FT_Face face, FT_Open_Args* parameters) FT_Attach_Stream;
-		FT_Error function(FT_Face face) FT_Reference_Face;
-		FT_Error function(FT_Face face) FT_Done_Face;
-		FT_Error function(FT_Face face, int strike_index) FT_Select_Size;
-		FT_Error function(FT_Face face, FT_Size_Request req) FT_Request_Size;
-		FT_Error function(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, uint horz_resolution, uint vert_resolution) FT_Set_Char_Size;
-		FT_Error function(FT_Face face, uint pixel_width, uint pixel_height) FT_Set_Pixel_Sizes;
-		FT_Error function(FT_Face face, uint glyph_index, int load_flags) FT_Load_Glyph;
-		FT_Error function(FT_Face face, uint char_code, int load_flags) FT_Load_Char;
-		void function(FT_Face face, FT_Matrix* matrix, FT_Vector* delta) FT_Set_Transform;
-		FT_Error function(FT_GlyphSlot slot, FT_Render_Mode render_mode) FT_Render_Glyph;
-		FT_Error function(FT_Face face, uint left_glyph, uint right_glyph, uint kern_mode, FT_Vector* akerning) FT_Get_Kerning;
-		FT_Error function(FT_Face face, FT_Fixed point_size, int degree, FT_Fixed* akerning) FT_Get_Track_Kerning;
-		FT_Error function(FT_Face face, uint glyph_index, FT_Pointer buffer, uint buffer_max) FT_Get_Glyph_Name;
-		const(char)* function(FT_Face face) FT_Get_Postscript_Name;
-		FT_Error function(FT_Face face, FT_Encoding encoding) FT_Select_Charmap;
-		FT_Error function(FT_Face face, FT_CharMap charmap) FT_Set_Charmap;
-		int function(FT_CharMap charmap) FT_Get_Charmap_Index;
-		uint function(FT_Face face, FT_ULong charcode) FT_Get_Char_Index;
-		FT_ULong function(FT_Face face, uint* agindex) FT_Get_First_Char;
-		FT_ULong function(FT_Face face, FT_ULong char_code, uint* agindex) FT_Get_Next_Char;
-		uint function(FT_Face face, const(char)* glyph_name) FT_Get_Name_Index;
-		FT_Error function(FT_GlyphSlot glyph, uint sub_index, int* p_index, uint* p_flags, int* p_arg1, int* p_arg2, FT_Matrix* p_transform) FT_Get_SubGlyph_Info;
-		ushort function(FT_Face face) FT_Get_FSType_Flags;
-		uint function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector) FT_Face_GetCharVariantIndex;
-		int function(FT_Face face, FT_ULong charcode, FT_ULong variantSelector) FT_Face_GetCharVariantIsDefault;
-		uint* function(FT_Face face) FT_Face_GetVariantSelectors;
-		uint* function(FT_Face face, FT_ULong charcode) FT_Face_GetVariantsOfChar;
-		uint* function(FT_Face face, FT_ULong variantSelector) FT_Face_GetCharsOfVariant;
-		FT_Long function(FT_Long a, FT_Long b, FT_Long c) FT_MulDiv;
-		FT_Long function(FT_Long a, FT_Long b) FT_MulFix;
-		FT_Long function(FT_Long a, FT_Long b) FT_DivFix;
-		FT_Fixed function(FT_Fixed a) FT_RoundFix;
-		FT_Fixed function(FT_Fixed a) FT_CeilFix;
-		FT_Fixed function(FT_Fixed a) FT_FloorFix;
-		void function(FT_Vector* vector, FT_Matrix* matrix) FT_Vector_Transform;
-		void function(FT_Library library, int* amajor, int* aminor, int* apatch) FT_Library_Version;
-		FT_Bool function(FT_Face face) FT_Face_CheckTrueTypePatents;
-		FT_Bool function(FT_Face face, FT_Bool value) FT_Face_SetUnpatentedHinting;
-		
-		static if(ftSupport >= FTSupport.v2_8){
-			alias pFT_Face_Properties = FT_Error function(FT_Face face, uint num_properties, FT_Parameter* properties);
-		}
-		static if(ftSupport >= FTSupport.v2_11){
-			alias pFT_Get_Transform = void function(FT_Face face, FT_Matrix* matrix, FT_Vector* delta);
-		}else{
-			// Moved to ftcolor.h in 2.11
-			alias pFT_Get_Color_Glyph_Layer = FT_Bool function(FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator);
-		}
+	if(ftSupport >= FTSupport.v2_11){
+		FnBind[] add = [
+			{q{void}, q{FT_Get_Transform}, q{FT_Face face, FT_Matrix* matrix, FT_Vector* delta}},
+		];
+		ret ~= add;
+	}else{
+		// Moved to ftcolor.h in 2.11
+		FnBind[] add = [
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator}},
+		];
+		ret ~= add;
 	}
-	__gshared{
-		static if(ftSupport >= FTSupport.v2_8){
-			pFT_Face_Properties FT_Face_Properties;
-		}
-		static if(ftSupport >= FTSupport.v2_11){
-			pFT_Get_Transform FT_Get_Transform;
-		}else{
-			// Moved to ftcolor.h in 2.11
-			pFT_Get_Color_Glyph_Layer FT_Get_Color_Glyph_Layer;
-		}
-	}
-}
+	return ret;
+}()));

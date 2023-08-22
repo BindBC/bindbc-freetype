@@ -8,19 +8,13 @@
 module ft.fntfmt;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		const(char)* FT_Get_Font_Format(FT_Face face);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_Font_Format = const(char)* function(FT_Face face);
-	}
-	
-	__gshared{
-		pFT_Get_Font_Format FT_Get_Font_Format;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{const(char)*}, q{FT_Get_Font_Format}, q{FT_Face face}},
+	];
+	return ret;
+}()));

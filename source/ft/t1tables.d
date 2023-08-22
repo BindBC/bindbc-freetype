@@ -8,6 +8,7 @@
 module ft.t1tables;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.image;
@@ -59,21 +60,21 @@ alias PS_Private = PS_PrivateRec*;
 
 alias T1_Blend_Flags = int;
 enum{
-	T1_BLEND_UNDERLINE_POSITION = 0,
-	T1_BLEND_UNDERLINE_THICKNESS,
-	T1_BLEND_ITALIC_ANGLE,
-	T1_BLEND_BLUE_VALUES,
-	T1_BLEND_OTHER_BLUES,
-	T1_BLEND_STANDARD_WIDTH,
-	T1_BLEND_STANDARD_HEIGHT,
-	T1_BLEND_STEM_SNAP_WIDTHS,
-	T1_BLEND_STEM_SNAP_HEIGHTS,
-	T1_BLEND_BLUE_SCALE,
-	T1_BLEND_BLUE_SHIFT,
-	T1_BLEND_FAMILY_BLUES,
-	T1_BLEND_FAMILY_OTHER_BLUES,
-	T1_BLEND_FORCE_BOLD,
-	T1_BLEND_MAX
+	T1_BLEND_UNDERLINE_POSITION   = 0,
+	T1_BLEND_UNDERLINE_THICKNESS  = 1,
+	T1_BLEND_ITALIC_ANGLE         = 2,
+	T1_BLEND_BLUE_VALUES          = 3,
+	T1_BLEND_OTHER_BLUES          = 4,
+	T1_BLEND_STANDARD_WIDTH       = 5,
+	T1_BLEND_STANDARD_HEIGHT      = 6,
+	T1_BLEND_STEM_SNAP_WIDTHS     = 7,
+	T1_BLEND_STEM_SNAP_HEIGHTS    = 8,
+	T1_BLEND_BLUE_SCALE           = 9,
+	T1_BLEND_BLUE_SHIFT           = 10,
+	T1_BLEND_FAMILY_BLUES         = 11,
+	T1_BLEND_FAMILY_OTHER_BLUES   = 12,
+	T1_BLEND_FORCE_BOLD           = 13,
+	T1_BLEND_MAX                  = 14,
 }
 
 enum T1_MAX_MM_DESIGNS = 16;
@@ -206,27 +207,15 @@ enum: PS_Dict_Keys{
 	PS_DICT_FS_TYPE,
 	PS_DICT_ITALIC_ANGLE,
 	
-	PS_DICT_MAX = PS_DICT_ITALIC_ANGLE
+	PS_DICT_MAX = PS_DICT_ITALIC_ANGLE,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		int FT_Has_PS_Glyph_Names(FT_Face face);
-		FT_Error FT_Get_PS_Font_Info(FT_Face face,PS_FontInfoRec* afont_info);
-		FT_Error FT_Get_PS_Font_Private(FT_Face face,PS_PrivateRec* afont_private);
-		FT_Long FT_Get_PS_Font_Value(FT_Face face, PS_Dict_Keys* key, uint idx, void* value, FT_Long value_len);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias da_FT_Has_PS_Glyph_Names = int function(FT_Face face);
-		alias da_FT_Get_PS_Font_Info = FT_Error function(FT_Face face,PS_FontInfoRec* afont_info);
-		alias da_FT_Get_PS_Font_Private = FT_Error function(FT_Face face,PS_PrivateRec* afont_private);
-		alias da_FT_Get_PS_Font_Value = FT_Long function(FT_Face face, PS_Dict_Keys* key, uint idx, void* value, FT_Long value_len);
-	}
-	__gshared{
-		da_FT_Has_PS_Glyph_Names FT_Has_PS_Glyph_Names;
-		da_FT_Get_PS_Font_Info FT_Get_PS_Font_Info;
-		da_FT_Get_PS_Font_Private FT_Get_PS_Font_Private;
-		da_FT_Get_PS_Font_Value FT_Get_PS_Font_Value;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{int}, q{FT_Has_PS_Glyph_Names}, q{FT_Face face}},
+		{q{FT_Error}, q{FT_Get_PS_Font_Info}, q{FT_Face face, PS_FontInfoRec* afont_info}},
+		{q{FT_Error}, q{FT_Get_PS_Font_Private}, q{FT_Face face, PS_PrivateRec* afont_private}},
+		{q{FT_Long}, q{FT_Get_PS_Font_Value}, q{FT_Face face, PS_Dict_Keys* key, uint idx, void* value, FT_Long value_len}},
+	];
+	return ret;
+}()));

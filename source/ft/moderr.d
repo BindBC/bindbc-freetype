@@ -7,6 +7,8 @@
 +/
 module ft.moderr;
 
+import bindbc.freetype.codegen;
+
 enum{
 	FT_Mod_Err_Base      = 0x000,
 	FT_Mod_Err_Autofit   = 0x100,
@@ -33,3 +35,8 @@ enum{
 	FT_Mod_Err_GXvalid   = 0x1600,
 	FT_Mod_Err_Sdf       = 0x1700,
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

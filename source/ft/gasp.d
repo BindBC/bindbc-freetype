@@ -8,6 +8,7 @@
 module ft.gasp;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -30,16 +31,9 @@ static if(ftSupport >= FTSupport.v2_8){
 	}
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		int FT_Get_Gasp(FT_Face face, uint ppem);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Get_Gasp = int function(FT_Face face, uint ppem);
-	}
-	
-	__gshared{
-		pFT_Get_Gasp FT_Get_Gasp;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{int}, q{FT_Get_Gasp}, q{FT_Face face, uint ppem}},
+	];
+	return ret;
+}()));

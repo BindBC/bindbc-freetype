@@ -8,6 +8,7 @@
 module ft.types;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import bindbc.common.types: c_long, c_ulong;
 
@@ -48,7 +49,7 @@ struct FT_Data{
 	int length;
 }
 
-extern(C) nothrow alias FT_Generic_Finalizer = void function(void*);
+alias FT_Generic_Finalizer = extern(C) void function(void*) nothrow;
 alias FT_Generic_Finaliser = FT_Generic_Finalizer;
 
 struct FT_Generic{
@@ -57,19 +58,26 @@ struct FT_Generic{
 	alias finaliser = finalizer;
 }
 
-FT_Tag FT_MAKE_TAG(char x1, char x2, char x3, char x4){
+FT_Tag FT_MAKE_TAG(char x1, char x2, char x3, char x4) nothrow @nogc pure @safe{
 	return cast(uint)((x1 << 24) | (x2 << 16) | (x3 << 8) | x4);
 }
+
+alias FT_ListNode = FT_ListNodeRec*;
 
 struct FT_ListNodeRec{
 	FT_ListNode prev;
 	FT_ListNode next;
 	void* data;
 }
-alias FT_ListNode = FT_ListNodeRec*;
+
+alias FT_List = FT_ListRec*;
 
 struct FT_ListRec{
 	FT_ListNode head;
 	FT_ListNode tail;
 }
-alias FT_List = FT_ListRec*;
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

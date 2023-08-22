@@ -8,6 +8,7 @@
 module ft.otval;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.types;
@@ -25,18 +26,10 @@ enum{
 		FT_VALIDATE_JSTF | FT_VALIDATE_MATH,
 }
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error da_FT_OpenType_Validate(FT_Face face, uint validation_flags, ubyte** BASE_table, ubyte** GDEF_table, ubyte** GPOS_table, ubyte** GSUB_table, ubyte** JSTF_table);
-		void da_FT_OpenType_Free(FT_Face face, ubyte* table);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_OpenType_Validate = FT_Error function(FT_Face face, uint validation_flags, ubyte** BASE_table, ubyte** GDEF_table, ubyte** GPOS_table, ubyte** GSUB_table, ubyte** JSTF_table);
-		alias pFT_OpenType_Free = void function (FT_Face face, ubyte* table);
-	}
-	__gshared{
-		pFT_OpenType_Validate FT_OpenType_Validate;
-		pFT_OpenType_Free FT_OpenType_Free;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{da_FT_OpenType_Validate}, q{FT_Face face, uint validation_flags, ubyte** BASE_table, ubyte** GDEF_table, ubyte** GPOS_table, ubyte** GSUB_table, ubyte** JSTF_table}},
+		{q{void}, q{da_FT_OpenType_Free}, q{FT_Face face, ubyte* table}},
+	];
+	return ret;
+}()));

@@ -7,6 +7,8 @@
 +/
 module ft.ttnameid;
 
+import bindbc.freetype.codegen;
+
 enum{
 	TT_PLATFORM_APPLE_UNICODE  = 0,
 	TT_PLATFORM_MACINTOSH      = 1,
@@ -665,3 +667,8 @@ enum{
 	TT_UCR_ARABIC_PRESENTATIONS_A            = TT_UCR_ARABIC_PRESENTATION_FORMS_A,
 	TT_UCR_ARABIC_PRESENTATIONS_B            = TT_UCR_ARABIC_PRESENTATION_FORMS_B,
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));

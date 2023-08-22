@@ -8,6 +8,7 @@
 module ft.cache;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 import ft;
 import ft.glyph;
@@ -66,57 +67,22 @@ struct FTC_SBitRec{
 struct FTC_SBitCacheRec;
 alias FTC_SBitCache = FTC_SBitCacheRec*;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		FT_Error FTC_Manager_New(FT_Library library, uint max_faces, uint max_sizes, FT_ULong max_bytes, FTC_Face_Requester requester, FT_Pointer req_data, FTC_Manager* amanager);
-		void FTC_Manager_Reset(FTC_Manager manager);
-		void FTC_Manager_Done(FTC_Manager manager);
-		FT_Error FTC_Manager_LookupFace(FTC_Manager manager, FTC_FaceID face_id, FT_Face* aface);
-		FT_Error FTC_Manager_LookupSize(FTC_Manager manager,FTC_Scaler sacler, FT_Size* asize);
-		void FTC_Node_Unref(FTC_Node node, FTC_Manager manager);
-		void FTC_Manager_RemoveFaceID(FTC_Manager manager, FTC_FaceID face_id);
-		FT_Error FTC_CMapCache_New(FTC_Manager manager, FTC_CMapCache* acache);
-		uint FTC_CMapCache_Lookup(FTC_CMapCache cache, FTC_FaceID face_id, int cmap_index, uint char_code);
-		FT_Error FTC_ImageCache_New(FTC_Manager manager, FTC_ImageCache* acache);
-		FT_Error FTC_ImageCache_Lookup(FTC_ImageCache cache, FTC_ImageType type, uint gindex, FT_Glyph* aglyph, FTC_Node* anode);
-		FT_Error FTC_ImageCache_LookupScaler(FTC_ImageCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FT_Glyph* aglyph, FTC_Node* anode);
-		FT_Error FTC_SBitCache_New(FTC_Manager manager, FTC_SBitCache* acache);
-		FT_Error FTC_SBitCache_Lookup(FTC_SBitCache cache, FTC_ImageType type, uint gindex, FTC_SBit* sbit, FTC_Node* anode);
-		FT_Error FTC_SBitCache_LookupScaler(FTC_SBitCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FTC_SBit* sbit, FTC_Node* anode);
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFTC_Manager_New = FT_Error function(FT_Library library, uint max_faces, uint max_sizes, FT_ULong max_bytes, FTC_Face_Requester requester, FT_Pointer req_data, FTC_Manager* amanager);
-		alias pFTC_Manager_Reset = void function(FTC_Manager manager);
-		alias pFTC_Manager_Done = void function(FTC_Manager manager);
-		alias pFTC_Manager_LookupFace = FT_Error function(FTC_Manager manager, FTC_FaceID face_id, FT_Face* aface);
-		alias pFTC_Manager_LookupSize = FT_Error function(FTC_Manager manager, FTC_Scaler scaler, FT_Size* asize);
-		alias pFTC_Node_Unref = void function(FTC_Node node, FTC_Manager manager);
-		alias pFTC_Manager_RemoveFaceID = void function(FTC_Manager manager,FTC_FaceID face_id);
-		alias pFTC_CMapCache_New = FT_Error function(FTC_Manager manager,FTC_CMapCache* acache);
-		alias pFTC_CMapCache_Lookup = uint function(FTC_CMapCache cache, FTC_FaceID face_id, int cmap_index, uint char_code);
-		alias pFTC_ImageCache_New = FT_Error function(FTC_Manager manager, FTC_ImageCache* acache);
-		alias pFTC_ImageCache_Lookup = FT_Error function(FTC_ImageCache cache, FTC_ImageType type, uint gindex, FT_Glyph* aglyph, FTC_Node* anode);
-		alias pFTC_ImageCache_LookupScaler = FT_Error function(FTC_ImageCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FT_Glyph* aglyph, FTC_Node* anode);
-		alias pFTC_SBitCache_New = FT_Error function(FTC_Manager manager, FTC_SBitCache* acache);
-		alias pFTC_SBitCache_Lookup = FT_Error function(FTC_SBitCache cache, FTC_ImageType type, uint gindex, FTC_SBit* sbit, FTC_Node* anode);
-		alias pFTC_SBitCache_LookupScaler = FT_Error function(FTC_SBitCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FTC_SBit* sbit, FTC_Node* anode);
-	}
-	__gshared{
-		pFTC_Manager_New FTC_Manager_New;
-		pFTC_Manager_Reset FTC_Manager_Reset;
-		pFTC_Manager_Done FTC_Manager_Done;
-		pFTC_Manager_LookupFace FTC_Manager_LookupFace;
-		pFTC_Manager_LookupSize FTC_Manager_LookupSize;
-		pFTC_Node_Unref FTC_Node_Unref;
-		pFTC_Manager_RemoveFaceID FTC_Manager_RemoveFaceID;
-		pFTC_CMapCache_New FTC_CMapCache_New;
-		pFTC_CMapCache_Lookup FTC_CMapCache_Lookup;
-		pFTC_ImageCache_New FTC_ImageCache_New;
-		pFTC_ImageCache_Lookup FTC_ImageCache_Lookup;
-		pFTC_ImageCache_LookupScaler FTC_ImageCache_LookupScaler;
-		pFTC_SBitCache_New FTC_SBitCache_New;
-		pFTC_SBitCache_Lookup FTC_SBitCache_Lookup;
-		pFTC_SBitCache_LookupScaler FTC_SBitCache_LookupScaler;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{FT_Error}, q{FTC_Manager_New}, q{FT_Library library, uint max_faces, uint max_sizes, FT_ULong max_bytes, FTC_Face_Requester requester, FT_Pointer req_data, FTC_Manager* amanager}},
+		{q{void}, q{FTC_Manager_Reset}, q{FTC_Manager manager}},
+		{q{void}, q{FTC_Manager_Done}, q{FTC_Manager manager}},
+		{q{FT_Error}, q{FTC_Manager_LookupFace}, q{FTC_Manager manager, FTC_FaceID face_id, FT_Face* aface}},
+		{q{FT_Error}, q{FTC_Manager_LookupSize}, q{FTC_Manager manager, FTC_Scaler sacler, FT_Size* asize}},
+		{q{void}, q{FTC_Node_Unref}, q{FTC_Node node, FTC_Manager manager}},
+		{q{void}, q{FTC_Manager_RemoveFaceID}, q{FTC_Manager manager, FTC_FaceID face_id}},
+		{q{FT_Error}, q{FTC_CMapCache_New}, q{FTC_Manager manager, FTC_CMapCache* acache}},
+		{q{uint}, q{FTC_CMapCache_Lookup}, q{FTC_CMapCache cache, FTC_FaceID face_id, int cmap_index, uint char_code}},
+		{q{FT_Error}, q{FTC_ImageCache_New}, q{FTC_Manager manager, FTC_ImageCache* acache}},
+		{q{FT_Error}, q{FTC_ImageCache_Lookup}, q{FTC_ImageCache cache, FTC_ImageType type, uint gindex, FT_Glyph* aglyph, FTC_Node* anode}},
+		{q{FT_Error}, q{FTC_ImageCache_LookupScaler}, q{FTC_ImageCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FT_Glyph* aglyph, FTC_Node* anode}},
+		{q{FT_Error}, q{FTC_SBitCache_New}, q{FTC_Manager manager, FTC_SBitCache* acache}},
+		{q{FT_Error}, q{FTC_SBitCache_Lookup}, q{FTC_SBitCache cache, FTC_ImageType type, uint gindex, FTC_SBit* sbit, FTC_Node* anode}},
+		{q{FT_Error}, q{FTC_SBitCache_LookupScaler}, q{FTC_SBitCache cache, FTC_Scaler scaler, FT_ULong load_flags, uint gindex, FTC_SBit* sbit, FTC_Node* anode}},	];
+	return ret;
+}()));

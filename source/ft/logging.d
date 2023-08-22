@@ -8,31 +8,20 @@
 module ft.logging;
 
 import bindbc.freetype.config;
+import bindbc.freetype.codegen;
 
 static if(ftSupport >= FTSupport.v2_11):
 import bindbc.common.types: va_list;
 import ft.types;
 
-extern(C) nothrow alias FT_Custom_Log_Handler = void function(const(char)* ft_component, const(char)* fmt, va_list args);
+alias FT_Custom_Log_Handler = extern(C) void function(const(char)* ft_component, const(char)* fmt, va_list args) nothrow;
 
-static if(staticBinding){
-	extern(C) nothrow @nogc{
-		void FT_Trace_Set_Level(const(char)* tracing_level);
-		void FT_Trace_Set_Default_Level();
-		void FT_Set_Log_Handler(FT_Custom_Log_Handler handler);
-		void FT_Set_Default_Log_Handler();
-	}
-}else{
-	extern(C) nothrow @nogc{
-		alias pFT_Trace_Set_Level = void function(const(char)* tracing_level);
-		alias pFT_Trace_Set_Default_Level = void function();
-		alias pFT_Set_Log_Handler = void function(FT_Custom_Log_Handler handler);
-		alias pFT_Set_Default_Log_Handler = void function();
-	}
-	__gshared{
-		pFT_Trace_Set_Level FT_Trace_Set_Level;
-		pFT_Trace_Set_Default_Level FT_Trace_Set_Default_Level;
-		pFT_Set_Log_Handler FT_Set_Log_Handler;
-		pFT_Set_Default_Log_Handler FT_Set_Default_Log_Handler;
-	}
-}
+mixin(joinFnBinds((){
+	FnBind[] ret = [
+		{q{void}, q{FT_Trace_Set_Level}, q{const(char)* tracing_level}},
+		{q{void}, q{FT_Trace_Set_Default_Level}, q{}},
+		{q{void}, q{FT_Set_Log_Handler}, q{FT_Custom_Log_Handler handler}},
+		{q{void}, q{FT_Set_Default_Log_Handler}, q{}},
+	];
+	return ret;
+}()));

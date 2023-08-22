@@ -7,6 +7,8 @@
 +/
 module ft.tttags;
 
+import bindbc.freetype.codegen;
+
 import ft.types;
 
 enum{
@@ -90,3 +92,8 @@ enum{
 	
 	TTAG_0xA5lst = FT_MAKE_TAG( 0xA5, 'l', 's', 't' ),
 }
+
+mixin(joinFnBinds((){
+	FnBind[] ret;
+	return ret;
+}()));
