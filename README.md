@@ -14,7 +14,7 @@ This project provides a set of both static and dynamic bindings to
 ## License
 BindBC-FreeType&mdash;as well as every other binding in the [BindBC project](https://github.com/BindBC)&mdash;is licensed under the [Boost Software License](https://www.boost.org/LICENSE_1_0.txt).
 
-Bear in mind that you still need to abide by [one of FreeType's licenses](https://freetype.org/license.html).
+Bear in mind that you still need to abide by [one of FreeType's licenses](https://freetype.org/license.html) if you use it through these bindings.
 
 ## FreeType documentation
 This readme describes how to use BindBC-FreeType, *not* FreeType itself. BindBC-FreeType is a direct D binding to the FreeType API, so any existing FreeType documentation and tutorials can be adapted with only minor modifications.
