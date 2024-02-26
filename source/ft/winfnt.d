@@ -80,7 +80,7 @@ alias FT_WinFNT_Header = FT_WinFNT_HeaderRec*;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Get_WinFNT_Header}, q{FT_Face face, FT_WinFNT_HeaderRec* aheader}},
+		{q{FT_Error}, q{FT_Get_WinFNT_Header}, q{FT_Face face, FT_WinFNT_HeaderRec* aHeader}},
 	];
 	return ret;
 }()));

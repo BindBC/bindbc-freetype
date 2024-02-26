@@ -30,12 +30,12 @@ struct FT_SfntLangTag{
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{uint}, q{FT_Get_Sfnt_Name_Count}, q{FT_Face face}},
-		{q{FT_Error}, q{FT_Get_Sfnt_Name}, q{FT_Face face, uint idx, FT_SfntName* aname}},
+		{q{FT_Error}, q{FT_Get_Sfnt_Name}, q{FT_Face face, uint idx, FT_SfntName* aName}},
 		
 	];
 	if(ftSupport >= FTSupport.v2_8){
 		FnBind[] add = [
-			{q{FT_Error}, q{FT_Get_Sfnt_LangTag}, q{FT_Face face, uint langID, FT_SfntLangTag* alangTag}},
+			{q{FT_Error}, q{FT_Get_Sfnt_LangTag}, q{FT_Face face, uint langID, FT_SfntLangTag* aLangTag}},
 		];
 		ret ~= add;
 	}

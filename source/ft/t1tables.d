@@ -213,9 +213,9 @@ enum: PS_Dict_Keys{
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{int}, q{FT_Has_PS_Glyph_Names}, q{FT_Face face}},
-		{q{FT_Error}, q{FT_Get_PS_Font_Info}, q{FT_Face face, PS_FontInfoRec* afont_info}},
-		{q{FT_Error}, q{FT_Get_PS_Font_Private}, q{FT_Face face, PS_PrivateRec* afont_private}},
-		{q{FT_Long}, q{FT_Get_PS_Font_Value}, q{FT_Face face, PS_Dict_Keys* key, uint idx, void* value, FT_Long value_len}},
+		{q{FT_Error}, q{FT_Get_PS_Font_Info}, q{FT_Face face, PS_FontInfoRec* aFontInfo}},
+		{q{FT_Error}, q{FT_Get_PS_Font_Private}, q{FT_Face face, PS_PrivateRec* aFontPrivate}},
+		{q{FT_Long}, q{FT_Get_PS_Font_Value}, q{FT_Face face, PS_Dict_Keys* key, uint idx, void* value, FT_Long valueLen}},
 	];
 	return ret;
 }()));

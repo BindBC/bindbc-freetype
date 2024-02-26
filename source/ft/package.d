@@ -386,40 +386,40 @@ enum: ushort{
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Init_FreeType}, q{FT_Library* alibrary}},
+		{q{FT_Error}, q{FT_Init_FreeType}, q{FT_Library* aLibrary}},
 		{q{FT_Error}, q{FT_Done_FreeType}, q{FT_Library library}},
-		{q{FT_Error}, q{FT_New_Face}, q{FT_Library library, const(char)* filepathname, FT_Long face_index, FT_Face* aface}},
-		{q{FT_Error}, q{FT_New_Memory_Face}, q{FT_Library library, const(ubyte)* file_base, FT_Long file_size, FT_Long face_index, FT_Face* aface}},
-		{q{FT_Error}, q{FT_Open_Face}, q{FT_Library library, const(FT_Open_Args)* args, FT_Long face_index, FT_Face* aface}},
-		{q{FT_Error}, q{FT_Attach_File}, q{FT_Face face, const(char)* filepathname}},
+		{q{FT_Error}, q{FT_New_Face}, q{FT_Library library, const(char)* filePathName, FT_Long faceIndex, FT_Face* aFace}},
+		{q{FT_Error}, q{FT_New_Memory_Face}, q{FT_Library library, const(ubyte)* fileBase, FT_Long fileSize, FT_Long faceIndex, FT_Face* aFace}},
+		{q{FT_Error}, q{FT_Open_Face}, q{FT_Library library, const(FT_Open_Args)* args, FT_Long faceIndex, FT_Face* aFace}},
+		{q{FT_Error}, q{FT_Attach_File}, q{FT_Face face, const(char)* filePathName}},
 		{q{FT_Error}, q{FT_Attach_Stream}, q{FT_Face face, const(FT_Open_Args)* parameters}},
 		{q{FT_Error}, q{FT_Reference_Face}, q{FT_Face face}},
 		{q{FT_Error}, q{FT_Done_Face}, q{FT_Face face}},
-		{q{FT_Error}, q{FT_Select_Size}, q{FT_Face face, int strike_index}},
+		{q{FT_Error}, q{FT_Select_Size}, q{FT_Face face, int strikeIndex}},
 		{q{FT_Error}, q{FT_Request_Size}, q{FT_Face face, FT_Size_Request req}},
-		{q{FT_Error}, q{FT_Set_Char_Size}, q{FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, uint horz_resolution, uint vert_resolution}},
-		{q{FT_Error}, q{FT_Set_Pixel_Sizes}, q{FT_Face face, uint pixel_width, uint pixel_height}},
-		{q{FT_Error}, q{FT_Load_Glyph}, q{FT_Face face, uint glyph_index, int load_flags}},
-		{q{FT_Error}, q{FT_Load_Char}, q{FT_Face face, uint char_code, int load_flags}},
+		{q{FT_Error}, q{FT_Set_Char_Size}, q{FT_Face face, FT_F26Dot6 charWidth, FT_F26Dot6 charHeight, uint horzResolution, uint vertResolution}},
+		{q{FT_Error}, q{FT_Set_Pixel_Sizes}, q{FT_Face face, uint pixelWidth, uint pixelHeight}},
+		{q{FT_Error}, q{FT_Load_Glyph}, q{FT_Face face, uint glyphIndex, int loadFlags}},
+		{q{FT_Error}, q{FT_Load_Char}, q{FT_Face face, uint charCode, int loadFlags}},
 		{q{void}, q{FT_Set_Transform}, q{FT_Face face, FT_Matrix* matrix, FT_Vector* delta}},
-		{q{FT_Error}, q{FT_Render_Glyph}, q{FT_GlyphSlot slot, FT_Render_Mode render_mode}},
-		{q{FT_Error}, q{FT_Get_Kerning}, q{FT_Face face, uint left_glyph, uint right_glyph, uint kern_mode, FT_Vector* akerning}},
-		{q{FT_Error}, q{FT_Get_Track_Kerning}, q{FT_Face face, FT_Fixed point_size, int degree, FT_Fixed* akerning}},
-		{q{FT_Error}, q{FT_Get_Glyph_Name}, q{FT_Face face, uint glyph_index, FT_Pointer buffer, uint buffer_max}},
+		{q{FT_Error}, q{FT_Render_Glyph}, q{FT_GlyphSlot slot, FT_Render_Mode renderMode}},
+		{q{FT_Error}, q{FT_Get_Kerning}, q{FT_Face face, uint leftGlyph, uint rightGlyph, uint kernMode, FT_Vector* aKerning}},
+		{q{FT_Error}, q{FT_Get_Track_Kerning}, q{FT_Face face, FT_Fixed pointSize, int degree, FT_Fixed* aKerning}},
+		{q{FT_Error}, q{FT_Get_Glyph_Name}, q{FT_Face face, uint glyphIndex, FT_Pointer buffer, uint bufferMax}},
 		{q{const(char)*}, q{FT_Get_Postscript_Name}, q{FT_Face face}},
 		{q{FT_Error}, q{FT_Select_Charmap}, q{FT_Face face, FT_Encoding encoding}},
-		{q{FT_Error}, q{FT_Set_Charmap}, q{FT_Face face, FT_CharMap charmap}},
-		{q{int}, q{FT_Get_Charmap_Index}, q{FT_CharMap charmap}},
-		{q{uint}, q{FT_Get_Char_Index}, q{FT_Face face, FT_ULong charcode}},
-		{q{FT_ULong}, q{FT_Get_First_Char}, q{FT_Face face, uint* agindex}},
-		{q{FT_ULong}, q{FT_Get_Next_Char}, q{FT_Face face, FT_ULong char_code, uint* agindex}},
-		{q{uint}, q{FT_Get_Name_Index}, q{FT_Face face, const(char)* glyph_name}},
-		{q{FT_Error}, q{FT_Get_SubGlyph_Info}, q{FT_GlyphSlot glyph, uint sub_index, int* p_index, uint* p_flags, int* p_arg1, int* p_arg2, FT_Matrix* p_transform}},
+		{q{FT_Error}, q{FT_Set_Charmap}, q{FT_Face face, FT_CharMap charMap}},
+		{q{int}, q{FT_Get_Charmap_Index}, q{FT_CharMap charMap}},
+		{q{uint}, q{FT_Get_Char_Index}, q{FT_Face face, FT_ULong charCode}},
+		{q{FT_ULong}, q{FT_Get_First_Char}, q{FT_Face face, uint* aGIndex}},
+		{q{FT_ULong}, q{FT_Get_Next_Char}, q{FT_Face face, FT_ULong charCode, uint* aGIndex}},
+		{q{uint}, q{FT_Get_Name_Index}, q{FT_Face face, const(char)* glyphName}},
+		{q{FT_Error}, q{FT_Get_SubGlyph_Info}, q{FT_GlyphSlot glyph, uint subIndex, int* pIndex, uint* pFlags, int* pArg1, int* pArg2, FT_Matrix* pTransform}},
 		{q{ushort}, q{FT_Get_FSType_Flags}, q{FT_Face face}},
-		{q{uint}, q{FT_Face_GetCharVariantIndex}, q{FT_Face face, FT_ULong charcode, FT_ULong variantSelector}},
-		{q{int}, q{FT_Face_GetCharVariantIsDefault}, q{FT_Face face, FT_ULong charcode, FT_ULong variantSelector}},
+		{q{uint}, q{FT_Face_GetCharVariantIndex}, q{FT_Face face, FT_ULong charCode, FT_ULong variantSelector}},
+		{q{int}, q{FT_Face_GetCharVariantIsDefault}, q{FT_Face face, FT_ULong charCode, FT_ULong variantSelector}},
 		{q{uint*}, q{FT_Face_GetVariantSelectors}, q{FT_Face face}},
-		{q{uint*}, q{FT_Face_GetVariantsOfChar}, q{FT_Face face, FT_ULong charcode}},
+		{q{uint*}, q{FT_Face_GetVariantsOfChar}, q{FT_Face face, FT_ULong charCode}},
 		{q{uint*}, q{FT_Face_GetCharsOfVariant}, q{FT_Face face, FT_ULong variantSelector}},
 		{q{FT_Long}, q{FT_MulDiv}, q{FT_Long a, FT_Long b, FT_Long c}},
 		{q{FT_Long}, q{FT_MulFix}, q{FT_Long a, FT_Long b}},
@@ -428,13 +428,13 @@ mixin(joinFnBinds((){
 		{q{FT_Fixed}, q{FT_CeilFix}, q{FT_Fixed a}},
 		{q{FT_Fixed}, q{FT_FloorFix}, q{FT_Fixed a}},
 		{q{void}, q{FT_Vector_Transform}, q{FT_Vector* vector, FT_Matrix* matrix}},
-		{q{void}, q{FT_Library_Version}, q{FT_Library library, int* amajor, int* aminor, int* apatch}},
+		{q{void}, q{FT_Library_Version}, q{FT_Library library, int* aMajor, int* aMinor, int* aPatch}},
 		{q{FT_Bool}, q{FT_Face_CheckTrueTypePatents}, q{FT_Face face}},
 		{q{FT_Bool}, q{FT_Face_SetUnpatentedHinting}, q{FT_Face face, FT_Bool value}},
 	];
 	if(ftSupport >= FTSupport.v2_8){
 		FnBind[] add = [
-			{q{FT_Error}, q{FT_Face_Properties}, q{FT_Face face, uint num_properties, FT_Parameter* properties}},
+			{q{FT_Error}, q{FT_Face_Properties}, q{FT_Face face, uint numProperties, FT_Parameter* properties}},
 		];
 		ret ~= add;
 	}
@@ -446,7 +446,7 @@ mixin(joinFnBinds((){
 	}else{
 		// Moved to ftcolor.h in 2.11
 		FnBind[] add = [
-			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator}},
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint baseGlyph, uint* aGlyphIndex, uint* aColourIndex, FT_LayerIterator* iterator}},
 		];
 		ret ~= add;
 	}

@@ -16,7 +16,7 @@ mixin(joinFnBinds((){
 	FnBind[] ret;
 	if(ftSupport >= FTSupport.v2_10){
 		FnBind[] add = [
-			{q{const(char)*}, q{FT_Error_String}, q{FT_Error error_code}},
+			{q{const(char)*}, q{FT_Error_String}, q{FT_Error errorCode}},
 		];
 		ret ~= add;
 	}

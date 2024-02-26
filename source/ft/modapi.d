@@ -61,15 +61,15 @@ enum: FT_TrueTypeEngineType{
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Add_Module}, q{FT_Library library, const(FT_Module_Class)* clazz}},
-		{q{FT_Module}, q{FT_Get_Module}, q{FT_Library library, const(char)* module_name}},
+		{q{FT_Error}, q{FT_Add_Module}, q{FT_Library library, const(FT_Module_Class)* class_}},
+		{q{FT_Module}, q{FT_Get_Module}, q{FT_Library library, const(char)* moduleName}},
 		{q{FT_Error}, q{FT_Remove_Module}, q{FT_Library library, FT_Module module_}},
-		{q{FT_Error}, q{FT_Property_Set}, q{FT_Library library, const(char)* module_name, const(char)* property_name, const(void)* value}},
-		{q{FT_Error}, q{FT_Property_Get}, q{FT_Library library, const(char)* module_name, const(char)* property_name, void* value}},
+		{q{FT_Error}, q{FT_Property_Set}, q{FT_Library library, const(char)* moduleName, const(char)* propertyName, const(void)* value}},
+		{q{FT_Error}, q{FT_Property_Get}, q{FT_Library library, const(char)* moduleName, const(char)* propertyName, void* value}},
 		{q{FT_Error}, q{FT_Reference_Library}, q{FT_Library library}},
-		{q{FT_Error}, q{FT_New_Library}, q{FT_Memory memory, FT_Library* alibrary}},
+		{q{FT_Error}, q{FT_New_Library}, q{FT_Memory memory, FT_Library* aLibrary}},
 		{q{FT_Error}, q{FT_Done_Library}, q{FT_Library library}},
-		{q{void}, q{FT_Set_Debug_Hook}, q{FT_Library library, uint hook_index, FT_DebugHook_Func debug_hook}},
+		{q{void}, q{FT_Set_Debug_Hook}, q{FT_Library library, uint hookIndex, FT_DebugHook_Func debugHook}},
 		{q{void}, q{FT_Add_Default_Modules}, q{FT_Library library}},
 		{q{FT_TrueTypeEngineType}, q{FT_Get_TrueType_Engine_Type}, q{FT_Library library}},
 	];

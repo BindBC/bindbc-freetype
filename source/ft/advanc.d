@@ -17,8 +17,8 @@ enum FT_ADVANCE_FLAG_FAST_ONLY = 0x20000000;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Get_Advance}, q{FT_Face face, uint gIndex, int load_flags, FT_Fixed* padvance}},
-		{q{FT_Error}, q{FT_Get_Advances}, q{FT_Face face, uint start, uint count, int load_flags, FT_Fixed* padvances}},
+		{q{FT_Error}, q{FT_Get_Advance}, q{FT_Face face, uint gIndex, int loadFlags, FT_Fixed* pAdvance}},
+		{q{FT_Error}, q{FT_Get_Advances}, q{FT_Face face, uint start, uint count, int loadFlags, FT_Fixed* pAdvances}},
 	];
 	return ret;
 }()));

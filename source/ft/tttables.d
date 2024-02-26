@@ -182,9 +182,9 @@ mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{void*}, q{FT_Get_Sfnt_Table}, q{FT_Face face, FT_Sfnt_Tag tag}},
 		{q{FT_Error}, q{FT_Load_Sfnt_Table}, q{FT_Face face, FT_ULong tag, FT_Long offset, ubyte* buffer, FT_ULong* length}},
-		{q{FT_Error}, q{FT_Sfnt_Table_Info}, q{FT_Face face, uint table_index, FT_ULong* tag, FT_ULong* length}},
-		{q{FT_ULong}, q{FT_Get_CMap_Language_ID}, q{FT_CharMap charmap}},
-		{q{FT_ULong}, q{FT_Get_CMap_Format}, q{FT_CharMap charmap}},
+		{q{FT_Error}, q{FT_Sfnt_Table_Info}, q{FT_Face face, uint tableIndex, FT_ULong* tag, FT_ULong* length}},
+		{q{FT_ULong}, q{FT_Get_CMap_Language_ID}, q{FT_CharMap charMap}},
+		{q{FT_ULong}, q{FT_Get_CMap_Format}, q{FT_CharMap charMap}},
 	];
 	return ret;
 }()));

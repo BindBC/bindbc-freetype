@@ -57,9 +57,9 @@ enum{
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_TrueTypeGX_Validate}, q{FT_Face face, uint validation_flags, ubyte** tables, uint table_length}},
+		{q{FT_Error}, q{FT_TrueTypeGX_Validate}, q{FT_Face face, uint validationFlags, ubyte** tables, uint tableLength}},
 		{q{void}, q{FT_TrueTypeGX_Free}, q{FT_Face face, ubyte* table}},
-		{q{FT_Error}, q{FT_ClassicKern_Validate}, q{FT_Face face, uint validation_flags, ubyte** ckern_table}},
+		{q{FT_Error}, q{FT_ClassicKern_Validate}, q{FT_Face face, uint validationFlags, ubyte** cKernTable}},
 		{q{void}, q{FT_ClassicKern_Free}, q{FT_Face face, ubyte* table}},
 	];
 	return ret;

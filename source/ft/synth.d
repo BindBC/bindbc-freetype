@@ -19,8 +19,8 @@ mixin(joinFnBinds((){
 	];
 	if(ftSupport >= FTSupport.v2_13){
 		FnBind[] add = [
-			{q{void}, q{FT_GlyphSlot_AdjustWeight}, q{FT_GlyphSlot slot, FT_Fixed xdelta, FT_Fixed ydelta}},
-			{q{void}, q{FT_GlyphSlot_Slant}, q{FT_GlyphSlot slot, FT_Fixed xslant, FT_Fixed yslant}},
+			{q{void}, q{FT_GlyphSlot_AdjustWeight}, q{FT_GlyphSlot slot, FT_Fixed xDelta, FT_Fixed yDelta}},
+			{q{void}, q{FT_GlyphSlot_Slant}, q{FT_GlyphSlot slot, FT_Fixed xSlant, FT_Fixed ySlant}},
 		];
 		ret ~= add;
 	}

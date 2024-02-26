@@ -16,7 +16,7 @@ import ft.types;
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{FT_Error}, q{FT_Stream_OpenGzip}, q{FT_Stream stream, FT_Stream source}},
-		{q{FT_Error}, q{FT_Gzip_Uncompress}, q{FT_Memory memory, ubyte* output, FT_ULong* output_len, const(ubyte)* input, FT_ULong input_len}},
+		{q{FT_Error}, q{FT_Gzip_Uncompress}, q{FT_Memory memory, ubyte* output, FT_ULong* outputLen, const(ubyte)* input, FT_ULong inputLen}},
 	];
 	return ret;
 }()));

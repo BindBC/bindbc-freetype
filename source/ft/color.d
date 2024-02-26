@@ -259,19 +259,19 @@ mixin(joinFnBinds((){
 	FnBind[] ret;
 	if(ftSupport >= FTSupport.v2_10){
 		FnBind[] add = [
-			{q{FT_Error}, q{FT_Palette_Data_Get}, q{FT_Face face, FT_Palette_Data* apalette}},
-			{q{FT_Error}, q{FT_Palette_Select}, q{FT_Face face, ushort palette_index, FT_Color* apalette}},
-			{q{FT_Error}, q{FT_Palette_Set_Foreground_Color}, q{FT_Face face, FT_Color foreground_color}},
-			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint base_glyph, uint* aglyph_index, uint* acolor_index, FT_LayerIterator* iterator}, aliases: ["FT_Get_Colour_Glyph_Layer"]},
+			{q{FT_Error}, q{FT_Palette_Data_Get}, q{FT_Face face, FT_Palette_Data* aPalette}},
+			{q{FT_Error}, q{FT_Palette_Select}, q{FT_Face face, ushort paletteIndex, FT_Color* aPalette}},
+			{q{FT_Error}, q{FT_Palette_Set_Foreground_Color}, q{FT_Face face, FT_Color foregroundColour}},
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint baseGlyph, uint* aGlyphIndex, uint* aColourIndex, FT_LayerIterator* iterator}, aliases: ["FT_Get_Colour_Glyph_Layer"]},
 		];
 		ret ~= add;
 	}
 	if(ftSupport >= FTSupport.v2_11){
 		FnBind[] add = [
-			{q{FT_Bool}, q{FT_Get_Color_Glyph_Paint}, q{FT_Face face, uint base_glyph, FT_Color_Root_Transform root_transform, FT_OpaquePaint* paint}, aliases: ["FT_Get_Colour_Glyph_Paint"]},
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Paint}, q{FT_Face face, uint baseGlyph, FT_Color_Root_Transform rootTransform, FT_OpaquePaint* paint}, aliases: ["FT_Get_Colour_Glyph_Paint"]},
 			{q{FT_Bool}, q{FT_Get_Paint_Layers}, q{FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint}},
-			{q{FT_Bool}, q{FT_Get_Colorline_Stops}, q{FT_Face face, FT_ColorStop* color_stop, FT_ColorStopIterator iterator}, aliases: ["FT_Get_Colourline_Stops"]},
-			{q{FT_Bool}, q{FT_Get_Paint}, q{FT_Face face, FT_OpaquePaint opaque_paint, FT_COLR_Paint* paint}},
+			{q{FT_Bool}, q{FT_Get_Colorline_Stops}, q{FT_Face face, FT_ColorStop* colourStop, FT_ColorStopIterator iterator}, aliases: ["FT_Get_Colourline_Stops"]},
+			{q{FT_Bool}, q{FT_Get_Paint}, q{FT_Face face, FT_OpaquePaint opaquePaint, FT_COLR_Paint* paint}},
 		];
 		ret ~= add;
 	}

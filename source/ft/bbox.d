@@ -15,7 +15,7 @@ import ft.types;
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Outline_Get_BBox}, q{FT_Outline* outline, FT_BBox* abbox}},
+		{q{FT_Error}, q{FT_Outline_Get_BBox}, q{FT_Outline* outline, FT_BBox* aBBox}},
 	];
 	return ret;
 }()));

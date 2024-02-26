@@ -60,7 +60,7 @@ struct FT_Renderer_Class{
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{FT_Renderer}, q{FT_Get_Renderer}, q{FT_Library library, FT_Glyph_Format format}},
-		{q{FT_Error}, q{FT_Set_Renderer}, q{FT_Library library, FT_Renderer renderer, uint num_params, FT_Parameter* parameters}},
+		{q{FT_Error}, q{FT_Set_Renderer}, q{FT_Library library, FT_Renderer renderer, uint numParams, FT_Parameter* parameters}},
 	];
 	return ret;
 }()));

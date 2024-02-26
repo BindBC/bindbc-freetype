@@ -73,18 +73,18 @@ static if(ftSupport >= FTSupport.v2_12){
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Get_Glyph}, q{FT_GlyphSlot slot, FT_Glyph* aglyph}},
+		{q{FT_Error}, q{FT_Get_Glyph}, q{FT_GlyphSlot slot, FT_Glyph* aGlyph}},
 		{q{FT_Error}, q{FT_Glyph_Copy}, q{FT_Glyph source, FT_Glyph* target}},
 		{q{FT_Error}, q{FT_Glyph_Transform}, q{FT_Glyph glyph, FT_Matrix* matrix, FT_Vector* delta}},
-		{q{void}, q{FT_Glyph_Get_CBox}, q{FT_Glyph glyph, uint bbox_mode, FT_BBox* acbox}},
-		{q{FT_Error}, q{FT_Glyph_To_Bitmap}, q{FT_Glyph* the_glyph, FT_Render_Mode render_mode, FT_Vector* origin, FT_Bool destroy}},
+		{q{void}, q{FT_Glyph_Get_CBox}, q{FT_Glyph glyph, uint bboxMode, FT_BBox* aCBox}},
+		{q{FT_Error}, q{FT_Glyph_To_Bitmap}, q{FT_Glyph* theGlyph, FT_Render_Mode renderMode, FT_Vector* origin, FT_Bool destroy}},
 		{q{void}, q{FT_Done_Glyph}, q{FT_Glyph glyph}},
 		{q{void}, q{FT_Matrix_Multiply}, q{const(FT_Matrix)* a, FT_Matrix* b}},
 		{q{FT_Error}, q{FT_Matrix_Invert}, q{FT_Matrix* matrix}},
 	];
 	if(ftSupport >= FTSupport.v2_10){
 		FnBind[] add = [
-			{q{FT_Error}, q{FT_New_Glyph}, q{FT_Library library, FT_Glyph_Format format, FT_Glyph* aglyph}},
+			{q{FT_Error}, q{FT_New_Glyph}, q{FT_Library library, FT_Glyph_Format format, FT_Glyph* aGlyph}},
 		];
 		ret ~= add;
 	}

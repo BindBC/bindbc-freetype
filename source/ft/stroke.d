@@ -48,8 +48,8 @@ mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{FT_StrokerBorder}, q{FT_Outline_GetInsideBorder}, q{FT_Outline* outline}},
 		{q{FT_StrokerBorder}, q{FT_Outline_GetOutsideBorder}, q{FT_Outline* outline}},
-		{q{FT_Error}, q{FT_Stroker_New}, q{FT_Library library, FT_Stroker* astroker}},
-		{q{void}, q{FT_Stroker_Set}, q{FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit}},
+		{q{FT_Error}, q{FT_Stroker_New}, q{FT_Library library, FT_Stroker* aStroker}},
+		{q{void}, q{FT_Stroker_Set}, q{FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap lineCap, FT_Stroker_LineJoin lineJoin, FT_Fixed mitreLimit}},
 		{q{void}, q{FT_Stroker_Rewind}, q{FT_Stroker stroker}},
 		{q{FT_Error}, q{FT_Stroker_ParseOutline}, q{FT_Stroker stroker, FT_Outline* outline, FT_Bool opened}},
 		{q{FT_Error}, q{FT_Stroker_BeginSubPath}, q{FT_Stroker stroker, FT_Vector* to, FT_Bool open}},
@@ -57,13 +57,13 @@ mixin(joinFnBinds((){
 		{q{FT_Error}, q{FT_Stroker_LineTo}, q{FT_Stroker stroker, FT_Vector* to}},
 		{q{FT_Error}, q{FT_Stroker_ConicTo}, q{FT_Stroker stroker, FT_Vector* control, FT_Vector* to}},
 		{q{FT_Error}, q{FT_Stroker_CubicTo}, q{FT_Stroker stroker, FT_Vector* control1, FT_Vector* control2, FT_Vector* to}},
-		{q{FT_Error}, q{FT_Stroker_GetBorderCounts}, q{FT_Stroker stroker, FT_StrokerBorder border, uint* anum_points, uint* anum_contours}},
+		{q{FT_Error}, q{FT_Stroker_GetBorderCounts}, q{FT_Stroker stroker, FT_StrokerBorder border, uint* aNumPoints, uint* aNumContours}},
 		{q{void}, q{FT_Stroker_ExportBorder}, q{FT_Stroker stroker, FT_StrokerBorder border, FT_Outline* outline}},
-		{q{FT_Error}, q{FT_Stroker_GetCounts}, q{FT_Stroker stroker, uint* anum_points, uint* anum_contours}},
+		{q{FT_Error}, q{FT_Stroker_GetCounts}, q{FT_Stroker stroker, uint* aNumPoints, uint* aNumContours}},
 		{q{void}, q{FT_Stroker_Export}, q{FT_Stroker stroker, FT_Outline* outline}},
 		{q{void}, q{FT_Stroker_Done}, q{FT_Stroker stroker}},
-		{q{FT_Error}, q{FT_Glyph_Stroke}, q{FT_Glyph* pglyph, FT_Stroker stroker, FT_Bool destroy}},
-		{q{FT_Error}, q{FT_Glyph_StrokeBorder}, q{FT_Glyph* pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy}},
+		{q{FT_Error}, q{FT_Glyph_Stroke}, q{FT_Glyph* pGlyph, FT_Stroker stroker, FT_Bool destroy}},
+		{q{FT_Error}, q{FT_Glyph_StrokeBorder}, q{FT_Glyph* pGlyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy}},
 	];
 	return ret;
 }()));
