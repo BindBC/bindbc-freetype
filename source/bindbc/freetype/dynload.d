@@ -39,7 +39,7 @@ FTSupport loadFreeType(){
 			"OSX": ["freetype.6"],
 		],
 		[
-			"OSX": ["/usr/X11/lib/",  "/opt/X11/lib/"],
+			"OSX": ["/usr/X11/lib/", "/opt/X11/lib/"],
 		],
 	));
 	const(char)[][libNamesCT.length] libNames = libNamesCT;
