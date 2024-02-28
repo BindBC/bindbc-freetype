@@ -7,7 +7,6 @@
 +/
 module ft.bdf;
 
-version(linux):
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
