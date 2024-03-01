@@ -127,7 +127,9 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_COLR_COMPOSITE_DARKEN          = 14,
 		FT_COLR_COMPOSITE_LIGHTEN         = 15,
 		FT_COLR_COMPOSITE_COLOR_DODGE     = 16,
+		FT_COLR_COMPOSITE_COLOUR_DODGE    = FT_COLR_COMPOSITE_COLOR_DODGE,
 		FT_COLR_COMPOSITE_COLOR_BURN      = 17,
+		FT_COLR_COMPOSITE_COLOUR_BURN     = FT_COLR_COMPOSITE_COLOR_BURN,
 		FT_COLR_COMPOSITE_HARD_LIGHT      = 18,
 		FT_COLR_COMPOSITE_SOFT_LIGHT      = 19,
 		FT_COLR_COMPOSITE_DIFFERENCE      = 20,
@@ -136,6 +138,7 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_COLR_COMPOSITE_HSL_HUE         = 23,
 		FT_COLR_COMPOSITE_HSL_SATURATION  = 24,
 		FT_COLR_COMPOSITE_HSL_COLOR       = 25,
+		FT_COLR_COMPOSITE_HSL_COLOUR      = FT_COLR_COMPOSITE_HSL_COLOR,
 		FT_COLR_COMPOSITE_HSL_LUMINOSITY  = 26,
 		FT_COLR_COMPOSITE_MAX             = 27,
 	}
@@ -175,6 +178,7 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_ColorLine colorline;
 		alias colourline = colorline;
 		FT_Vector center;
+		alias centre = center;
 		FT_Fixed start_angle;
 		FT_Fixed end_angle;
 	}
@@ -204,14 +208,18 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_Fixed scale_x;
 		FT_Fixed scale_y;
 		FT_Fixed center_x;
+		alias centre_x = center_x;
 		FT_Fixed center_y;
+		alias centre_y = center_y;
 	}
 	
 	struct FT_PaintRotate{
 		FT_OpaquePaint paint;
 		FT_Fixed angle;
 		FT_Fixed center_x;
+		alias centre_x = center_x;
 		FT_Fixed center_y;
+		alias centre_y = center_y;
 	}
 	
 	struct FT_PaintSkew{
@@ -219,7 +227,9 @@ static if(ftSupport >= FTSupport.v2_11){
 		FT_Fixed x_skew_angle;
 		FT_Fixed y_skew_angle;
 		FT_Fixed center_x;
+		alias centre_x = center_x;
 		FT_Fixed center_y;
+		alias centre_y = center_y;
 	}
 	
 	struct FT_PaintComposite{
@@ -250,9 +260,13 @@ static if(ftSupport >= FTSupport.v2_11){
 	alias FT_Color_Root_Transform = int;
 	enum: FT_Color_Root_Transform{
 		FT_COLOR_INCLUDE_ROOT_TRANSFORM,
+		FT_COLOUR_INCLUDE_ROOT_TRANSFORM = FT_COLOR_INCLUDE_ROOT_TRANSFORM,
 		FT_COLOR_NO_ROOT_TRANSFORM,
+		FT_COLOUR_NO_ROOT_TRANSFORM = FT_COLOR_NO_ROOT_TRANSFORM,
 		FT_COLOR_ROOT_TRANSFORM_MAX,
+		FT_COLOUR_ROOT_TRANSFORM_MAX = FT_COLOR_ROOT_TRANSFORM_MAX,
 	}
+	alias FT_Colour_Root_Transform = FT_Color_Root_Transform;
 }
 
 mixin(joinFnBinds((){

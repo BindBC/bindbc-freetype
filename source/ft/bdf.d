@@ -7,36 +7,41 @@
 +/
 module ft.bdf;
 
-version(linux):
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
-import ft;
-import ft.types;
+version(linux){
+	import ft;
+	import ft.types;
 
-alias BDF_PropertyType = int;
-enum: BDF_PropertyType{
-	BDF_PROPERTY_TYPE_NONE      = 0,
-	BDF_PROPERTY_TYPE_ATOM      = 1,
-	BDF_PROPERTY_TYPE_INTEGER   = 2,
-	BDF_PROPERTY_TYPE_CARDINAL  = 3,
-}
-
-alias BDF_Property = BDF_PropertyRec*;
-
-struct BDF_PropertyRec{
-	BDF_PropertyType type;
-	union u{
-		char* atom;
-		int integer;
-		uint cardinal;
+	alias BDF_PropertyType = int;
+	enum: BDF_PropertyType{
+		BDF_PROPERTY_TYPE_NONE      = 0,
+		BDF_PROPERTY_TYPE_ATOM      = 1,
+		BDF_PROPERTY_TYPE_INTEGER   = 2,
+		BDF_PROPERTY_TYPE_CARDINAL  = 3,
+	}
+	
+	alias BDF_Property = BDF_PropertyRec*;
+	
+	struct BDF_PropertyRec{
+		BDF_PropertyType type;
+		union u{
+			char* atom;
+			int integer;
+			uint cardinal;
+		}
 	}
 }
 
 mixin(joinFnBinds((){
-	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Get_BDF_Charset_ID}, q{FT_Face face, const(char)** aCharsetEncoding, const(char)** aCharsetRegistry}},
-		{q{FT_Error}, q{FT_Get_BDF_Property}, q{FT_Face face, const(char)* propName, BDF_PropertyRec* aProperty}},
-	];
+	FnBind[] ret;
+	version(linux){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_Get_BDF_Charset_ID}, q{FT_Face face, const(char)** aCharsetEncoding, const(char)** aCharsetRegistry}},
+			{q{FT_Error}, q{FT_Get_BDF_Property}, q{FT_Face face, const(char)* propName, BDF_PropertyRec* aProperty}},
+		];
+		ret ~= add;
+	}
 	return ret;
 }()));

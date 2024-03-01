@@ -14,7 +14,7 @@ static if(ftSupport >= FTSupport.v2_11){
 	import bindbc.common.types: va_list;
 	import ft.types;
 	
-	alias FT_Custom_Log_Handler = extern(C) void function(const(char)* ft_component, const(char)* fmt, va_list args) nothrow;
+	alias FT_Custom_Log_Handler = extern(C) void function(const(char)* ftComponent, const(char)* fmt, va_list args) nothrow;
 }
 
 mixin(joinFnBinds((){
