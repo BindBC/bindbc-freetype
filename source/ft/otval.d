@@ -28,8 +28,8 @@ enum{
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{da_FT_OpenType_Validate}, q{FT_Face face, uint validationFlags, ubyte** baseTable, ubyte** gdefTable, ubyte** gposTable, ubyte** gsubTable, ubyte** jstfTable}},
-		{q{void}, q{da_FT_OpenType_Free}, q{FT_Face face, ubyte* table}},
+		{q{FT_Error}, q{FT_OpenType_Validate}, q{FT_Face face, uint validationFlags, ubyte** baseTable, ubyte** gdefTable, ubyte** gposTable, ubyte** gsubTable, ubyte** jstfTable}},
+		{q{void}, q{FT_OpenType_Free}, q{FT_Face face, ubyte* table}},
 	];
 	return ret;
 }()));
