@@ -7,14 +7,54 @@
 +/
 module ft;
 
+public import
+	ft.advanc,
+	ft.bbox,
+	ft.bdf,
+	ft.bitmap,
+	ft.bzip2,
+	ft.cache,
+	ft.cid,
+	ft.color,
+	ft.driver,
+	ft.errdef,
+	ft.errors,
+	ft.fntfmt,
+	ft.gasp,
+	ft.glyph,
+	ft.gxval,
+	ft.gzip,
+	ft.image,
+	ft.increm,
+	ft.lcdfil,
+	ft.list,
+	ft.logging,
+	ft.lzw,
+	ft.mm,
+	ft.modapi,
+	ft.moderr,
+	ft.otval,
+	ft.outln,
+	ft.params,
+	ft.pfr,
+	ft.render,
+	ft.sizes,
+	ft.snames,
+	ft.stroke,
+	ft.synth,
+	ft.system,
+	ft.t1tables,
+	ft.trigon,
+	ft.ttnameid,
+	ft.tttables,
+	ft.tttags,
+	ft.types,
+	ft.winfnt;
+
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
 import bindbc.common.types: c_long;
-import ft.image;
-import ft.system;
-import ft.types;
-import ft.color;
 
 alias colour = ft.color;
 

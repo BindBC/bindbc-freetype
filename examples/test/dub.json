@@ -1,0 +1,26 @@
+{
+	"name": "test",
+	"targetType": "executable",
+	"targetPath": "bin",
+	"dependencies": {
+		"bindbc-freetype": {"path": "../../"},
+	},
+	"configurations": [
+		{
+			"name": "dynamic",
+			"subConfigurations": {
+				"bindbc-freetype": "dynamic",
+				"bindbc-sdl": "dynamic",
+			},
+		},
+		{
+			"name": "static",
+			"subConfigurations": {
+				"bindbc-freetype": "static",
+				"bindbc-sdl": "static",
+			},
+			"libs": ["freetype", "stdc++"],
+		},
+	],
+	"versions": ["FT_2_13"],
+}

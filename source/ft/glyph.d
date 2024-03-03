@@ -58,7 +58,7 @@ static if(ftSupport >= FTSupport.v2_12){
 		ubyte* svg_document;
 		FT_ULong svg_document_length;
 		
-		FT_UInt glyph_index;
+		uint glyph_index;
 		
 		FT_Size_Metrics metrics;
 		ushort units_per_EM;
