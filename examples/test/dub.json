@@ -8,17 +8,20 @@
 	"configurations": [
 		{
 			"name": "dynamic",
-			"subConfigurations": {
-				"bindbc-freetype": "dynamic",
-				"bindbc-sdl": "dynamic",
-			},
+			"subConfigurations": {"bindbc-freetype": "dynamic"},
+		},
+		{
+			"name": "dynamicBC",
+			"subConfigurations": {"bindbc-freetype": "dynamicBC"},
 		},
 		{
 			"name": "static",
-			"subConfigurations": {
-				"bindbc-freetype": "static",
-				"bindbc-sdl": "static",
-			},
+			"subConfigurations": {"bindbc-freetype": "static"},
+			"libs": ["freetype", "stdc++"],
+		},
+		{
+			"name": "staticBC",
+			"subConfigurations": {"bindbc-freetype": "staticBC"},
 			"libs": ["freetype", "stdc++"],
 		},
 	],
