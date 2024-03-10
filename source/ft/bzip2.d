@@ -10,13 +10,16 @@ module ft.bzip2;
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
-static if(enableBZIP2):
 import ft.system;
 import ft.types;
 
 mixin(joinFnBinds((){
-	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Stream_OpenBzip2}, q{FT_Stream stream, FT_Stream source}},
-	];
+	FnBind[] ret;
+	static if(enableBZIP2){
+		FnBind[] add = [
+			{q{FT_Error}, q{FT_Stream_OpenBzip2}, q{FT_Stream stream, FT_Stream source}},
+		];
+		ret ~= add;
+	}
 	return ret;
 }()));

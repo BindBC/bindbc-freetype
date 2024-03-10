@@ -28,7 +28,7 @@ void main(){
 	FT_Face ftFace;
 	enum fontPath = {
 		version(linux)        return "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf";
-		else version(OSX)     static assert(0, "No font path set for macOS"); //return "";
+		else version(OSX)     return "/System/Library/Fonts/Geneva.ttf";
 		else version(Windows) static assert(0, "No font path set for Windows"); //return "";
 		else static assert(0, "No font path for this operating system.");
 	}();

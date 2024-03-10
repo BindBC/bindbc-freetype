@@ -39,16 +39,18 @@ enum{
 	FT_VALIDATE_prop = FT_VALIDATE_GX_START << FT_VALIDATE_prop_INDEX,
 	FT_VALIDATE_lcar = FT_VALIDATE_GX_START << FT_VALIDATE_lcar_INDEX,
 	
-	FT_VALIDATE_GX = (FT_VALIDATE_feat |
-					   FT_VALIDATE_mort |
-					   FT_VALIDATE_morx |
-					   FT_VALIDATE_bsln |
-					   FT_VALIDATE_just |
-					   FT_VALIDATE_kern |
-					   FT_VALIDATE_opbd |
-					   FT_VALIDATE_trak |
-					   FT_VALIDATE_prop |
-					   FT_VALIDATE_lcar),
+	FT_VALIDATE_GX = (
+		FT_VALIDATE_feat |
+		FT_VALIDATE_mort |
+		FT_VALIDATE_morx |
+		FT_VALIDATE_bsln |
+		FT_VALIDATE_just |
+		FT_VALIDATE_kern |
+		FT_VALIDATE_opbd |
+		FT_VALIDATE_trak |
+		FT_VALIDATE_prop |
+		FT_VALIDATE_lcar
+	),
 	
 	FT_VALIDATE_MS = FT_VALIDATE_GX_START << 0,
 	FT_VALIDATE_APPLE = FT_VALIDATE_GX_START << 1,
