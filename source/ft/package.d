@@ -478,15 +478,16 @@ mixin(joinFnBinds((){
 		];
 		ret ~= add;
 	}
-	if(ftSupport >= FTSupport.v2_11){
-		FnBind[] add = [
-			{q{void}, q{FT_Get_Transform}, q{FT_Face face, FT_Matrix* matrix, FT_Vector* delta}},
-		];
-		ret ~= add;
-	}else{
+	if (ftSupport >= FTSupport.v2_10) {
 		// Moved to ftcolor.h in 2.11
 		FnBind[] add = [
 			{q{FT_Bool}, q{FT_Get_Color_Glyph_Layer}, q{FT_Face face, uint baseGlyph, uint* aGlyphIndex, uint* aColourIndex, FT_LayerIterator* iterator}},
+		];
+		ret ~= add;
+	}
+	if(ftSupport >= FTSupport.v2_11){
+		FnBind[] add = [
+			{q{void}, q{FT_Get_Transform}, q{FT_Face face, FT_Matrix* matrix, FT_Vector* delta}},
 		];
 		ret ~= add;
 	}
