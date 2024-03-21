@@ -33,7 +33,7 @@ mixin(joinFnBinds((){
 		{q{FT_Error}, q{FT_Library_SetLcdFilter}, q{FT_Library library, FT_LcdFilter filter}},
 		{q{FT_Error}, q{FT_Library_SetLcdFilterWeights}, q{FT_Library library, ubyte* weights}},
 	];
-	if (ftSupport >= FTSupport.v2_10) {
+	if(ftSupport >= FTSupport.v2_10){
 		FnBind[] add = [
 			{q{FT_Error}, q{FT_Library_SetLcdGeometry}, q{FT_Library library, ref FT_Vector[3] sub}},
 		];
