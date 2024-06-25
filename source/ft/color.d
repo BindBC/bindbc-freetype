@@ -35,15 +35,15 @@ static if(ftSupport >= FTSupport.v2_10){
 		ushort num_palette_entries;
 		const(ushort)* palette_entry_name_ids;
 	}
-}
-
-static if(ftSupport >= FTSupport.v2_11){
+	
 	struct FT_LayerIterator{
 		uint num_layers;
 		uint layer;
 		ubyte* p;
 	}
-	
+}
+
+static if(ftSupport >= FTSupport.v2_11){
 	alias FT_PaintFormat = int;
 	enum: FT_PaintFormat{
 		FT_COLR_PAINTFORMAT_COLR_LAYERS      = 1,
