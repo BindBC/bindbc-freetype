@@ -10,7 +10,7 @@ module ft.render;
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
-import ft;
+import ft.ft;
 import ft.glyph;
 import ft.image;
 import ft.modapi;
@@ -26,14 +26,22 @@ extern(C) nothrow{
 }
 
 struct FT_Glyph_Class{ //typedef aliased in ftglyph.h
-	FT_Long glyph_size;
-	FT_Glyph_Format glyph_format;
-	FT_Glyph_InitFunc glyph_init;
-	FT_Glyph_DoneFunc glyph_done;
-	FT_Glyph_CopyFunc glyph_copy;
-	FT_Glyph_TransformFunc glyph_transform;
-	FT_Glyph_GetBBoxFunc glyph_bbox;
-	FT_Glyph_PrepareFunc glyph_prepare;
+	FT_Long glyphSize;
+	FT_Glyph_Format glyphFormat;
+	FT_Glyph_InitFunc glyphInit;
+	FT_Glyph_DoneFunc glyphDone;
+	FT_Glyph_CopyFunc glyphCopy;
+	FT_Glyph_TransformFunc glyphTransform;
+	FT_Glyph_GetBBoxFunc glyphBbox;
+	FT_Glyph_PrepareFunc glyphPrepare;
+	alias glyph_size = glyphSize;
+	alias glyph_format = glyphFormat;
+	alias glyph_init = glyphInit;
+	alias glyph_done = glyphDone;
+	alias glyph_copy = glyphCopy;
+	alias glyph_transform = glyphTransform;
+	alias glyph_bbox = glyphBbox;
+	alias glyph_prepare = glyphPrepare;
 }
 
 extern(C) nothrow{
@@ -45,16 +53,22 @@ extern(C) nothrow{
 
 struct FT_Renderer_Class{
 	FT_Module_Class root;
-	FT_Glyph_Format glyph_format;
-	FT_Renderer_RenderFunc render_glyph;
-	FT_Renderer_TransformFunc transform_glyph;
-	FT_Renderer_GetCBoxFunc get_glyph_cbox;
-	FT_Renderer_SetModeFunc set_mode;
+	FT_Glyph_Format glyphFormat;
+	FT_Renderer_RenderFunc renderGlyph;
+	FT_Renderer_TransformFunc transformGlyph;
+	FT_Renderer_GetCBoxFunc getGlyphCBox;
+	FT_Renderer_SetModeFunc setMode;
 	static if(ftSupport >= FTSupport.v2_13){
-		const(FT_Raster_Funcs)* raster_class;
+		const(FT_Raster_Funcs)* rasterClass;
 	}else{
-		FT_Raster_Funcs* raster_class;
+		FT_Raster_Funcs* rasterClass;
 	}
+	alias glyph_format = glyphFormat;
+	alias render_glyph = renderGlyph;
+	alias transform_glyph = transformGlyph;
+	alias get_glyph_cbox = getGlyphCBox;
+	alias set_mode = setMode;
+	alias raster_class = rasterClass;
 }
 
 mixin(joinFnBinds((){

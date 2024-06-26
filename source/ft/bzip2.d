@@ -15,7 +15,7 @@ import ft.types;
 
 mixin(joinFnBinds((){
 	FnBind[] ret;
-	static if(enableBZIP2){
+	if(enableBZIP2){
 		FnBind[] add = [
 			{q{FT_Error}, q{FT_Stream_OpenBzip2}, q{FT_Stream stream, FT_Stream source}},
 		];

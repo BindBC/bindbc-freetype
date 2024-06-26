@@ -62,14 +62,21 @@ FTSupport loadFreeType(const(char)* libName){
 	loadedVersion = FTSupport.badLibrary;
 	
 	static foreach(mod; [
-		"ft.advanc", "ft.bbox", "ft.bdf", "ft.bitmap", "ft.bzip2", "ft.cache",
-		"ft.cid", "ft.color", "ft.driver", "ft.errdef", "ft.errors",
-		"ft.fntfmt", "ft.gasp", "ft.glyph", "ft.gxval", "ft.gzip", "ft.image",
-		"ft.increm", "ft.lcdfil", "ft.list", "ft.logging", "ft.lzw", "ft.mm",
-		"ft.modapi", "ft.moderr", "ft.otval", "ft.outln", "ft", "ft.params",
-		"ft.pfr", "ft.render", "ft.sizes", "ft.snames", "ft.stroke",
-		"ft.synth", "ft.system", "ft.t1tables", "ft.trigon", "ft.ttnameid",
-		"ft.tttables", "ft.tttags", "ft.types", "ft.winfnt",
+		"ft.advanc",    "ft.bbox",    "ft.bdf",
+		"ft.bitmap",    "ft.bzip2",   "ft.cache",
+		"ft.cid",       "ft.colour",  "ft.driver",
+		"ft.errdef",    "ft.errors",  "ft.fntfmt",
+		"ft.gasp",      "ft.glyph",   "ft.gxval",
+		"ft.gzip",      "ft.image",   "ft.increm",
+		"ft.lcdfil",    "ft.list",    "ft.logging",
+		"ft.lzw",       "ft.mm",      "ft.modapi",
+		"ft.moderr",    "ft.otval",   "ft.outln",
+		"ft.ft",        "ft.params",  "ft.pfr",
+		"ft.render",    "ft.sizes",   "ft.snames",
+		"ft.stroke",    "ft.synth",   "ft.system",
+		"ft.t1tables",  "ft.trigon",  "ft.ttnameid",
+		"ft.tttables",  "ft.tttags",  "ft.types",
+		"ft.winfnt",
 	]){
 		mixin(mod ~ ".bindModuleSymbols(lib);");
 	}

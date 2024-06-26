@@ -43,11 +43,15 @@ struct FT_Var_Named_Style{
 }
 
 struct FT_MM_Var{
-	uint num_axis;
-	uint num_designs;
-	uint num_namedstyles;
+	uint numAxis;
+	uint numDesigns;
+	uint numNamedstyles;
+	alias num_axis = numAxis;
+	alias num_designs = numDesigns;
+	alias num_namedstyles = numNamedstyles;
 	FT_Var_Axis* axis;
-	FT_Var_Named_Style* namedstyle;
+	FT_Var_Named_Style* namedStyle;
+	alias namedstyle = namedStyle;
 }
 
 // Added in Freetype 2.8

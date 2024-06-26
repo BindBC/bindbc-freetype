@@ -49,18 +49,19 @@ struct FT_Data{
 	int length;
 }
 
-alias FT_Generic_Finalizer = extern(C) void function(void*) nothrow;
-alias FT_Generic_Finaliser = FT_Generic_Finalizer;
+alias FT_Generic_Finaliser = extern(C) void function(void*) nothrow;
+alias FT_Generic_Finalizer = FT_Generic_Finaliser;
 
 struct FT_Generic{
 	void* data;
-	FT_Generic_Finalizer finalizer;
-	alias finaliser = finalizer;
+	FT_Generic_Finaliser finaliser;
+	alias finalizer = finaliser;
 }
 
-FT_Tag FT_MAKE_TAG(char x1, char x2, char x3, char x4) nothrow @nogc pure @safe{
+FT_Tag ftMakeTag(char x1, char x2, char x3, char x4) nothrow @nogc pure @safe{
 	return cast(uint)((x1 << 24) | (x2 << 16) | (x3 << 8) | x4);
 }
+alias FT_MAKE_TAG = ftMakeTag;
 
 alias FT_ListNode = FT_ListNodeRec*;
 

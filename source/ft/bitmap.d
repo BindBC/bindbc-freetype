@@ -11,12 +11,10 @@ import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
 import ft;
+import ft.colour;
 import ft.image;
 import ft.modapi;
 import ft.types;
-static if(ftSupport >= FTSupport.v2_10){
-	import ft.color;
-}
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
@@ -29,7 +27,7 @@ mixin(joinFnBinds((){
 	];
 	if(ftSupport >= FTSupport.v2_10){
 		FnBind[] add = [
-			{q{FT_Error}, q{FT_Bitmap_Blend}, q{FT_Library library, const(FT_Bitmap)* source, const(FT_Vector) sourceOffset, FT_Bitmap* target, FT_Vector* aTargetOffset, FT_Color colour}},
+			{q{FT_Error}, q{FT_Bitmap_Blend}, q{FT_Library library, const(FT_Bitmap)* source, const(FT_Vector) sourceOffset, FT_Bitmap* target, FT_Vector* aTargetOffset, FT_Colour colour}},
 		];
 		ret ~= add;
 	}

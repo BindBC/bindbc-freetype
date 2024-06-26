@@ -34,15 +34,24 @@ extern(C) nothrow{
 }
 
 struct FT_Module_Class{
-	FT_ULong module_flags;
-	FT_Long module_size;
-	char* module_name;
-	FT_Fixed module_version;
-	FT_Fixed module_requires;
-	void* module_interface;
-	FT_Module_Constructor module_init;
-	FT_Module_Destructor module_done;
-	FT_Module_Requester get_interface;
+	FT_ULong moduleFlags;
+	FT_Long moduleSize;
+	char* moduleName;
+	FT_Fixed moduleVersion;
+	FT_Fixed moduleRequires;
+	void* moduleInterface;
+	FT_Module_Constructor moduleInit;
+	FT_Module_Destructor moduleDone;
+	FT_Module_Requester getInterface;
+	alias module_flags = moduleFlags;
+	alias module_size = moduleSize;
+	alias module_name = moduleName;
+	alias module_version = moduleVersion;
+	alias module_requires = moduleRequires;
+	alias module_interface = moduleInterface;
+	alias module_init = moduleInit;
+	alias module_done = moduleDone;
+	alias get_interface = getInterface;
 }
 
 import bindbc.common: Version;
@@ -52,12 +61,14 @@ static if(ftSupport >= Version(2,10,1)){
 	extern(C) nothrow alias FT_DebugHook_Func = void function(void*);
 }
 
-alias FT_TrueTypeEngineType = int;
-enum: FT_TrueTypeEngineType{
-	FT_TRUETYPE_ENGINE_TYPE_NONE        = 0,
-	FT_TRUETYPE_ENGINE_TYPE_UNPATENTED  = 1,
-	FT_TRUETYPE_ENGINE_TYPE_PATENTED    = 2,
-}
+mixin(makeEnumBind(q{FT_TrueTypeEngineType}, members: (){
+	EnumMember[] ret = [
+		{{q{none},        q{FT_TRUETYPE_ENGINE_TYPE_NONE}},        q{0}},
+		{{q{unpatented},  q{FT_TRUETYPE_ENGINE_TYPE_UNPATENTED}},  q{1}},
+		{{q{patented},    q{FT_TRUETYPE_ENGINE_TYPE_PATENTED}},    q{2}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

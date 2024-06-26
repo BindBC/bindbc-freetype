@@ -19,30 +19,32 @@ import ft.types;
 struct FT_StrokerRec;
 alias FT_Stroker = FT_StrokerRec*;
 
-alias FT_Stroker_LineJoin = int;
-enum: FT_Stroker_LineJoin{
-	FT_STROKER_LINEJOIN_ROUND           = 0,
-	FT_STROKER_LINEJOIN_BEVEL           = 1,
-	FT_STROKER_LINEJOIN_MITER_VARIABLE  = 2,
-	FT_STROKER_LINEJOIN_MITRE_VARIABLE  = FT_STROKER_LINEJOIN_MITER_VARIABLE,
-	FT_STROKER_LINEJOIN_MITER           = FT_STROKER_LINEJOIN_MITER_VARIABLE,
-	FT_STROKER_LINEJOIN_MITRE           = FT_STROKER_LINEJOIN_MITER,
-	FT_STROKER_LINEJOIN_MITER_FIXED     = 3,
-	FT_STROKER_LINEJOIN_MITRE_FIXED     = FT_STROKER_LINEJOIN_MITER_FIXED,
-}
+mixin(makeEnumBind(q{FT_Stroker_LineJoin}, members: (){
+	EnumMember[] ret = [
+		{{q{round},          q{FT_STROKER_LINEJOIN_ROUND}},           q{0}},
+		{{q{bevel},          q{FT_STROKER_LINEJOIN_BEVEL}},           q{1}},
+		{{q{mitreVariable},  q{FT_STROKER_LINEJOIN_MITRE_VARIABLE}},  q{2}, aliases: [{q{mitre}, q{FT_STROKER_LINEJOIN_MITRE}}, {q{miterVariable}, q{FT_STROKER_LINEJOIN_MITER_VARIABLE}}]},
+		{{q{mitreFixed},     q{FT_STROKER_LINEJOIN_MITRE_FIXED}},     q{3}, aliases: [{q{miterFixed}, q{FT_STROKER_LINEJOIN_MITER_FIXED}}]},
+	];
+	return ret;
+}()));
 
-alias FT_Stroker_LineCap = int;
-enum{
-	FT_STROKER_LINECAP_BUTT    = 0,
-	FT_STROKER_LINECAP_ROUND   = 1,
-	FT_STROKER_LINECAP_SQUARE  = 2,
-}
+mixin(makeEnumBind(q{FT_Stroker_LineCap}, members: (){
+	EnumMember[] ret = [
+		{{q{butt},    q{FT_STROKER_LINECAP_BUTT}},    q{0}},
+		{{q{round},   q{FT_STROKER_LINECAP_ROUND}},   q{1}},
+		{{q{square},  q{FT_STROKER_LINECAP_SQUARE}},  q{2}},
+	];
+	return ret;
+}()));
 
-alias FT_StrokerBorder = int;
-enum{
-	FT_STROKER_BORDER_LEFT   = 0,
-	FT_STROKER_BORDER_RIGHT  = 1,
-}
+mixin(makeEnumBind(q{FT_StrokerBorder}, members: (){
+	EnumMember[] ret = [
+		{{q{left},   q{FT_STROKER_BORDER_LEFT}},   q{0}},
+		{{q{right},  q{FT_STROKER_BORDER_RIGHT}},  q{1}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

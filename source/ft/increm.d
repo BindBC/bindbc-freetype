@@ -17,8 +17,10 @@ struct FT_IncrementalRec;
 alias FT_Incremental = FT_IncrementalRec*;
 
 struct FT_Incremental_MetricsRec{
-	FT_Long bearing_x;
-	FT_Long bearing_y;
+	FT_Long bearingX;
+	FT_Long bearingY;
+	alias bearing_x = bearingX;
+	alias bearing_y = bearingY;
 	FT_Long advance;
 }
 
@@ -31,9 +33,12 @@ extern(C) nothrow{
 }
 
 struct FT_Incremental_FuncsRec{
-	FT_Incremental_GetGlyphDataFunc get_glyph_data;
-	FT_Incremental_FreeGlyphDataFunc free_glyph_data;
-	FT_Incremental_GetGlyphMetricsFunc get_glyph_metrics;
+	FT_Incremental_GetGlyphDataFunc getGlyphData;
+	FT_Incremental_FreeGlyphDataFunc freeGlyphData;
+	FT_Incremental_GetGlyphMetricsFunc getGlyphMetrics;
+	alias get_glyph_data = getGlyphData;
+	alias free_glyph_data = freeGlyphData;
+	alias get_glyph_metrics = getGlyphMetrics;
 }
 
 struct FT_Incremental_InterfaceRec{

@@ -14,70 +14,114 @@ import ft;
 import ft.types;
 
 struct TT_Header{
-	FT_Fixed Table_Version;
-	FT_Fixed Font_Revision;
-	FT_Long CheckSum_Adjust;
-	FT_Long Magic_Number;
-	ushort Flags;
-	ushort Units_Per_EM;
+	FT_Fixed tableVersion;
+	FT_Fixed fontRevision;
+	FT_Long checkSumAdjust;
+	FT_Long magicNumber;
+	ushort flags;
+	ushort unitsPerEM;
 	static if(ftSupport >= FTSupport.v2_10){
-		FT_ULong[2] Created;
-		FT_ULong[2] Modified;
+		FT_ULong[2] created;
+		FT_ULong[2] modified;
 	}else{
-		FT_Long[2] Created;
-		FT_Long[2] Modified;
+		FT_Long[2] created;
+		FT_Long[2] modified;
 	}
+	alias Table_Version = tableVersion;
+	alias Font_Revision = fontRevision;
+	alias CheckSum_Adjust = checkSumAdjust;
+	alias Magic_Number = magicNumber;
+	alias Flags = flags;
+	alias Units_Per_EM = unitsPerEM;
+	alias Created = created;
+	alias Modified = modified;
 	short xMin;
 	short yMin;
 	short xMax;
 	short yMax;
-	ushort Mac_Style;
-	ushort Lowest_Rec_PPEM;
-	short Font_Direction;
-	short Index_To_Loc_Format;
-	short Glyph_Data_Format;
+	ushort macStyle;
+	ushort lowestRecPPEM;
+	short fontDirection;
+	short indexToLocFormat;
+	short glyphDataFormat;
+	alias Mac_Style = macStyle;
+	alias Lowest_Rec_PPEM = lowestRecPPEM;
+	alias Font_Direction = fontDirection;
+	alias Index_To_Loc_Format = indexToLocFormat;
+	alias Glyph_Data_Format = glyphDataFormat;
 }
 
 struct TT_HoriHeader{
-	FT_Fixed Version;
-	short Ascender;
-	short Descender;
-	short Line_Gap;
-	ushort advance_Width_Max;
-	short min_Left_Side_Bearing;
-	short min_Right_Side_Bearing;
-	short xMax_Extent;
-	short caret_Slope_Rise;
-	short caret_Slope_Run;
-	short caret_Offset;
+	FT_Fixed version_;
+	short ascender;
+	short descender;
+	short lineGap;
+	ushort advanceWidthMax;
+	short minLeftSideBearing;
+	short minRightSideBearing;
+	short xMaxExtent;
+	short caretSlopeRise;
+	short caretSlopeRun;
+	short caretOffset;
+	alias Version = version_;
+	alias Ascender = ascender;
+	alias Descender = descender;
+	alias Line_Gap = lineGap;
+	alias advance_Width_Max = advanceWidthMax;
+	alias min_Left_Side_Bearing = minLeftSideBearing;
+	alias min_Right_Side_Bearing = minRightSideBearing;
+	alias xMax_Extent = xMaxExtent;
+	alias caret_Slope_Rise = caretSlopeRise;
+	alias caret_Slope_Run = caretSlopeRun;
+	alias caret_Offset = caretOffset;
 	short[4] Reserved;
-	short metric_Data_Format;
-	ushort number_Of_HMetrics;
-	void* long_metrics;
-	void* short_metrics;
+	short metricDataFormat;
+	ushort numberOfHMetrics;
+	void* longMetrics;
+	void* shortMetrics;
+	alias metric_Data_Format = metricDataFormat;
+	alias number_Of_HMetrics = numberOfHMetrics;
+	alias long_metrics = longMetrics;
+	alias short_metrics = shortMetrics;
 }
 
 struct TT_VertHeader{
-	FT_Fixed Version;
-	short Ascender;
-	short Descender;
-	short Line_Gap;
-	ushort advance_Height_Max;
-	short min_Top_Side_Bearing;
-	short min_Bottom_Side_Bearing;
-	short yMax_Extent;
-	short caret_Slope_Rise;
-	short caret_Slope_Run;
-	short caret_Offset;
+	FT_Fixed version_;
+	short ascender;
+	short descender;
+	short lineGap;
+	ushort advanceHeightMax;
+	short minTopSideBearing;
+	short minBottomSideBearing;
+	short yMaxExtent;
+	short caretSlopeRise;
+	short caretSlopeRun;
+	short caretOffset;
+	alias Version = version_;
+	alias Ascender = ascender;
+	alias Descender = descender;
+	alias Line_Gap = lineGap;
+	alias advance_Height_Max = advanceHeightMax;
+	alias min_Top_Side_Bearing = minTopSideBearing;
+	alias min_Bottom_Side_Bearing = minBottomSideBearing;
+	alias yMax_Extent = yMaxExtent;
+	alias caret_Slope_Rise = caretSlopeRise;
+	alias caret_Slope_Run = caretSlopeRun;
+	alias caret_Offset = caretOffset;
 	short[4] Reserved;
-	short metric_Data_Format;
-	ushort number_Of_VMetrics;
-	void* long_metrics;
-	void* short_metrics;
+	short metricDataFormat;
+	ushort numberOfVMetrics;
+	void* longMetrics;
+	void* shortMetrics;
+	alias metric_Data_Format = metricDataFormat;
+	alias number_Of_VMetrics = numberOfVMetrics;
+	alias long_metrics = longMetrics;
+	alias short_metrics = shortMetrics;
 }
 
 struct TT_OS2{
-	ushort _version;
+	ushort version_;
+	alias _version = version_;
 	short xAvgCharWidth;
 	ushort usWeightClass;
 	ushort usWidthClass;
@@ -131,25 +175,39 @@ struct TT_Postscript{
 }
 
 struct TT_PCLT{
-	FT_Fixed Version;
-	FT_ULong FontNumber;
-	ushort Pitch;
+	FT_Fixed version_;
+	FT_ULong fontNumber;
+	ushort pitch;
 	ushort xHeight;
-	ushort Style;
-	ushort TypeFamily;
-	ushort CapHeight;
-	ushort SymbolSet;
-	char[16] TypeFace;
-	byte[8] CharacterComplement;
-	char[6] FileName;
-	byte StrokeWeight;
-	byte WidthType;
-	ubyte SerifStyle;
+	ushort style;
+	ushort typeFamily;
+	ushort capHeight;
+	ushort symbolSet;
+	char[16] typeFace;
+	byte[8] characterComplement;
+	char[6] fileName;
+	byte strokeWeight;
+	byte widthType;
+	ubyte serifStyle;
+	alias Version = version_;
+	alias FontNumber = fontNumber;
+	alias Pitch = pitch;
+	alias Style = style;
+	alias TypeFamily = typeFamily;
+	alias CapHeight = capHeight;
+	alias SymbolSet = symbolSet;
+	alias TypeFace = typeFace;
+	alias CharacterComplement = characterComplement;
+	alias FileName = fileName;
+	alias StrokeWeight = strokeWeight;
+	alias WidthType = widthType;
+	alias SerifStyle = serifStyle;
 	ubyte Reserved;
 }
 
 struct TT_MaxProfile{
-	FT_Fixed _version;
+	FT_Fixed version_;
+	alias _version = version_;
 	ushort numGlyphs;
 	ushort maxPoints;
 	ushort maxContours;
@@ -166,17 +224,19 @@ struct TT_MaxProfile{
 	ushort maxComponentDepth;
 }
 
-alias FT_Sfnt_Tag = int;
-enum{
-	FT_SFNT_HEAD,
-	FT_SFNT_MAXP,
-	FT_SFNT_OS2,
-	FT_SFNT_HHEA,
-	FT_SFNT_VHEA,
-	FT_SFNT_POST,
-	FT_SFNT_PCLT,
-	FT_SFNT_MAX,
-}
+mixin(makeEnumBind(q{FT_SFNT_Tag}, aliases: [q{FT_Sfnt_Tag}, q{FT_Sfnt}, q{FT_SFNT}], members: (){
+	EnumMember[] ret = [
+		{{q{head},  q{FT_SFNT_HEAD}}},
+		{{q{maxp},  q{FT_SFNT_MAXP}}},
+		{{q{os2},   q{FT_SFNT_OS2}}},
+		{{q{hhea},  q{FT_SFNT_HHEA}}},
+		{{q{vhea},  q{FT_SFNT_VHEA}}},
+		{{q{post},  q{FT_SFNT_POST}}},
+		{{q{pclt},  q{FT_SFNT_PCLT}}},
+		{{q{max_},  q{FT_SFNT_MAX}}},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

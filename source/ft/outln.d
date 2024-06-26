@@ -14,13 +14,13 @@ import ft;
 import ft.image;
 import ft.types;
 
-alias FT_Orientation = int;
-enum{
-	FT_ORIENTATION_TRUETYPE    = 0,
-	FT_ORIENTATION_POSTSCRIPT  = 1,
-	FT_ORIENTATION_FILL_RIGHT  = FT_ORIENTATION_TRUETYPE,
-	FT_ORIENTATION_FILL_LEFT   = FT_ORIENTATION_POSTSCRIPT,
-}
+mixin(makeEnumBind(q{FT_Orientation}, members: (){
+	EnumMember[] ret = [
+		{{q{trueType},    q{FT_ORIENTATION_TRUETYPE}},    q{0}, aliases: [{q{fillRight}, q{FT_ORIENTATION_FILL_RIGHT}}]},
+		{{q{postScript},  q{FT_ORIENTATION_POSTSCRIPT}},  q{1}, aliases: [{q{fillLeft}, q{FT_ORIENTATION_FILL_LEFT}}]},
+	];
+	return ret;
+}()));
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [

@@ -10,7 +10,7 @@ module ft.glyph;
 import bindbc.freetype.config;
 import bindbc.freetype.codegen;
 
-import ft;
+import ft.ft;
 import ft.image;
 import ft.render;
 import ft.types;
@@ -50,21 +50,27 @@ enum{
 }
 
 static if(ftSupport >= FTSupport.v2_12){
-	alias FT_SvgGlyph = FT_SvgGlyphRec_*;
+	alias FT_SvgGlyph = FT_SvgGlyphRec*;
 	
-	struct FT_SvgGlyphRec_{
+	struct FT_SvgGlyphRec{
 		FT_GlyphRec root;
 		
-		ubyte* svg_document;
-		FT_ULong svg_document_length;
+		ubyte* svgDocument;
+		FT_ULong svgDocumentLength;
+		alias svg_document = svgDocument;
+		alias svg_document_length = svgDocumentLength;
 		
-		uint glyph_index;
+		uint glyphIndex;
+		alias glyph_index = glyphIndex;
 		
 		FT_Size_Metrics metrics;
-		ushort units_per_EM;
+		ushort unitsPerEM;
+		alias units_per_EM = unitsPerEM;
 		
-		ushort start_glyph_id;
-		ushort end_glyph_id;
+		ushort startGlyphID;
+		ushort endGlyphID;
+		alias start_glyph_id = startGlyphID;
+		alias end_glyph_id = endGlyphID;
 		
 		FT_Matrix transform;
 		FT_Vector delta;

@@ -14,23 +14,34 @@ import ft;
 import ft.image;
 import ft.types;
 
-alias FT_LcdFilter = int;
-enum: FT_LcdFilter{
-	FT_LCD_FILTER_NONE    = 0,
-	FT_LCD_FILTER_DEFAULT = 1,
-	FT_LCD_FILTER_LIGHT   = 2,
-	FT_LCD_FILTER_LEGACY1 = 3,
-	FT_LCD_FILTER_LEGACY  = 16,
-	FT_LCD_FILTER_MAX,
-}
+mixin(makeEnumBind(q{FT_LCDFilter}, aliases: [q{FT_LcdFilter}], members: (){
+	EnumMember[] ret = [
+		{{q{none},          q{FT_LCD_FILTER_NONE}},       q{0}},
+		{{q{default_},      q{FT_LCD_FILTER_DEFAULT}},    q{1}},
+		{{q{light},         q{FT_LCD_FILTER_LIGHT}},      q{2}},
+		{{q{legacy1},       q{FT_LCD_FILTER_LEGACY1}},    q{3}},
+	];
+	if(ftSupport >= FTSupport.v2_8){
+		EnumMember[] add = [
+			{{q{fiveTaps},  q{FT_LCD_FILTER_FIVE_TAPS}},  q{5}},
+		];
+		ret ~= add;
+	}
+	{
+		EnumMember[] add = [
+			{{q{legacy},    q{FT_LCD_FILTER_LEGACY}},     q{16}},
+			{{q{max_},      q{FT_LCD_FILTER_MAX}}},
+		];
+		ret ~= add;
+	}
+	return ret;
+}()));
 
-// Added in Freetype 2.8
-enum FT_LcdFilter FT_LCD_FILTER_FIVE_TAPS = 5;
-alias FT_LcdFiveTapFilter = ubyte[FT_LCD_FILTER_FIVE_TAPS];
+alias FT_LcdFiveTapFilter = ubyte[FT_LCDFilter.fiveTaps];
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
-		{q{FT_Error}, q{FT_Library_SetLcdFilter}, q{FT_Library library, FT_LcdFilter filter}},
+		{q{FT_Error}, q{FT_Library_SetLcdFilter}, q{FT_Library library, FT_LCDFilter filter}},
 		{q{FT_Error}, q{FT_Library_SetLcdFilterWeights}, q{FT_Library library, ubyte* weights}},
 	];
 	if(ftSupport >= FTSupport.v2_10){

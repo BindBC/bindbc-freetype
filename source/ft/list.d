@@ -26,7 +26,7 @@ mixin(joinFnBinds((){
 		{q{void}, q{FT_List_Remove}, q{FT_List list, FT_ListNode node}},
 		{q{void}, q{FT_List_Up}, q{FT_List list, FT_ListNode node}},
 		{q{FT_Error}, q{FT_List_Iterate}, q{FT_List list, FT_List_Iterator iterator, void* user}},
-		{q{void}, q{FT_List_Finalize}, q{FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user}, aliases: ["FT_List_Finalise"]},
+		{q{void}, q{FT_List_Finalize}, q{FT_List list, FT_List_Destructor destroy, FT_Memory memory, void* user}, aliases: [q{FT_List_Finalise}]},
 	];
 	return ret;
 }()));

@@ -21,13 +21,12 @@ enum FTSupport: Version{
 	v2_12       = Version(2,12,1),
 	v2_13       = Version(2,13,1),
 	
-	//These will become deprecated later.
-	ft26  = v2_6,
-	ft27  = v2_7,
-	ft28  = v2_8,
-	ft29  = v2_9,
-	ft210 = v2_10,
-	ft211 = v2_11,
+	deprecated("Please use `FTSupport.v2_6` instead") ft26  = v2_6,
+	deprecated("Please use `FTSupport.v2_7` instead") ft27  = v2_7,
+	deprecated("Please use `FTSupport.v2_8` instead") ft28  = v2_8,
+	deprecated("Please use `FTSupport.v2_9` instead") ft29  = v2_9,
+	deprecated("Please use `FTSupport.v2_10` instead") ft210 = v2_10,
+	deprecated("Please use `FTSupport.v2_11` instead") ft211 = v2_11,
 }
 
 enum staticBinding = (){
@@ -36,9 +35,29 @@ enum staticBinding = (){
 	else return false;
 }();
 
+enum cStyleEnums = (){
+	version(FT_C_Enums_Only)          return true;
+	else version(BindBC_D_Enums_Only) return false;
+	else version(FT_D_Enums_Only)     return false;
+	else return true;
+}();
+
+enum dStyleEnums = (){
+	version(FT_D_Enums_Only)          return true;
+	else version(BindBC_C_Enums_Only) return false;
+	else version(FT_C_Enums_Only)     return false;
+	else return true;
+}();
+
 enum ftSupport = (){
 	version(FT_2_13)      return FTSupport.v2_13;
 	else version(FT_2_12) return FTSupport.v2_12;
+	else version(FT_2_11) return FTSupport.v2_11;
+	else version(FT_2_10) return FTSupport.v2_10;
+	else version(FT_2_9)  return FTSupport.v2_9;
+	else version(FT_2_8)  return FTSupport.v2_8;
+	else version(FT_2_7)  return FTSupport.v2_7;
+	
 	else version(FT_211)  return FTSupport.v2_11;
 	else version(FT_210)  return FTSupport.v2_10;
 	else version(FT_29)   return FTSupport.v2_9;

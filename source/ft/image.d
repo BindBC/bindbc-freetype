@@ -25,33 +25,42 @@ struct FT_BBox{
 	FT_Pos xMax, yMax;
 }
 
-alias FT_Pixel_Mode = int;
-enum{
-	FT_PIXEL_MODE_NONE = 0,
-	FT_PIXEL_MODE_MONO,
-	FT_PIXEL_MODE_GRAY,
-	FT_PIXEL_MODE_GRAY2,
-	FT_PIXEL_MODE_GRAY4,
-	FT_PIXEL_MODE_LCD,
-	FT_PIXEL_MODE_LCD_V,
-	FT_PIXEL_MODE_BGRA,
-	FT_PIXEL_MODE_MAX
-}
+mixin(makeEnumBind(q{FT_Pixel_Mode}, members: (){
+	EnumMember[] ret = [
+		{{q{none},   q{FT_PIXEL_MODE_NONE}},  q{0}},
+		{{q{mono},   q{FT_PIXEL_MODE_MONO}}},
+		{{q{grey},   q{FT_PIXEL_MODE_GREY}}, aliases: [{q{gray}, q{FT_PIXEL_MODE_GRAY}}]},
+		{{q{grey2},  q{FT_PIXEL_MODE_GREY2}}, aliases: [{q{gray2}, q{FT_PIXEL_MODE_GRAY2}}]},
+		{{q{grey4},  q{FT_PIXEL_MODE_GREY4}}, aliases: [{q{gray4}, q{FT_PIXEL_MODE_GRAY4}}]},
+		{{q{lcd},    q{FT_PIXEL_MODE_LCD}}},
+		{{q{lcdV},   q{FT_PIXEL_MODE_LCD_V}}},
+		{{q{bgra},   q{FT_PIXEL_MODE_BGRA}}},
+		{{q{max_},   q{FT_PIXEL_MODE_MAX}}},
+	];
+	return ret;
+}()));
 
 struct FT_Bitmap{
 	uint rows;
 	uint width;
 	int pitch;
 	ubyte* buffer;
-	ushort num_grays;
-	ubyte pixel_mode;
-	ubyte palette_mode;
+	ushort numGreys;
+	ubyte pixelMode;
+	ubyte paletteMode;
+	alias num_greys = numGreys;
+	alias num_grays = numGreys;
+	alias numGrays = numGreys;
+	alias pixel_mode = pixelMode;
+	alias palette_mode = paletteMode;
 	void* palette;
 }
 
 struct FT_Outline{
-	short n_contours;
-	short n_points;
+	short nContours;
+	short nPoints;
+	alias n_contours = nContours;
+	alias n_points = nPoints;
 	FT_Vector* points;
 	byte* tags;
 	short* contours;
@@ -94,26 +103,34 @@ extern(C) nothrow{
 }
 
 struct FT_Outline_Funcs{
-	FT_Outline_MoveToFunc move_to;
-	FT_Outline_LineToFunc line_to;
-	FT_Outline_ConicToFunc conic_to;
-	FT_Outline_CubicToFunc cubic_to;
+	FT_Outline_MoveToFunc moveTo;
+	FT_Outline_LineToFunc lineTo;
+	FT_Outline_ConicToFunc conicTo;
+	FT_Outline_CubicToFunc cubicTo;
+	alias move_to = moveTo;
+	alias line_to = lineTo;
+	alias conic_to = conicTo;
+	alias cubic_to = cubicTo;
 	int shift;
 	FT_Pos delta;
 }
 
-alias FT_Glyph_Format = FT_Tag;
-enum: FT_Tag{
-	FT_GLYPH_FORMAT_NONE       = 0,
-	FT_GLYPH_FORMAT_COMPOSITE  = FT_MAKE_TAG('c','o','m','p'),
-	FT_GLYPH_FORMAT_BITMAP     = FT_MAKE_TAG('b','i','t','s'),
-	FT_GLYPH_FORMAT_OUTLINE    = FT_MAKE_TAG('o','u','t','l'),
-	FT_GLYPH_FORMAT_PLOTTER    = FT_MAKE_TAG('p','l','o','t'),
-}
-static if(ftSupport >= FTSupport.v2_12)
-enum: FT_Tag{
-	FT_GLYPH_FORMAT_SVG        = FT_MAKE_TAG('S','V','G',' '),
-}
+mixin(makeEnumBind(q{FT_Glyph_Format}, q{FT_Tag}, members: (){
+	EnumMember[] ret = [
+		{{q{none},       q{FT_GLYPH_FORMAT_NONE}},       q{0}},
+		{{q{composite},  q{FT_GLYPH_FORMAT_COMPOSITE}},  q{ftMakeTag('c','o','m','p')}},
+		{{q{bitmap},     q{FT_GLYPH_FORMAT_BITMAP}},     q{ftMakeTag('b','i','t','s')}},
+		{{q{outline},    q{FT_GLYPH_FORMAT_OUTLINE}},    q{ftMakeTag('o','u','t','l')}},
+		{{q{plotter},    q{FT_GLYPH_FORMAT_PLOTTER}},    q{ftMakeTag('p','l','o','t')}},
+	];
+	if(ftSupport >= FTSupport.v2_12){
+		EnumMember[] add = [
+			{{q{svg},    q{FT_GLYPH_FORMAT_SVG}},        q{ftMakeTag('S','V','G',' ')}},
+		];
+		ret ~= add;
+	}
+	return ret;
+}()));
 
 struct FT_RasterRec;
 alias FT_Raster = FT_RasterRec*;
@@ -141,12 +158,17 @@ struct FT_Raster_Params{
 	const(FT_Bitmap)* target;
 	const(void)* source;
 	int flags;
-	FT_SpanFunc gray_spans;
-	void* black_spans;
-	void* bit_test;
-	void* bit_set;
+	FT_SpanFunc graySpans;
+	void* blackSpans;
+	void* bitTest;
+	void* bitSet;
+	alias gray_spans = graySpans;
+	alias black_spans = blackSpans;
+	alias bit_test = bitTest;
+	alias bit_set = bitSet;
 	void* user;
-	FT_BBox clip_box;
+	FT_BBox clipBox;
+	alias clip_box = clipBox;
 }
 
 extern(C) nothrow{
@@ -158,12 +180,18 @@ extern(C) nothrow{
 }
 
 struct FT_Raster_Funcs{
-	FT_Glyph_Format glyph_format;
-	FT_Raster_NewFunc raster_new;
-	FT_Raster_ResetFunc raster_reset;
-	FT_Raster_SetModeFunc raster_set_mode;
-	FT_Raster_RenderFunc raster_render;
-	FT_Raster_DoneFunc raster_done;
+	FT_Glyph_Format glyphFormat;
+	FT_Raster_NewFunc rasterNew;
+	FT_Raster_ResetFunc rasterReset;
+	FT_Raster_SetModeFunc rasterSetMode;
+	FT_Raster_RenderFunc rasterRender;
+	FT_Raster_DoneFunc rasterDone;
+	alias glyph_format = glyphFormat;
+	alias raster_new = rasterNew;
+	alias raster_reset = rasterReset;
+	alias raster_set_mode = rasterSetMode;
+	alias raster_render = rasterRender;
+	alias raster_done = rasterDone;
 }
 
 mixin(joinFnBinds((){

@@ -14,17 +14,24 @@ import ft;
 import ft.types;
 
 struct FT_SfntName{
-	ushort platform_id;
-	ushort encoding_id;
-	ushort language_id;
-	ushort name_id;
+	ushort platformID;
+	ushort encodingID;
+	ushort languageID;
+	ushort nameID;
+	alias platform_id = platformID;
+	alias encoding_id = encodingID;
+	alias language_id = languageID;
+	alias name_id = nameID;
 	ubyte* string;
-	uint string_len;
+	uint stringLen;
+	alias string_len = stringLen;
 }
 
 struct FT_SfntLangTag{
-	ubyte* string_;
-	uint string_len;
+	ubyte* string;
+	alias string_ = FT_SfntLangTag.string;
+	uint stringLen;
+	alias string_len = stringLen;
 }
 
 mixin(joinFnBinds((){

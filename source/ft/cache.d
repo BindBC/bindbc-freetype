@@ -15,7 +15,7 @@ import ft.glyph;
 import ft.types;
 
 alias FTC_FaceID = FT_Pointer;
-extern(C) alias FTC_Face_Requester = FT_Error function(FTC_FaceID, FT_Library, FT_Pointer, FT_Face*) nothrow;
+alias FTC_Face_Requester = extern(C) FT_Error function(FTC_FaceID, FT_Library, FT_Pointer, FT_Face*) nothrow;
 
 struct FTC_ManagerRec;
 struct FTC_NodeRec;
@@ -24,12 +24,15 @@ alias FTC_Manager = FTC_ManagerRec*;
 alias FTC_Node = FTC_NodeRec*;
 
 struct FTC_ScalerRec{
-	FTC_FaceID face_id;
+	FTC_FaceID faceID;
+	alias face_id = faceID;
 	uint width;
 	uint height;
 	int pixel;
-	uint x_res;
-	uint y_res;
+	uint xRes;
+	uint yRes;
+	alias x_res = xRes;
+	alias y_res = yRes;
 }
 
 alias FTC_Scaler = FTC_ScalerRec*;
@@ -38,7 +41,8 @@ struct FTC_CMapCacheRec;
 alias FTC_CMapCache = FTC_CMapCacheRec*;
 
 struct FTC_ImageTypeRec{
-	FTC_FaceID face_id;
+	FTC_FaceID faceID;
+	alias face_id = faceID;
 	uint width;
 	uint height;
 	int flags;
@@ -57,10 +61,13 @@ struct FTC_SBitRec{
 	byte left;
 	byte top;
 	ubyte format;
-	ubyte max_grays;
+	ubyte maxGrays;
+	alias max_grays = maxGrays;
 	short pitch;
-	byte xadvance;
-	byte yadvance;
+	byte xAdvance;
+	byte yAdvance;
+	alias xadvance = xAdvance;
+	alias yadvance = yAdvance;
 	ubyte* buffer;
 }
 
