@@ -3,17 +3,17 @@ description "Static & dynamic bindings to FreeType, compatible with BetterC, @no
 authors "Aya Partridge" "Mike Parker"
 license "BSL-1.0"
 
-dependency "bindbc-common" version="~>1.0.0"
+dependency "bindbc-common" version="~>1.0"
 targetType "staticLibrary"
 targetPath "lib"
 targetName "BindBC_FT"
 
 configuration "dynamic" {
-	dependency "bindbc-loader" version="~>1.1.0"
+	dependency "bindbc-loader" version="~>1.1"
 }
 
 configuration "dynamicBC" {
-	dependency "bindbc-loader" version="~>1.1.0"
+	dependency "bindbc-loader" version="~>1.1"
 	subConfiguration "bindbc-loader" "yesBC"
 	subConfiguration "bindbc-common" "yesBC"
 	buildOptions "betterC"
