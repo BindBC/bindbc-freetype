@@ -1,5 +1,5 @@
 /+
-+            Copyright 2023 – 2024 Aya Partridge
++            Copyright 2023 – 2025 Aya Partridge
 +          Copyright 2019 - 2022 Michael D. Parker
 + Distributed under the Boost Software License, Version 1.0.
 +     (See accompanying file LICENSE_1_0.txt or copy at
@@ -141,8 +141,8 @@ static if(ftSupport >= FTSupport.v2_11){
 			{{q{overlay},        q{FT_COLR_COMPOSITE_OVERLAY}},         q{13}},
 			{{q{darken},         q{FT_COLR_COMPOSITE_DARKEN}},          q{14}},
 			{{q{lighten},        q{FT_COLR_COMPOSITE_LIGHTEN}},         q{15}},
-			{{q{colourDodge},    q{FT_COLR_COMPOSITE_COLOUR_DODGE}},    q{16}, aliases: [q{colorDodge}, q{FT_COLR_COMPOSITE_COLOR_DODGE}]},
-			{{q{colourBurn},     q{FT_COLR_COMPOSITE_COLOUR_BURN}},     q{17}, aliases: [q{colorBurn}, q{FT_COLR_COMPOSITE_COLOR_BURN}]},
+			{{q{colourDodge},    q{FT_COLR_COMPOSITE_COLOUR_DODGE}},    q{16}, aliases: [{q{colorDodge}, q{FT_COLR_COMPOSITE_COLOR_DODGE}}]},
+			{{q{colourBurn},     q{FT_COLR_COMPOSITE_COLOUR_BURN}},     q{17}, aliases: [{q{colorBurn}, q{FT_COLR_COMPOSITE_COLOR_BURN}}]},
 			{{q{hardLight},      q{FT_COLR_COMPOSITE_HARD_LIGHT}},      q{18}},
 			{{q{softLight},      q{FT_COLR_COMPOSITE_SOFT_LIGHT}},      q{19}},
 			{{q{difference},     q{FT_COLR_COMPOSITE_DIFFERENCE}},      q{20}},
@@ -150,7 +150,7 @@ static if(ftSupport >= FTSupport.v2_11){
 			{{q{multiply},       q{FT_COLR_COMPOSITE_MULTIPLY}},        q{22}},
 			{{q{hslHue},         q{FT_COLR_COMPOSITE_HSL_HUE}},         q{23}},
 			{{q{hslSaturation},  q{FT_COLR_COMPOSITE_HSL_SATURATION}},  q{24}},
-			{{q{hslColour},      q{FT_COLR_COMPOSITE_HSL_COLOUR}},      q{25}, aliases: [q{hslColor}, q{FT_COLR_COMPOSITE_HSL_COLOR}]},
+			{{q{hslColour},      q{FT_COLR_COMPOSITE_HSL_COLOUR}},      q{25}, aliases: [{q{hslColor}, q{FT_COLR_COMPOSITE_HSL_COLOR}}]},
 			{{q{hslLuminosity},  q{FT_COLR_COMPOSITE_HSL_LUMINOSITY}},  q{26}},
 			{{q{max},            q{FT_COLR_COMPOSITE_MAX}},             q{27}},
 		];
