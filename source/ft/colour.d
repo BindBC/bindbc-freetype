@@ -201,8 +201,8 @@ static if(ftSupport >= FTSupport.v2_11){
 		alias colorLine = colourLine;
 		FT_Vector centre;
 		alias center = centre;
-		FT_Fixed start_angle;
-		FT_Fixed end_angle;
+		FT_Fixed startAngle;
+		FT_Fixed endAngle;
 		alias start_angle = startAngle;
 		alias end_angle = endAngle;
 	}
@@ -328,7 +328,7 @@ mixin(joinFnBinds((){
 	}
 	if(ftSupport >= FTSupport.v2_11){
 		FnBind[] add = [
-			{q{FT_Bool}, q{FT_Get_Color_Glyph_Paint}, q{FT_Face face, uint baseGlyph, FT_Color_Root_Transform rootTransform, FT_OpaquePaint* paint}, aliases: [q{FT_Get_Colour_Glyph_Paint}]},
+			{q{FT_Bool}, q{FT_Get_Color_Glyph_Paint}, q{FT_Face face, uint baseGlyph, FT_Colour_Root_Transform rootTransform, FT_OpaquePaint* paint}, aliases: [q{FT_Get_Colour_Glyph_Paint}]},
 			{q{FT_Bool}, q{FT_Get_Paint_Layers}, q{FT_Face face, FT_LayerIterator* iterator, FT_OpaquePaint* paint}},
 			{q{FT_Bool}, q{FT_Get_Colorline_Stops}, q{FT_Face face, FT_ColourStop* colourStop, FT_ColourStopIterator iterator}, aliases: [q{FT_Get_Colourline_Stops}]},
 			{q{FT_Bool}, q{FT_Get_Paint}, q{FT_Face face, FT_OpaquePaint opaquePaint, FT_COLR_Paint* paint}},
