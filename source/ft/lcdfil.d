@@ -37,7 +37,9 @@ mixin(makeEnumBind(q{FT_LCDFilter}, aliases: [q{FT_LcdFilter}], members: (){
 	return ret;
 }()));
 
-alias FT_LcdFiveTapFilter = ubyte[FT_LCDFilter.fiveTaps];
+static if(ftSupport >= FTSupport.v2_8){
+	alias FT_LcdFiveTapFilter = ubyte[FT_LCDFilter.fiveTaps];
+}
 
 mixin(joinFnBinds((){
 	FnBind[] ret = [
